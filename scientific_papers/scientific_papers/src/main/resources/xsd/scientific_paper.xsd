@@ -11,15 +11,18 @@
                 <xs:element ref="unordered_list"/>
                 <xs:element ref="ordered_list"/>
                 <xs:element ref="quote"/>
-                <xs:element ref="image"/>
-                <xs:element ref="table"/>
             </xs:choice>
         </xs:sequence>
         <xs:attribute name="id" type="xs:ID"/>
     </xs:complexType>
-    <xs:complexType name="TComplexParagraph">
+    <xs:complexType name="TComplexParagraph" mixed="true">
         <xs:complexContent>
-            <xs:extension base="TSimpleParagraph"/>
+            <xs:extension base="TSimpleParagraph">
+                <xs:sequence>
+                    <xs:element ref="image"/>
+                    <xs:element ref="table"/>
+                </xs:sequence>
+            </xs:extension>
         </xs:complexContent>
     </xs:complexType>
     <xs:element name="scientific_paper">
