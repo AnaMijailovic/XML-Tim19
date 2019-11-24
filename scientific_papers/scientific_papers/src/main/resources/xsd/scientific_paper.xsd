@@ -1,27 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/AnaMijailovic/XML-Tim19"
+    xmlns="https://github.com/AnaMijailovic/XML-Tim19">
+    <xs:complexType name="TPerson">
+        <xs:sequence>
+            <xs:element name="first_name">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                        <xs:maxLength value="20"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="middle_name" minOccurs="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                        <xs:maxLength value="20"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="last_name">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                        <xs:maxLength value="50"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:group name="simple_paragraph_elements">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="b" type="TEmphasis"/>
+            <xs:element minOccurs="0" name="i" type="TEmphasis"/>
+            <xs:element minOccurs="0" name="u" type="TEmphasis"/>
+            <xs:element minOccurs="0" ref="unordered_list"/>
+            <xs:element minOccurs="0" ref="ordered_list"/>
+            <xs:element minOccurs="0" ref="quote"/>
+        </xs:sequence>
+    </xs:group>
+    <xs:complexType mixed="true" name="TSimpleParagraph">
+        <xs:sequence>
+            <xs:choice maxOccurs="unbounded" minOccurs="1">
+                <xs:group ref="simple_paragraph_elements"/>
+            </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="TComplexParagraph" mixed="true">
+        <xs:sequence>
+            <xs:choice maxOccurs="unbounded">
+                <xs:element ref="image"/>
+                <xs:element ref="table"/>
+                <xs:group ref="simple_paragraph_elements"/>
+            </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="required"/>
+    </xs:complexType>
+    <xs:complexType mixed="true" name="TEmphasis">
+        <xs:choice maxOccurs="unbounded" minOccurs="1">
+            <xs:element minOccurs="0" name="b" type="TEmphasis"/>
+            <xs:element minOccurs="0" name="i" type="TEmphasis"/>
+            <xs:element minOccurs="0" name="u" type="TEmphasis"/>
+        </xs:choice>
+    </xs:complexType>
     <xs:simpleType name="TItem">
         <xs:restriction base="xs:string"/>
     </xs:simpleType>
-    <xs:complexType mixed="true" name="TSimpleParagraph">
-        <xs:sequence>
-            <xs:choice>
-                <xs:element name="b" type="xs:string"/>
-                <xs:element name="i" type="xs:string"/>
-                <xs:element ref="unordered_list"/>
-                <xs:element ref="ordered_list"/>
-                <xs:element ref="quote"/>
-                <xs:element ref="image"/>
-                <xs:element ref="table"/>
-            </xs:choice>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:ID"/>
-    </xs:complexType>
-    <xs:complexType name="TComplexParagraph">
-        <xs:complexContent>
-            <xs:extension base="TSimpleParagraph"/>
-        </xs:complexContent>
-    </xs:complexType>
     <xs:element name="scientific_paper">
         <xs:complexType>
             <xs:sequence>
@@ -54,9 +100,10 @@
                             <xs:element name="abstract">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element maxOccurs="unbounded" ref="simple_paragraph"/>
+                                        <xs:element maxOccurs="unbounded" name="paragraph"
+                                            type="TSimpleParagraph"/>
                                     </xs:sequence>
-                                    <xs:attribute name="id" type="xs:ID"/>
+                                    <xs:attribute name="id" type="xs:ID" use="required"/>
                                 </xs:complexType>
                             </xs:element>
                             <xs:element maxOccurs="unbounded" ref="chapter"/>
@@ -68,101 +115,76 @@
                                                 <xs:sequence>
                                                   <xs:element name="title" type="xs:string"/>
                                                   <xs:element maxOccurs="unbounded"
-                                                  name="reference_author">
-                                                  <xs:complexType>
-                                                  <xs:sequence>
-                                                  <xs:element name="first_name" type="xs:string"/>
-                                                  <xs:element name="middle_name" type="xs:string"/>
-                                                  <xs:element name="last_name" type="xs:string"/>
-                                                  </xs:sequence>
-                                                  </xs:complexType>
-                                                  </xs:element>
+                                                  name="reference_author" type="TPerson"> </xs:element>
                                                   <xs:element name="publisher" type="xs:string"/>
                                                   <xs:element name="year_of_publication"
                                                   type="xs:gYear"/>
                                                   <xs:element name="pages" type="xs:string"/>
                                                 </xs:sequence>
-                                                <xs:attribute name="id" type="xs:ID"/>
+                                                <xs:attribute name="id" type="xs:ID" use="required"
+                                                />
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
-                                    <xs:attribute name="id" type="xs:ID"/>
+                                    <xs:attribute name="id" type="xs:ID" use="required"/>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="id" type="xs:ID"/>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
             <xs:attribute name="recieved_date" type="xs:date"/>
             <xs:attribute name="revised_date" type="xs:date"/>
             <xs:attribute name="accepted_date" type="xs:date"/>
-            <xs:attribute name="status">
+            <xs:attribute name="status" default="PENDING" use="optional">
                 <xs:simpleType>
                     <xs:restriction base="xs:token">
                         <xs:enumeration value="REVIEWING"/>
                         <xs:enumeration value="ACCEPTED"/>
                         <xs:enumeration value="REJECTED"/>
                         <xs:enumeration value="REVISION"/>
+                        <xs:enumeration value="PENDING"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:attribute>
+            <xs:attribute default="1" name="version" type="xs:positiveInteger"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="author">
         <xs:complexType>
-            <xs:sequence>
-                <xs:element name="first_name">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:minLength value="1"/>
-                            <xs:maxLength value="20"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
-                <xs:element name="middle_name" minOccurs="0">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:minLength value="1"/>
-                            <xs:maxLength value="20"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
-                <xs:element name="last_name">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:minLength value="1"/>
-                            <xs:maxLength value="30"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
-                <xs:element minOccurs="0" name="email">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string"/>
-                    </xs:simpleType>
-                </xs:element>
-                <xs:element name="affiliation">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="name" type="xs:string"/>
-                            <xs:element name="city" type="xs:string"/>
-                            <xs:element name="state" type="xs:string" minOccurs="0"/>
-                            <xs:element name="country" type="xs:string"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-            </xs:sequence>
+            <xs:complexContent>
+                <xs:extension base="TPerson">
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="email">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string"/>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="affiliation">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="name" type="xs:string"/>
+                                    <xs:element name="city" type="xs:string"/>
+                                    <xs:element name="state" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="country" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
         </xs:complexType>
     </xs:element>
     <xs:element name="chapter">
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="heading"/>
-                <xs:element maxOccurs="unbounded" ref="complex_paragraph"/>
+                <xs:element maxOccurs="unbounded" name="paragraph" type="TComplexParagraph"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="chapter"/>
             </xs:sequence>
-            <xs:attribute name="id" type="xs:ID"/>
-            <xs:attribute name="level">
+            <xs:attribute name="id" type="xs:ID" use="required"/>
+            <xs:attribute name="level" use="required">
                 <xs:simpleType>
                     <xs:restriction base="xs:positiveInteger">
                         <xs:maxInclusive value="5"/>
@@ -177,8 +199,8 @@
                 <xs:element name="name" type="xs:string"/>
                 <xs:element name="description" type="xs:string"/>
             </xs:sequence>
-            <xs:attribute name="id" type="xs:ID"/>
-            <xs:attribute name="src" type="xs:string"/>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
+            <xs:attribute name="src" type="xs:string" use="required"/>
             <xs:attribute name="width" type="xs:positiveInteger"/>
             <xs:attribute name="height" type="xs:positiveInteger"/>
         </xs:complexType>
@@ -188,8 +210,8 @@
             <xs:sequence maxOccurs="unbounded" minOccurs="1">
                 <xs:element name="item" type="TItem"/>
             </xs:sequence>
-            <xs:attribute name="id" type="xs:ID"/>
-            <xs:attribute name="style">
+            <xs:attribute name="id" type="xs:ID" use="required"/>
+            <xs:attribute name="style" default="circle">
                 <xs:simpleType>
                     <xs:restriction base="xs:token">
                         <xs:enumeration value="disc"/>
@@ -206,8 +228,8 @@
             <xs:sequence maxOccurs="unbounded">
                 <xs:element name="item" type="TItem"/>
             </xs:sequence>
-            <xs:attribute name="id" type="xs:ID"/>
-            <xs:attribute name="type">
+            <xs:attribute name="id" type="xs:ID" use="required"/>
+            <xs:attribute name="type" default="1">
                 <xs:simpleType>
                     <xs:restriction base="xs:token">
                         <xs:enumeration value="1"/>
@@ -234,7 +256,7 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="id" type="xs:ID"/>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="quote">
@@ -243,10 +265,8 @@
                 <xs:element name="source" type="xs:string"/>
                 <xs:element name="text" type="xs:string"/>
             </xs:sequence>
-            <xs:attribute name="id" type="xs:ID"/>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="heading" type="xs:string"/>
-    <xs:element name="simple_paragraph" type="TSimpleParagraph"/>
-    <xs:element name="complex_paragraph" type="TComplexParagraph"/>
 </xs:schema>
