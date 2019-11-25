@@ -110,21 +110,7 @@
                             <xs:element name="references">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element maxOccurs="unbounded" name="reference">
-                                            <xs:complexType>
-                                                <xs:sequence>
-                                                  <xs:element name="title" type="xs:string"/>
-                                                  <xs:element maxOccurs="unbounded"
-                                                  name="reference_author" type="TPerson"> </xs:element>
-                                                  <xs:element name="publisher" type="xs:string"/>
-                                                  <xs:element name="year_of_publication"
-                                                  type="xs:gYear"/>
-                                                  <xs:element name="pages" type="xs:string"/>
-                                                </xs:sequence>
-                                                <xs:attribute name="id" type="xs:ID" use="required"
-                                                />
-                                            </xs:complexType>
-                                        </xs:element>
+                                        <xs:element maxOccurs="unbounded" ref="reference"/>
                                     </xs:sequence>
                                     <xs:attribute name="id" type="xs:ID" use="required"/>
                                 </xs:complexType>
@@ -269,4 +255,16 @@
         </xs:complexType>
     </xs:element>
     <xs:element name="heading" type="xs:string"/>
+    <xs:element name="reference">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="title" type="xs:string"/>
+                <xs:element maxOccurs="unbounded" name="reference_author" type="TPerson"> </xs:element>
+                <xs:element name="publisher" type="xs:string"/>
+                <xs:element name="year_of_publication" type="xs:gYear"/>
+                <xs:element name="pages" type="xs:string"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:ID" use="required"/>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>
