@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/AnaMijailovic/XML-Tim19/user"
+    xmlns="https://github.com/AnaMijailovic/XML-Tim19/user">
+    <xs:element name="user">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="1"/>
+                <xs:element name="surname" type="xs:string" maxOccurs="1" minOccurs="1"/>
+                <xs:element name="username" type="xs:string" maxOccurs="1" minOccurs="1"/>
+                <xs:element name="password" type="xs:string" maxOccurs="1" minOccurs="1"/>
+                <xs:element name="role" type="xs:string" maxOccurs="1" minOccurs="1"/>
+                <xs:element name="email" type="email"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:simpleType name="email">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-zA-Z0-9!#$%&amp;'*+/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+</xs:schema>
