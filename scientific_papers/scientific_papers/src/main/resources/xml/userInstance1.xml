@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<user xmlns="https://github.com/AnaMijailovic/XML-Tim19/user"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="https://github.com/AnaMijailovic/XML-Tim19/user file:/C:/Users/Dule/Desktop/WEB-MATERIJALI/XML-PROJEKAT/XML-Tim19/scientific_papers/scientific_papers/src/main/resources/xsd/user.xsd">
+    <name>name1</name>
+    <surname>surname1</surname>
+    <username>username1</username>
+    <password>password1</password>
+    <role>AUTHOR</role>
+    <email>author@gmail.com</email>
+</user>
