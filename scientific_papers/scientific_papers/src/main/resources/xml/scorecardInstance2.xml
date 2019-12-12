@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scorecard xmlns="https://github.com/AnaMijailovic/XML-Tim19/scorecard"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="https://github.com/AnaMijailovic/XML-Tim19/scorecard file:/C:/Users/Dule/Desktop/WEB-MATERIJALI/XML-PROJEKAT/XML-Tim19/scientific_papers/scientific_papers/src/main/resources/xsd/scorecard.xsd">
+    <originality score="5"/>
+    <importance score="5"/>
+    <clarity score="5"/>
+    <relevance score="5"/>
+    <value score="5"/>
+    <purpose score="5"/>
+    <courtesy score="5"/>
+    <impact_factor score="5"/>
+    <first_impressions score="5"/>
+    <layout_and_format score="5"/>
+    <design score="5"/>
+    <methodology score="5"/>
+    <scientific_approach score="5"/>
+    <language score="5"/>
+    <results score="5"/>
+    <findings score="5"/>
+    <research_implications score="5"/>
+    <practical_implications score="5"/>
+    <social_implications score="5"/>
+    <research_limitations score="5"/>
+    <further_discussion score="5"/>
+    <justified_conclusions score="5"/>
+    <acknowledgements score="5"/>
+    <figures score="5"/>
+    <tables score="5"/>
+    <references score="5"/>
+    <supplementary_data score="5"/>
+</scorecard>
