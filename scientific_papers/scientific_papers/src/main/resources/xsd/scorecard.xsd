@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/AnaMijailovic/XML-Tim19/scorecard"
+    xmlns="https://github.com/AnaMijailovic/XML-Tim19/scorecard"> 
+    <xs:element name="scorecard">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="originality">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="importance">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="clarity">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="relevance">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="value">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="purpose">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="courtesy">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="impact_factor">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element> 
+                <xs:element name="first_impressions">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element> 
+                <xs:element name="layout_and_format">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="design">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="methodology">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="scientific_approach">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="language">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>        
+                <xs:element name="results">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="findings">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="research_implications">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="practical_implications">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="social_implications">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>     
+                <xs:element name="research_limitations">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element> 
+                <xs:element name="further_discussion">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>           
+                <xs:element name="justified_conclusions">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="acknowledgements">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="figures">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="tables">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="references">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="supplementary_data">
+                    <xs:complexType>
+                        <xs:attribute name="score" type="score"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="score">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="5"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
