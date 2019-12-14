@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/AnaMijailovic/XML-Tim19/email_notification"
+    xmlns="https://github.com/AnaMijailovic/XML-Tim19/email_notification"> 
+    <xs:element name="email_notification">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="email_notification_header" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="subject">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="1"/>
+                                        <xs:maxLength value="200"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="to" type="TEmail"/>
+                            <xs:element name="from" type="TEmail"/>
+                        </xs:sequence>
+                        <xs:attribute default="false" name="attachments" type="xs:boolean" use="optional"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="email_notification_body" minOccurs="1" maxOccurs="1"  >
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="0"/>
+                            <xs:maxLength value="800"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="TEmail">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-zA-Z0-9!#$%&amp;'*+/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
