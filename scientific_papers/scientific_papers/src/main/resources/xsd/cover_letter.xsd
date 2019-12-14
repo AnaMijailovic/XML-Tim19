@@ -12,7 +12,7 @@
                             <xs:element name="sender_name" minOccurs="1" maxOccurs="1"/>
                             <xs:element default="Faculty of Technical Sciences" name="university_name" minOccurs="1" maxOccurs="1"/>
                             <xs:element ref="university_address"/>
-                            <xs:element default="3930938021450-810" name="phone_number" type="TPhoneNumber"/>
+                            <xs:element default="+38121/450-810" name="phone_number" type="TPhoneNumber"/>
                             <xs:element name="email" type="TEmail"/>
                         </xs:sequence>
                     </xs:complexType>
@@ -69,7 +69,7 @@
     </xs:element>
     <xs:simpleType name="TPhoneNumber">
         <xs:restriction base="xs:string">
-            <xs:pattern value="\+?[381|0]\d+[-.\s]?\d+[-.\s]?\d+"/>
+            <xs:pattern value="\+?\d+[-.\s]?\/?\d+[-.\s]?\d+"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="TEmail">
