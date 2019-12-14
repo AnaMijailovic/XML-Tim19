@@ -5,15 +5,14 @@
     <xs:element name="cover_letter">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="cover_letter_header" minOccurs="1" maxOccurs="1"></xs:element>
+                <xs:element name="cover_letter_header" minOccurs="1" maxOccurs="1"/>
                 <xs:element name="sender" minOccurs="1" maxOccurs="1">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="sender_name" minOccurs="1" maxOccurs="1"></xs:element>
-                            <xs:element default="Faculty of Technical Sciences" name="university_name" minOccurs="1" maxOccurs="1"></xs:element>
+                            <xs:element name="sender_name" minOccurs="1" maxOccurs="1"/>
+                            <xs:element default="Faculty of Technical Sciences" name="university_name" minOccurs="1" maxOccurs="1"/>
                             <xs:element ref="university_address"/>
-                            
-                            <xs:element default="0938021450-810" name="phone_number" type="TPhoneNumber"/>
+                            <xs:element default="3930938021450-810" name="phone_number" type="TPhoneNumber"/>
                             <xs:element name="email" type="TEmail"/>
                         </xs:sequence>
                     </xs:complexType>
@@ -21,9 +20,9 @@
                 <xs:element name="recipient" minOccurs="1" maxOccurs="1">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="recipient_name" type="xs:string"></xs:element>
-                            <xs:element name="recipient_role" type="xs:string"></xs:element>
-                            <xs:element name="journal_name" type="xs:string"></xs:element>
+                            <xs:element name="recipient_name" type="xs:string"/>
+                            <xs:element name="recipient_role" type="xs:string"/>
+                            <xs:element name="journal_name" type="xs:string"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -70,7 +69,7 @@
     </xs:element>
     <xs:simpleType name="TPhoneNumber">
         <xs:restriction base="xs:string">
-            <xs:pattern value="[(\+381)|0]\d+[-.\s]?\d+[-.\s]?\d+"/>
+            <xs:pattern value="\+?[381|0]\d+[-.\s]?\d+[-.\s]?\d+"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="TEmail">
