@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="https://github.com/AnaMijailovic/XML-Tim19"
-    xmlns="https://github.com/AnaMijailovic/XML-Tim19">
+    attributeFormDefault="unqualified" targetNamespace="https://github.com/AnaMijailovic/XML-Tim19"
+    xmlns="https://github.com/AnaMijailovic/XML-Tim19" xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+    jxb:version="2.0" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc">
+	
+	<xs:annotation>
+		<xs:appinfo>
+			<jxb:serializable uid="1" />
+			<jxb:globalBindings>
+				<jxb:javaType name="java.util.Date" xmlType="xs:date" 
+    			parseMethod="com.ftn.scientific_papers.util.MyDatatypeConverter.parseDate"
+   				printMethod="com.ftn.scientific_papers.util.MyDatatypeConverter.printDate" />
+   				
+   				<jxb:javaType name="java.util.Date" xmlType="xs:gYear"
+    			parseMethod="com.ftn.scientific_papers.util.MyDatatypeConverter.parseDate"
+   				printMethod="com.ftn.scientific_papers.util.MyDatatypeConverter.printDate" />
+   				
+			</jxb:globalBindings>
+		</xs:appinfo>
+	</xs:annotation>
+
     <xs:complexType name="TPerson">
         <xs:sequence>
             <xs:element name="first_name">
@@ -74,13 +92,15 @@
                 <xs:element name="head">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="title" minOccurs="1">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                        <xs:minLength value="1"/>
-                                        <xs:maxLength value="100"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
+                            <xs:element name="title" minOccurs="1" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:string">
+                                            <xs:attribute name="lang" type="xs:string"
+                                                use="required"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
                             </xs:element>
                             <xs:element maxOccurs="unbounded" ref="author"/>
                             <xs:element name="keyword" maxOccurs="15">
@@ -121,8 +141,9 @@
             </xs:sequence>
             <xs:attribute name="id" type="xs:ID" use="required"/>
             <xs:attribute name="recieved_date" type="xs:date"/>
-            <xs:attribute name="revised_date" type="xs:date"/>
+            <xs:attribute name="revised_date" type="xs:date"/> 
             <xs:attribute name="accepted_date" type="xs:date"/>
+               
             <xs:attribute name="status" default="PENDING" use="optional">
                 <xs:simpleType>
                     <xs:restriction base="xs:token">
@@ -137,6 +158,16 @@
             <xs:attribute default="1" name="version" type="xs:positiveInteger"/>
         </xs:complexType>
     </xs:element>
+    <xs:element name="affiliation">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="city" type="xs:string"/>
+                <xs:element name="state" type="xs:string" minOccurs="0"/>
+                <xs:element name="country" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
     <xs:element name="author">
         <xs:complexType>
             <xs:complexContent>
@@ -147,16 +178,7 @@
                                 <xs:restriction base="xs:string"/>
                             </xs:simpleType>
                         </xs:element>
-                        <xs:element name="affiliation">
-                            <xs:complexType>
-                                <xs:sequence>
-                                    <xs:element name="name" type="xs:string"/>
-                                    <xs:element name="city" type="xs:string"/>
-                                    <xs:element name="state" type="xs:string" minOccurs="0"/>
-                                    <xs:element name="country" type="xs:string"/>
-                                </xs:sequence>
-                            </xs:complexType>
-                        </xs:element>
+                        <xs:element ref="affiliation"/>
                     </xs:sequence>
                 </xs:extension>
             </xs:complexContent>
@@ -261,7 +283,7 @@
                 <xs:element name="title" type="xs:string"/>
                 <xs:element maxOccurs="unbounded" name="reference_author" type="TPerson"> </xs:element>
                 <xs:element name="publisher" type="xs:string"/>
-                <xs:element name="year_of_publication" type="xs:gYear"/>
+                <xs:element name="year_of_publication" type="xs:gYear"> </xs:element>
                 <xs:element name="pages" type="xs:string"/>
             </xs:sequence>
             <xs:attribute name="id" type="xs:ID" use="required"/>

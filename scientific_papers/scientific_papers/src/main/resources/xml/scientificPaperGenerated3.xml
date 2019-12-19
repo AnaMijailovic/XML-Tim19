@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xm:scientific_paper xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+ xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+ xmlns:xm="https://github.com/AnaMijailovic/XML-Tim19"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="https://github.com/AnaMijailovic/XML-Tim19 file:/C:/Users/anaam/Desktop/XML%20Project/XML-Tim19/scientific_papers/scientific_papers/src/main/resources/xsd/scientific_paper.xsd" id="ID000">
+    <xm:head>
+        <xm:title lang="lang0">title0</xm:title>
+        <xm:title lang="lang1">title1</xm:title>
+        <xm:author>
+            <xm:first_name>first_name0</xm:first_name>
+            <xm:last_name>last_name0</xm:last_name>
+            <xm:affiliation>
+                <xm:name>name0</xm:name>
+                <xm:city>city0</xm:city>
+                <xm:country>country0</xm:country>
+            </xm:affiliation>
+        </xm:author>
+        <xm:author>
+            <xm:first_name>first_name1</xm:first_name>
+            <xm:last_name>last_name1</xm:last_name>
+            <xm:affiliation>
+                <xm:name>name1</xm:name>
+                <xm:city>city1</xm:city>
+                <xm:country>country1</xm:country>
+            </xm:affiliation>
+        </xm:author>
+        <xm:keyword>keyword0</xm:keyword>
+        <xm:keyword>keyword1</xm:keyword>
+    </xm:head>
+    <xm:body>
+        <xm:abstract id="ID001">
+            <xm:paragraph id="ID002">
+            </xm:paragraph>
+            <xm:paragraph id="ID003">
+            </xm:paragraph>
+        </xm:abstract>
+        <xm:chapter id="ID004" level="3">
+            <xm:heading>heading0</xm:heading>
+            <xm:paragraph id="ID005">
+                <xm:image id="ID006" src="src0">
+                    <xm:name>name2</xm:name>
+                    <xm:description>description0</xm:description>
+                </xm:image>
+                <xm:table id="ID007">
+                    <xm:name>name3</xm:name>
+                    <xm:description>description1</xm:description>
+                    <xm:tr>
+                        <xm:th>th0</xm:th>
+                        <xm:th>th1</xm:th>
+                    </xm:tr>
+                    <xm:tr>
+                        <xm:th>th2</xm:th>
+                        <xm:th>th3</xm:th>
+                    </xm:tr>
+                </xm:table>
+            </xm:paragraph>
+            <xm:paragraph id="ID008">
+                <xm:table id="ID009">
+                    <xm:name>name4</xm:name>
+                    <xm:description>description2</xm:description>
+                    <xm:tr>
+                        <xm:td>td0</xm:td>
+                        <xm:td>td1</xm:td>
+                    </xm:tr>
+                    <xm:tr>
+                        <xm:th>th4</xm:th>
+                        <xm:th>th5</xm:th>
+                    </xm:tr>
+                </xm:table>
+            </xm:paragraph>
+        </xm:chapter>
+        <xm:chapter id="ID010" level="3">
+            <xm:heading>heading1</xm:heading>
+            <xm:paragraph id="ID011">
+                <xm:image id="ID012" src="src1">
+                    <xm:name>name5</xm:name>
+                    <xm:description>description3</xm:description>
+                </xm:image>
+                <xm:image id="ID013" src="src2">
+                    <xm:name>name6</xm:name>
+                    <xm:description>description4</xm:description>
+                </xm:image>
+            </xm:paragraph>
+            <xm:paragraph id="ID014">
+                <xm:image id="ID015" src="src3">
+                    <xm:name>name7</xm:name>
+                    <xm:description>description5</xm:description>
+                </xm:image>
+                <xm:image id="ID016" src="src4">
+                    <xm:name>name8</xm:name>
+                    <xm:description>description6</xm:description>
+                </xm:image>
+            </xm:paragraph>
+        </xm:chapter>
+        <xm:references id="ID017">
+            <xm:reference id="ID018">
+                <xm:title>title2</xm:title>
+                <xm:reference_author>
+                    <xm:first_name>first_name2</xm:first_name>
+                    <xm:last_name>last_name2</xm:last_name>
+                </xm:reference_author>
+                <xm:reference_author>
+                    <xm:first_name>first_name3</xm:first_name>
+                    <xm:last_name>last_name3</xm:last_name>
+                </xm:reference_author>
+                <xm:publisher>publisher0</xm:publisher>
+                <xm:year_of_publication>2006</xm:year_of_publication>
+                <xm:pages>pages0</xm:pages>
+            </xm:reference>
+            <xm:reference id="ID019">
+                <xm:title>title3</xm:title>
+                <xm:reference_author>
+                    <xm:first_name>first_name4</xm:first_name>
+                    <xm:last_name>last_name4</xm:last_name>
+                </xm:reference_author>
+                <xm:reference_author>
+                    <xm:first_name>first_name5</xm:first_name>
+                    <xm:last_name>last_name5</xm:last_name>
+                </xm:reference_author>
+                <xm:publisher>publisher1</xm:publisher>
+                <xm:year_of_publication>2006</xm:year_of_publication>
+                <xm:pages>pages1</xm:pages>
+            </xm:reference>
+        </xm:references>
+    </xm:body>
+</xm:scientific_paper>
