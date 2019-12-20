@@ -3,22 +3,18 @@
     attributeFormDefault="unqualified" targetNamespace="https://github.com/AnaMijailovic/XML-Tim19"
     xmlns="https://github.com/AnaMijailovic/XML-Tim19" xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
     jxb:version="2.0" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc">
-	
-	<xs:annotation>
-		<xs:appinfo>
-			<jxb:serializable uid="1" />
+
+    <xs:annotation>
+        <xs:appinfo>
+			<jxb:serializable uid="1"/>
 			<jxb:globalBindings>
-				<jxb:javaType name="java.util.Date" xmlType="xs:date" 
-    			parseMethod="com.ftn.scientific_papers.util.MyDatatypeConverter.parseDate"
-   				printMethod="com.ftn.scientific_papers.util.MyDatatypeConverter.printDate" />
+				<jxb:javaType name="java.util.Date" xmlType="xs:date" parseMethod="com.ftn.scientific_papers.util.MyDatatypeConverter.parseDate" printMethod="com.ftn.scientific_papers.util.MyDatatypeConverter.printDate"/>
    				
-   				<jxb:javaType name="java.util.Date" xmlType="xs:gYear"
-    			parseMethod="com.ftn.scientific_papers.util.MyDatatypeConverter.parseDate"
-   				printMethod="com.ftn.scientific_papers.util.MyDatatypeConverter.printDate" />
+   				<jxb:javaType name="java.util.Date" xmlType="xs:gYear" parseMethod="com.ftn.scientific_papers.util.MyDatatypeConverter.parseDate" printMethod="com.ftn.scientific_papers.util.MyDatatypeConverter.printDate"/>
    				
 			</jxb:globalBindings>
 		</xs:appinfo>
-	</xs:annotation>
+    </xs:annotation>
 
     <xs:complexType name="TPerson">
         <xs:sequence>
@@ -141,9 +137,9 @@
             </xs:sequence>
             <xs:attribute name="id" type="xs:ID" use="required"/>
             <xs:attribute name="recieved_date" type="xs:date"/>
-            <xs:attribute name="revised_date" type="xs:date"/> 
+            <xs:attribute name="revised_date" type="xs:date"/>
             <xs:attribute name="accepted_date" type="xs:date"/>
-               
+
             <xs:attribute name="status" default="PENDING" use="optional">
                 <xs:simpleType>
                     <xs:restriction base="xs:token">
