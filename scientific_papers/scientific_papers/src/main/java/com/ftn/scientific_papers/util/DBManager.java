@@ -6,20 +6,32 @@ import org.exist.xmldb.EXistResource;
 import org.springframework.stereotype.Component;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
+import org.xmldb.api.base.CompiledExpression;
 import org.xmldb.api.base.Database;
+import org.xmldb.api.base.Resource;
+import org.xmldb.api.base.ResourceIterator;
+import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
+import org.xmldb.api.modules.XPathQueryService;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
+import org.xmldb.api.modules.XQueryService;
 import com.ftn.scientific_papers.util.AuthenticationUtilities.ConnectionProperties;
 
 @Component
 public class DBManager {
 
 	private static ConnectionProperties conn;
-	
+	private static final String TARGET_NAMESPACE = "https://github.com/AnaMijailovic/XML-Tim19";
+
 	public void save(String collectionId, String documentId, String xml) throws Exception {
-		
+
 		conn = AuthenticationUtilities.loadProperties();
 
 		System.out.println("\t- collection ID: " + collectionId);
@@ -133,11 +145,73 @@ public class DBManager {
 					xe.printStackTrace();
 				}
 			}
-			
-			
+
+		}
+
+		return res;
+	}
+
+	
+	public ResourceSet executeXQuery(String collectionId, String xqueryExpression, String xqueryFilePath) throws Exception {
+
+		conn = AuthenticationUtilities.loadProperties();
+		
+		ResourceSet result;
+
+		// initialize database driver
+		Class<?> cl = Class.forName(conn.driver);
+
+		Database database = (Database) cl.newInstance();
+		database.setProperty("create-database", "true");
+
+		DatabaseManager.registerDatabase(database);
+
+		Collection col = null;
+
+		try {
+
+			// get the collection
+			col = DatabaseManager.getCollection(conn.uri + collectionId);
+
+			// get an instance of xquery service
+			XQueryService xqueryService = (XQueryService) col.getService("XQueryService", "1.0");
+			xqueryService.setProperty("indent", "yes");
+
+			// make the service aware of namespaces
+			xqueryService.setNamespace("b", TARGET_NAMESPACE);
+
+			// read xquery if expression is not provided
+			if(xqueryExpression.isEmpty()) {
+				System.out.println("[INFO] Invoking XQuery service for: " + xqueryFilePath);
+				xqueryExpression = readFile(xqueryFilePath, StandardCharsets.UTF_8);
+	
+			}
+
+			// compile and execute the expression
+			CompiledExpression compiledXquery = xqueryService.compile(xqueryExpression);
+			result = xqueryService.execute(compiledXquery);
+
+		} finally {
+
+			// don't forget to cleanup
+			if (col != null) {
+				try {
+					col.close();
+				} catch (XMLDBException xe) {
+					xe.printStackTrace();
+				}
+			}
 		}
 		
-		return res;
+		return result;
+	}
+
+	/**
+	 * Convenience method for reading file contents into a string.
+	 */
+	public static String readFile(String path, Charset encoding) throws IOException {
+		byte[] encoded = Files.readAllBytes(Paths.get(path));
+		return new String(encoded, encoding);
 	}
 
 	private Collection getOrCreateCollection(String collectionUri) throws XMLDBException {

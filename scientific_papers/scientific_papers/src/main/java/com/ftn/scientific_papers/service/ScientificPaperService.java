@@ -25,12 +25,11 @@ public class ScientificPaperService {
 		
 	   // SAXParseExcetion is thrown when xml is not valid
        Document document =  DOMParser.buildDocument(scientificPaperXml, spSchemaPath);
-       
-        // TODO Generate id for the document
+   
        	// TODO Generate ids for chapters, paragraphs etc. 
         // TODO Check chapter levels (max is 5)
        
-	   spRepository.save(null, scientificPaperXml);
+	   spRepository.save(scientificPaperXml);
 
 	}
 }

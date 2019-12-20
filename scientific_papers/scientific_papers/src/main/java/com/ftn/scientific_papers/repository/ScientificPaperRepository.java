@@ -2,6 +2,7 @@ package com.ftn.scientific_papers.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
 
 import com.ftn.scientific_papers.exceptions.ResourceNotFoundException;
@@ -25,8 +26,14 @@ public class ScientificPaperRepository {
 		 return result;
 	}
 	
-	public void  save(String id, String scientificPaperXml) throws Exception {
-
+	public void save(String scientificPaperXml) throws Exception {
+		
+		// generate id
+		ResourceSet rs = dbManager.executeXQuery(spCollectionId, "count(/.)", "");
+		String id = "paper" + rs.getIterator().nextResource().getContent().toString();
+		System.out.println("\nID: " + id);
+		
+		//save 
 		dbManager.save(spCollectionId, id, scientificPaperXml);
 		
 	}
