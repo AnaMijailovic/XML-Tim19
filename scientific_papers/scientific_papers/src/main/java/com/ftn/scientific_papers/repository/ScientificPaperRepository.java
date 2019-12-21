@@ -29,10 +29,16 @@ public class ScientificPaperRepository {
 	public void save(String scientificPaperXml) throws Exception {
 		
 		// generate id
-		ResourceSet rs = dbManager.executeXQuery(spCollectionId, "count(/.)", "");
-		String id = "paper" + rs.getIterator().nextResource().getContent().toString();
-		System.out.println("\nID: " + id);
+		String id = "paper0";
+				
+		try {
+			ResourceSet rs = dbManager.executeXQuery(spCollectionId, "count(/.)", "");
+			id = "paper" + rs.getIterator().nextResource().getContent().toString();
+		}catch(Exception e) {
+			
+		}
 		
+		System.out.println("\nID: " + id);	
 		//save 
 		dbManager.save(spCollectionId, id, scientificPaperXml);
 		

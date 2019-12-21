@@ -1,5 +1,11 @@
 package com.ftn.scientific_papers.util;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import javax.xml.transform.OutputKeys;
 
 import org.exist.xmldb.EXistResource;
@@ -8,20 +14,12 @@ import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.CompiledExpression;
 import org.xmldb.api.base.Database;
-import org.xmldb.api.base.Resource;
-import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
-import org.xmldb.api.modules.XPathQueryService;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import org.xmldb.api.modules.XQueryService;
+
 import com.ftn.scientific_papers.util.AuthenticationUtilities.ConnectionProperties;
 
 @Component

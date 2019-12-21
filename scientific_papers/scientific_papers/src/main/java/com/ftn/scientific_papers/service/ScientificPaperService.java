@@ -15,6 +15,9 @@ public class ScientificPaperService {
 	
 	@Autowired
 	private ScientificPaperRepository spRepository;
+	
+	@Autowired 
+	private MetadataExtractor metadataExtractor;
 
 	public XMLResource findOne(String id) throws Exception {
 		
@@ -25,7 +28,9 @@ public class ScientificPaperService {
 		
 	   // SAXParseExcetion is thrown when xml is not valid
        Document document =  DOMParser.buildDocument(scientificPaperXml, spSchemaPath);
-   
+       
+       // TODO change newMetadata.rdf path
+       metadataExtractor.extractMetadata(scientificPaperXml, "src/main/resources/rdf/newMetadata.rdf");
        	// TODO Generate ids for chapters, paragraphs etc. 
         // TODO Check chapter levels (max is 5)
        

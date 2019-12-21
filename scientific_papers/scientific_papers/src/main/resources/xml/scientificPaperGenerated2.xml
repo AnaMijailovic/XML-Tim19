@@ -1,131 +1,136 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xm:scientific_paper xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+<scientific_paper xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
  xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
- xmlns:xm="https://github.com/AnaMijailovic/XML-Tim19"
+ xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/"
+ xmlns:rdfa="http://www.w3.org/ns/rdfa#"
+ xmlns="https://github.com/AnaMijailovic/XML-Tim19"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/AnaMijailovic/XML-Tim19 file:/C:/Users/anaam/Desktop/XML%20Project/XML-Tim19/scientific_papers/scientific_papers/src/main/resources/xsd/scientific_paper.xsd" id="ID000">
-    <xm:head>
-        <xm:title lang="lang0">title0</xm:title>
-        <xm:title lang="lang1">title1</xm:title>
-        <xm:author>
-            <xm:first_name>first_name0</xm:first_name>
-            <xm:last_name>last_name0</xm:last_name>
-            <xm:affiliation>
-                <xm:name>name0</xm:name>
-                <xm:city>city0</xm:city>
-                <xm:country>country0</xm:country>
-            </xm:affiliation>
-        </xm:author>
-        <xm:author>
-            <xm:first_name>first_name1</xm:first_name>
-            <xm:last_name>last_name1</xm:last_name>
-            <xm:affiliation>
-                <xm:name>name1</xm:name>
-                <xm:city>city1</xm:city>
-                <xm:country>country1</xm:country>
-            </xm:affiliation>
-        </xm:author>
-        <xm:keyword>keyword0</xm:keyword>
-        <xm:keyword>keyword1</xm:keyword>
-    </xm:head>
-    <xm:body>
-        <xm:abstract id="ID001">
-            <xm:paragraph id="ID002">
-            </xm:paragraph>
-            <xm:paragraph id="ID003">
-            </xm:paragraph>
-        </xm:abstract>
-        <xm:chapter id="ID004" level="3">
-            <xm:heading>heading0</xm:heading>
-            <xm:paragraph id="ID005">
-                <xm:table id="ID006">
-                    <xm:name>name2</xm:name>
-                    <xm:description>description0</xm:description>
-                    <xm:tr>
-                        <xm:td>td0</xm:td>
-                        <xm:td>td1</xm:td>
-                    </xm:tr>
-                    <xm:tr>
-                        <xm:th>th0</xm:th>
-                        <xm:th>th1</xm:th>
-                    </xm:tr>
-                </xm:table>
-                <xm:image id="ID007" src="src0">
-                    <xm:name>name3</xm:name>
-                    <xm:description>description1</xm:description>
-                </xm:image>
-            </xm:paragraph>
-            <xm:paragraph id="ID008">
-            </xm:paragraph>
-        </xm:chapter>
-        <xm:chapter id="ID009" level="3">
-            <xm:heading>heading1</xm:heading>
-            <xm:paragraph id="ID010">
-                <xm:image id="ID011" src="src1">
-                    <xm:name>name4</xm:name>
-                    <xm:description>description2</xm:description>
-                </xm:image>
-                <xm:image id="ID012" src="src2">
-                    <xm:name>name5</xm:name>
-                    <xm:description>description3</xm:description>
-                </xm:image>
-            </xm:paragraph>
-            <xm:paragraph id="ID013">
-                <xm:table id="ID014">
-                    <xm:name>name6</xm:name>
-                    <xm:description>description4</xm:description>
-                    <xm:tr>
-                        <xm:th>th2</xm:th>
-                        <xm:th>th3</xm:th>
-                    </xm:tr>
-                    <xm:tr>
-                        <xm:td>td2</xm:td>
-                        <xm:td>td3</xm:td>
-                    </xm:tr>
-                </xm:table>
-                <xm:table id="ID015">
-                    <xm:name>name7</xm:name>
-                    <xm:description>description5</xm:description>
-                    <xm:tr>
-                        <xm:th>th4</xm:th>
-                        <xm:th>th5</xm:th>
-                    </xm:tr>
-                    <xm:tr>
-                        <xm:th>th6</xm:th>
-                        <xm:th>th7</xm:th>
-                    </xm:tr>
-                </xm:table>
-            </xm:paragraph>
-        </xm:chapter>
-        <xm:references id="ID016">
-            <xm:reference id="ID017">
-                <xm:title>title2</xm:title>
-                <xm:reference_author>
-                    <xm:first_name>first_name2</xm:first_name>
-                    <xm:last_name>last_name2</xm:last_name>
-                </xm:reference_author>
-                <xm:reference_author>
-                    <xm:first_name>first_name3</xm:first_name>
-                    <xm:last_name>last_name3</xm:last_name>
-                </xm:reference_author>
-                <xm:publisher>publisher0</xm:publisher>
-                <xm:year_of_publication>2006</xm:year_of_publication>
-                <xm:pages>pages0</xm:pages>
-            </xm:reference>
-            <xm:reference id="ID018">
-                <xm:title>title3</xm:title>
-                <xm:reference_author>
-                    <xm:first_name>first_name4</xm:first_name>
-                    <xm:last_name>last_name4</xm:last_name>
-                </xm:reference_author>
-                <xm:reference_author>
-                    <xm:first_name>first_name5</xm:first_name>
-                    <xm:last_name>last_name5</xm:last_name>
-                </xm:reference_author>
-                <xm:publisher>publisher1</xm:publisher>
-                <xm:year_of_publication>2006</xm:year_of_publication>
-                <xm:pages>pages1</xm:pages>
-            </xm:reference>
-        </xm:references>
-    </xm:body>
-</xm:scientific_paper>
+ xsi:schemaLocation="https://github.com/AnaMijailovic/XML-Tim19 file:/C:/Users/anaam/Desktop/XML%20Project/XML-Tim19/scientific_papers/scientific_papers/src/main/resources/xsd/scientific_paper.xsd" id="ID001">
+    <head>
+        <recieved_date>2006-05-04</recieved_date>
+        <revised_date>2006-05-04</revised_date>
+        <accepted_date>2006-05-04</accepted_date>
+        <title lang="lang1">title0</title>
+        <title lang="lang3">title1</title>
+        <author>
+            <first_name>first_name0</first_name>
+            <last_name>last_name0</last_name>
+            <affiliation>
+                <name>name0</name>
+                <city>city0</city>
+                <country>country0</country>
+            </affiliation>
+        </author>
+        <author>
+            <first_name>first_name1</first_name>
+            <last_name>last_name1</last_name>
+            <affiliation>
+                <name>name1</name>
+                <city>city1</city>
+                <country>country1</country>
+            </affiliation>
+        </author>
+        <keyword>keyword0</keyword>
+        <keyword>keyword1</keyword>
+    </head>
+    <body>
+        <abstract id="ID003">
+            <paragraph id="ID005">
+            </paragraph>
+            <paragraph id="ID007">
+            </paragraph>
+        </abstract>
+        <chapter id="ID009" level="3">
+            <heading>heading0</heading>
+            <paragraph id="ID011">
+                <image id="ID013" src="src1">
+                    <name>name2</name>
+                    <description>description0</description>
+                </image>
+            </paragraph>
+            <paragraph id="ID015">
+                <image id="ID017" src="src3">
+                    <name>name3</name>
+                    <description>description1</description>
+                </image>
+            </paragraph>
+        </chapter>
+        <chapter id="ID019" level="3">
+            <heading>heading1</heading>
+            <paragraph id="ID021">
+                <table id="ID023">
+                    <name>name4</name>
+                    <description>description2</description>
+                    <tr>
+                        <th>th0</th>
+                        <th>th1</th>
+                    </tr>
+                    <tr>
+                        <td>td0</td>
+                        <td>td1</td>
+                    </tr>
+                </table>
+                <table id="ID025">
+                    <name>name5</name>
+                    <description>description3</description>
+                    <tr>
+                        <th>th2</th>
+                        <th>th3</th>
+                    </tr>
+                    <tr>
+                        <td>td2</td>
+                        <td>td3</td>
+                    </tr>
+                </table>
+            </paragraph>
+            <paragraph id="ID027">
+                <image id="ID029" src="src5">
+                    <name>name6</name>
+                    <description>description4</description>
+                </image>
+                <table id="ID031">
+                    <name>name7</name>
+                    <description>description5</description>
+                    <tr>
+                        <td>td4</td>
+                        <td>td5</td>
+                    </tr>
+                    <tr>
+                        <th>th4</th>
+                        <th>th5</th>
+                    </tr>
+                </table>
+            </paragraph>
+        </chapter>
+        <references id="ID033">
+            <reference id="ID035">
+                <title>title2</title>
+                <reference_author>
+                    <first_name>first_name2</first_name>
+                    <last_name>last_name2</last_name>
+                </reference_author>
+                <reference_author>
+                    <first_name>first_name3</first_name>
+                    <last_name>last_name3</last_name>
+                </reference_author>
+                <publisher>publisher0</publisher>
+                <year_of_publication>2006</year_of_publication>
+                <pages>pages0</pages>
+            </reference>
+            <reference id="ID037">
+                <title>title3</title>
+                <reference_author>
+                    <first_name>first_name4</first_name>
+                    <last_name>last_name4</last_name>
+                </reference_author>
+                <reference_author>
+                    <first_name>first_name5</first_name>
+                    <last_name>last_name5</last_name>
+                </reference_author>
+                <publisher>publisher1</publisher>
+                <year_of_publication>2006</year_of_publication>
+                <pages>pages1</pages>
+            </reference>
+        </references>
+    </body>
+</scientific_paper>
