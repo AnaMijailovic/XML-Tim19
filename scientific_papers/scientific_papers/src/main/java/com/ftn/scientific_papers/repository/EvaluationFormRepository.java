@@ -1,12 +1,14 @@
 package com.ftn.scientific_papers.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
 
 import com.ftn.scientific_papers.exceptions.ResourceNotFoundException;
 import com.ftn.scientific_papers.util.DBManager;
 
+@Repository
 public class EvaluationFormRepository {
 	
 	@Autowired
