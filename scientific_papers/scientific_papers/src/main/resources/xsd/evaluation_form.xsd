@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/AnaMijailovic/XML-Tim19/evaluation_form"
+    xmlns="https://github.com/AnaMijailovic/XML-Tim19/evaluation_form">
+    <xs:element name="evaluation_form">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="evaluation_form_author"/>
+                <xs:element name="scientific_paper_title">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="0"/>
+                            <xs:maxLength value="100"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="scientific_paper_summary">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="0"/>
+                            <xs:maxLength value="400"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element ref="review_suggestions"/>
+                <xs:element ref="scorecard"/>
+                <xs:element ref="recommendation_score"/>
+                <xs:element name="additional_comments_to_author">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="0"/>
+                            <xs:maxLength value="200"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="additional_comments_to_editor">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="0"/>
+                            <xs:maxLength value="200"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:ID"/>
+            <xs:attribute name="review_accepted" type="xs:date"/>
+            <xs:attribute name="review_due_date" type="xs:date"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="recommendation_score">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="category">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="Accept"/>
+                            <xs:enumeration value="Minor Revision"/>
+                            <xs:enumeration value="Major Revision"/>
+                            <xs:enumeration value="Reject"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="explanation">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="0"/>
+                            <xs:maxLength value="200"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:ID"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="scorecard">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="originality" type="TScore"> </xs:element>
+                <xs:element name="importance" type="TScore"> </xs:element>
+                <xs:element name="clarity" type="TScore"> </xs:element>
+                <xs:element name="relevance" type="TScore"> </xs:element>
+                <xs:element name="value" type="TScore"> </xs:element>
+                <xs:element name="purpose" type="TScore"> </xs:element>
+                <xs:element name="courtesy" type="TScore"> </xs:element>
+                <xs:element name="impact_factor" type="TScore"> </xs:element>
+                <xs:element name="first_impressions" type="TScore"> </xs:element>
+                <xs:element name="layout_and_format" type="TScore"> </xs:element>
+                <xs:element name="design" type="TScore"> </xs:element>
+                <xs:element name="methodology" type="TScore"> </xs:element>
+                <xs:element name="scientific_approach" type="TScore"> </xs:element>
+                <xs:element name="language" type="TScore"> </xs:element>
+                <xs:element name="results" type="TScore"> </xs:element>
+                <xs:element name="findings" type="TScore"> </xs:element>
+                <xs:element name="research_implications" type="TScore"> </xs:element>
+                <xs:element name="practical_implications" type="TScore"> </xs:element>
+                <xs:element name="social_implications" type="TScore"> </xs:element>
+                <xs:element name="research_limitations" type="TScore"> </xs:element>
+                <xs:element name="further_discussion" type="TScore"> </xs:element>
+                <xs:element name="justified_conclusions" type="TScore"> </xs:element>
+                <xs:element name="acknowledgements" type="TScore"> </xs:element>
+                <xs:element name="figures" type="TScore"> </xs:element>
+                <xs:element name="tables" type="TScore"> </xs:element>
+                <xs:element name="references" type="TScore"> </xs:element>
+                <xs:element name="supplementary_data" type="TScore"> </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:ID"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="review_suggestions">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="review_suggestion"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:ID"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="review_suggestion">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="scientific_paper_ref" type="xs:ID"> </xs:element>
+                <xs:element name="comment">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="0"/>
+                            <xs:maxLength value="100"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:ID"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="evaluation_form_author">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="TPerson">
+                    <xs:sequence>
+                        <xs:element name="email">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:pattern value="[\w-]+@([\w-]+\.)+[\w-]+"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="TScore">
+        <xs:sequence>
+            <xs:element name="score">
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                        <xs:minInclusive value="1"/>
+                        <xs:maxInclusive value="5"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="comment" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TPerson">
+        <xs:sequence>
+            <xs:element name="first_name">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                        <xs:maxLength value="20"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="0" name="middle_name">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                        <xs:maxLength value="20"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="last_name">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                        <xs:maxLength value="50"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
