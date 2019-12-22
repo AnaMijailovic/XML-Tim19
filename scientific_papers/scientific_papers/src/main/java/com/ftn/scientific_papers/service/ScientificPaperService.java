@@ -6,6 +6,8 @@ import org.w3c.dom.Document;
 import org.xmldb.api.modules.XMLResource;
 
 import com.ftn.scientific_papers.dom.DOMParser;
+import com.ftn.scientific_papers.fuseki.FusekiManager;
+import com.ftn.scientific_papers.fuseki.MetadataExtractor;
 import com.ftn.scientific_papers.repository.ScientificPaperRepository;
 
 @Service
@@ -15,6 +17,12 @@ public class ScientificPaperService {
 	
 	@Autowired
 	private ScientificPaperRepository spRepository;
+	
+	@Autowired 
+	private MetadataExtractor metadataExtractor;
+	
+	@Autowired
+	private FusekiManager fusekiManager;
 
 	public XMLResource findOne(String id) throws Exception {
 		
@@ -25,7 +33,12 @@ public class ScientificPaperService {
 		
 	   // SAXParseExcetion is thrown when xml is not valid
        Document document =  DOMParser.buildDocument(scientificPaperXml, spSchemaPath);
-   
+       
+       // TODO change newMetadata.rdf path
+       String rdfFilePath = "src/main/resources/rdf/newMetadata.rdf";
+       metadataExtractor.extractMetadata(scientificPaperXml, rdfFilePath);
+       fusekiManager.saveMetadata(rdfFilePath, "/scientificPapers");
+       
        	// TODO Generate ids for chapters, paragraphs etc. 
         // TODO Check chapter levels (max is 5)
        

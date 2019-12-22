@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scientific_paper xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
- xmlns:rdfa="http://www.w3.org/ns/rdfa"
  xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+ xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/"
+ xmlns:rdfa="http://www.w3.org/ns/rdfa#"
  xmlns="https://github.com/AnaMijailovic/XML-Tim19"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/AnaMijailovic/XML-Tim19 file:/C:/Users/anaam/Desktop/XML%20Project/XML-Tim19/scientific_papers/scientific_papers/src/main/resources/xsd/scientific_paper.xsd" id="ID001">
-    <head>
-        <title lang="lang2">title0</title>
-        <title lang="lang3">title1</title>
-        <author>
+ xsi:schemaLocation="https://github.com/AnaMijailovic/XML-Tim19 file:/C:/Users/anaam/Desktop/XML%20Project/XML-Tim19/scientific_papers/scientific_papers/src/main/resources/xsd/scientific_paper.xsd" id="ID001"
+  >
+    <head rdfa:vocab="https://github.com/AnaMijailovic/XML-Tim19/predicate/"
+  		  rdfa:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper0"
+  		  >  
+        <recieved_date rdfa:property="pred:recieved" rdfa:datatype="xs:date">2006-05-04</recieved_date>
+        <revised_date rdfa:property="pred:revised" rdfa:datatype="xs:date">2006-05-04</revised_date>
+        <accepted_date rdfa:property="pred:accepted" rdfa:datatype="xs:date">2006-05-04</accepted_date>
+        <title lang="lang1" rdfa:property="pred:titled" rdfa:datatype="xs:string">title0</title>
+        <title lang="lang3" rdfa:property="pred:titled" rdfa:datatype="xs:string">title1</title>   
+        <author rdfa:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author0"
+        		rdfa:rel="pred:isTheAuthorOf" 
+        		rdfa:rev="pred:isWrittenBy"
+        		rdfa:href="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper0"
+        		>
             <first_name>first_name0</first_name>
             <last_name>last_name0</last_name>
             <affiliation>
@@ -20,9 +31,12 @@
         <author>
             <first_name>first_name1</first_name>
             <last_name>last_name1</last_name>
-            <affiliation>
+            <affiliation rdfa:about="https://github.com/AnaMijailovic/XML-Tim19/affiliation/affiliation0"
+            		     rdfa:rel="pred:hasAMember" 
+            		     rdfa:rev="pred:isAMemberOf" 
+            		     rdfa:href="https://github.com/AnaMijailovic/XML-Tim19/authors/author0">
                 <name>name1</name>
-                <city>city1</city>
+                <city>city1</city> 
                 <country>country1</country>
             </affiliation>
         </author>
@@ -39,36 +53,67 @@
         <chapter id="ID009" level="3">
             <heading>heading0</heading>
             <paragraph id="ID011">
-                geprgjprtjg<b>fdge</b>
-            </paragraph>
-            <paragraph id="ID013">
-                <image id="ID015" src="src1">
+                <table id="ID013">
                     <name>name2</name>
                     <description>description0</description>
-                </image>
-            </paragraph>
-        </chapter>
-        <chapter id="ID017" level="3">
-            <heading>heading1</heading>
-            <paragraph id="ID019">
-                <image id="ID021" src="src3">
+                    <tr>
+                        <th>th0</th>
+                        <th>th1</th>
+                    </tr>
+                    <tr>
+                        <td>td0</td>
+                        <td>td1</td>
+                    </tr>
+                </table>
+                <table id="ID015">
                     <name>name3</name>
                     <description>description1</description>
-                </image>
+                    <tr>
+                        <td>td2</td>
+                        <td>td3</td>
+                    </tr>
+                    <tr>
+                        <th>th2</th>
+                        <th>th3</th>
+                    </tr>
+                </table>
             </paragraph>
-            <paragraph id="ID023">
-                <image id="ID025" src="src5">
+            <paragraph id="ID017">
+                <image id="ID019" src="src1">
                     <name>name4</name>
                     <description>description2</description>
                 </image>
-                <image id="ID027" src="src7">
+                <image id="ID021" src="src3">
                     <name>name5</name>
                     <description>description3</description>
                 </image>
             </paragraph>
         </chapter>
-        <references id="ID029">
-            <reference id="ID031">
+        <chapter id="ID023" level="3">
+            <heading>heading1</heading>
+            <paragraph id="ID025">
+                <image id="ID027" src="src5">
+                    <name>name6</name>
+                    <description>description4</description>
+                </image>
+            </paragraph>
+            <paragraph id="ID029">
+                <table id="ID031">
+                    <name>name7</name>
+                    <description>description5</description>
+                    <tr>
+                        <td>td4</td>
+                        <td>td5</td>
+                    </tr>
+                    <tr>
+                        <th>th4</th>
+                        <th>th5</th>
+                    </tr>
+                </table>
+            </paragraph>
+        </chapter>
+        <references id="ID033">
+            <reference id="ID035">
                 <title>title2</title>
                 <reference_author>
                     <first_name>first_name2</first_name>
@@ -82,7 +127,7 @@
                 <year_of_publication>2006</year_of_publication>
                 <pages>pages0</pages>
             </reference>
-            <reference id="ID033">
+            <reference id="ID037">
                 <title>title3</title>
                 <reference_author>
                     <first_name>first_name4</first_name>
