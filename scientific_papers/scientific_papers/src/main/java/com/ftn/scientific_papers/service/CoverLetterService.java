@@ -7,30 +7,29 @@ import org.xmldb.api.modules.XMLResource;
 
 import com.ftn.scientific_papers.dom.DOMParser;
 import com.ftn.scientific_papers.repository.CoverLetterRepository;
-import com.ftn.scientific_papers.repository.ScientificPaperRepository;
 
 @Service
 public class CoverLetterService {
 	
-	static String spSchemaPath = "src/main/resources/xsd/cover_letter.xsd";
+	static String coverLetterSchemaPath = "src/main/resources/xsd/cover_letter.xsd";
 	
 	@Autowired
-	private CoverLetterRepository spRepository;
+	private CoverLetterRepository coverLetterRepository;
 
 	public XMLResource findOne(String id) throws Exception {
 		
-		return spRepository.findOne(id);
+		return coverLetterRepository.findOne(id);
 	}
 
 	public void save(String scientificPaperXml) throws Exception {
 		
 	   // SAXParseExcetion is thrown when xml is not valid
-       Document document =  DOMParser.buildDocument(scientificPaperXml, spSchemaPath);
+       Document document =  DOMParser.buildDocument(scientificPaperXml, coverLetterSchemaPath);
    
        	// TODO Generate ids for chapters, paragraphs etc. 
         // TODO Check chapter levels (max is 5)
        
-	   spRepository.save(scientificPaperXml);
+       coverLetterRepository.save(scientificPaperXml);
 
 	}
 }
