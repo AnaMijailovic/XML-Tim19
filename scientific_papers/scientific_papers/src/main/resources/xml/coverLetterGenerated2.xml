@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cover_letter xmlns="https://github.com/AnaMijailovic/XML-Tim19/cover_letter"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="https://github.com/AnaMijailovic/XML-Tim19/cover_letter file:/C:/Users/Dule/Desktop/WEB-MATERIJALI/XML-PROJEKAT/XML-Tim19/scientific_papers/scientific_papers/src/main/resources/xsd/cover_letter.xsd">
+    <cover_letter_header>
+    </cover_letter_header>
+    <sender>
+        <sender_name>s</sender_name>
+        <university_name>Faculty of Technical Sciences</university_name>
+        <university_address>
+            <street>Trg Dositeja Obradovića</street>
+            <street_number>6</street_number>
+            <city>Novi Sad</city>
+            <country>Serbia</country>
+            <postal_number>21000</postal_number>
+        </university_address>
+        <phone_number>+38121/450-810</phone_number>
+        <email>ftn@gmail.com</email>
+    </sender>
+    <recipient>
+        <recipient_name>pCD</recipient_name>
+        <recipient_role>M</recipient_role>
+        <journal_name>UkAxP7vMaC</journal_name>
+    </recipient>
+    <date>2020-01-25</date>
+    <cover_letter_body>FsdpgNeTIAsK4QGyXkK7ytmAii_C7YOsSUGtP0.-z3.tEKlbXSWvLXF36gzg6Xoouh_u0-eIy9V1hvIU7UMKi6ebptx8Gf59</cover_letter_body>
+    <cover_letter_closing>
+        <signature>9075877571897486737467667290716690726677788666787468888270708473718481906671879086658966718487677368718581716779</signature>
+        <sender_name>SU5cw3musOS56kUG</sender_name>
+        <academic_title>ErVlbRcJmU8pQjm</academic_title>
+        <department_name>TOU</department_name>
+        <university_name>gQEsZAR</university_name>
+    </cover_letter_closing>
+</cover_letter>
