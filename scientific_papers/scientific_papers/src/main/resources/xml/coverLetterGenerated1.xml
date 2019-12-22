@@ -5,10 +5,8 @@
     <cover_letter_header>
     </cover_letter_header>
     <sender>
-        <sender_name>
-        </sender_name>
-        <university_name>
-        </university_name>
+        <sender_name>s</sender_name>
+        <university_name>Faculty of Technical Sciences</university_name>
         <university_address>
             <street>Trg Dositeja Obradovića</street>
             <street_number>6</street_number>
@@ -17,19 +15,20 @@
             <postal_number>21000</postal_number>
         </university_address>
         <phone_number>+38121/450-810</phone_number>
-        <email>!@-</email>
+        <email>ftn@gmail.com</email>
     </sender>
     <recipient>
-        <recipient_name>recipient_name0</recipient_name>
-        <recipient_role>recipient_role0</recipient_role>
-        <journal_name>journal_name0</journal_name>
+        <recipient_name>E</recipient_name>
+        <recipient_role>_GJZdwawZzFA9f.L-rhaN</recipient_role>
+        <journal_name>vHBIhg3xbK3A</journal_name>
     </recipient>
-    <date>2006-05-04</date>
-    <cover_letter_body>cover_letter_body0</cover_letter_body>
+    <date>2021-09-12Z</date>
+    <cover_letter_body>C70P.prPIZhxzWiSm</cover_letter_body>
     <cover_letter_closing>
-        <sender_name>sender_name0</sender_name>
-        <academic_title>academic_title0</academic_title>
-        <department_name>department_name0</department_name>
-        <university_name>university_name0</university_name>
+        <signature>857082898577807273666869887082897268687673707778727590698367687582787774828489908679696773677676786880836880868386807890</signature>
+        <sender_name>Jdssd5LPZS.Oe5F_3GT</sender_name>
+        <academic_title>qOq</academic_title>
+        <department_name>dIGq</department_name>
+        <university_name>IF25gjtsKmuRqweCYcKkeTBew6QIg-</university_name>
     </cover_letter_closing>
 </cover_letter>

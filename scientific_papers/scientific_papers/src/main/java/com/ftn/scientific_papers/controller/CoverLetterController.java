@@ -20,11 +20,11 @@ import com.ftn.scientific_papers.service.ScientificPaperService;
 public class CoverLetterController {
 
 	@Autowired
-	private CoverLetterService spService;
+	private CoverLetterService coverLetterService;
 
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_XML_VALUE)
 	private ResponseEntity<String> findOne(@PathVariable("id") String id) throws Exception {
-		XMLResource resource = spService.findOne(id);
+		XMLResource resource = coverLetterService.findOne(id);
 
 		return new ResponseEntity<>(resource.getContent().toString(), HttpStatus.OK);
 	}
@@ -32,7 +32,7 @@ public class CoverLetterController {
 	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> add(@RequestBody String scientificPaperXml) throws Exception {
 		
-		spService.save(scientificPaperXml);
+		coverLetterService.save(scientificPaperXml);
 		return new ResponseEntity<>("Successfully saved cover letter", HttpStatus.CREATED);
 	}
 
