@@ -9,33 +9,36 @@ import com.ftn.scientific_papers.exceptions.ResourceNotFoundException;
 import com.ftn.scientific_papers.util.DBManager;
 
 @Repository
-public class ScientificPaperRepository {
+public class CoverLetterRepository {
 	
 	@Autowired
 	private DBManager dbManager;
 	
-	static String spCollectionId = "/db/sample/scientific_papers";
-	static String spSchemaPath = "src/main/resources/xsd/scientific_paper.xsd"; 
+	static String spCollectionId = "/db/sample/cover_letters";
+	static String spSchemaPath = "src/main/resources/xsd/cover_letter.xsd"; 
 	
 	public XMLResource findOne(String id) throws Exception {
 		
 		 XMLResource result = dbManager.findOne(spCollectionId, id);
 		 if(result == null) {
-			 throw new ResourceNotFoundException("Scientific paper with id " + id + " was not found");
+			 throw new ResourceNotFoundException("cover letter with id " + id + " was not found");
 		 }
 		 return result;
 	}
 	
 	public void save(String scientificPaperXml) throws Exception {
 		// generate id
-		String id = "paper0";				
+		String id = "letter0";
 		try {
 			ResourceSet rs = dbManager.executeXQuery(spCollectionId, "count(/.)", "");
-			id = "paper" + rs.getIterator().nextResource().getContent().toString();
-		}catch(Exception e) {
-			
+			id = "letter" + rs.getIterator().nextResource().getContent().toString();
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
-		System.out.println("\nID: " + id);	
+		
+		
+		System.out.println("\nID: " + id);
+		
 		//save 
 		dbManager.save(spCollectionId, id, scientificPaperXml);
 		
