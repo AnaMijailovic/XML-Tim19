@@ -103,6 +103,12 @@
 		<artifactId>xmldb-xupdate</artifactId>
 		<version>20021220</version>
 	</dependency>
+
+	<dependency>
+		<groupId>org.apache.jena</groupId>
+		<artifactId>jena-fuseki-main</artifactId>
+		<version>3.13.1</version>
+	</dependency>
     
 	</dependencies>
 

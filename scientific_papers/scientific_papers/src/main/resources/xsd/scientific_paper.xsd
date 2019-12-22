@@ -2,18 +2,20 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
     attributeFormDefault="unqualified" targetNamespace="https://github.com/AnaMijailovic/XML-Tim19"
     xmlns="https://github.com/AnaMijailovic/XML-Tim19" xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
-    jxb:version="2.0" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc">
+    jxb:version="2.0" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+    xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/"
+    xmlns:rdfa="http://www.w3.org/ns/rdfa#">
 
     <xs:annotation>
         <xs:appinfo>
-			<jxb:serializable uid="1"/>
-			<jxb:globalBindings>
-				<jxb:javaType name="java.util.Date" xmlType="xs:date" parseMethod="com.ftn.scientific_papers.util.MyDatatypeConverter.parseDate" printMethod="com.ftn.scientific_papers.util.MyDatatypeConverter.printDate"/>
-   				
-   				<jxb:javaType name="java.util.Date" xmlType="xs:gYear" parseMethod="com.ftn.scientific_papers.util.MyDatatypeConverter.parseDate" printMethod="com.ftn.scientific_papers.util.MyDatatypeConverter.printDate"/>
-   				
-			</jxb:globalBindings>
-		</xs:appinfo>
+            <jxb:serializable uid="1"/>
+            <jxb:globalBindings>
+                <jxb:javaType name="java.util.Date" xmlType="xs:date" parseMethod="com.ftn.scientific_papers.util.MyDatatypeConverter.parseDate" printMethod="com.ftn.scientific_papers.util.MyDatatypeConverter.printDate"/>
+                
+                <jxb:javaType name="java.util.Date" xmlType="xs:gYear" parseMethod="com.ftn.scientific_papers.util.MyDatatypeConverter.parseDate" printMethod="com.ftn.scientific_papers.util.MyDatatypeConverter.printDate"/>
+                
+            </jxb:globalBindings>
+        </xs:appinfo>
     </xs:annotation>
 
     <xs:complexType name="TPerson">
@@ -88,26 +90,62 @@
                 <xs:element name="head">
                     <xs:complexType>
                         <xs:sequence>
+                            <xs:element name="recieved_date">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:date">
+                                            <xs:anyAttribute namespace="http://www.w3.org/ns/rdfa#"
+                                                processContents="lax"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="revised_date">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:date">
+                                            <xs:anyAttribute namespace="http://www.w3.org/ns/rdfa#"
+                                                processContents="lax"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="accepted_date">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:date">
+                                            <xs:anyAttribute namespace="http://www.w3.org/ns/rdfa#"
+                                                processContents="lax"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
                             <xs:element name="title" minOccurs="1" maxOccurs="unbounded">
                                 <xs:complexType>
                                     <xs:simpleContent>
                                         <xs:extension base="xs:string">
                                             <xs:attribute name="lang" type="xs:string"
                                                 use="required"/>
+                                            <xs:anyAttribute namespace="http://www.w3.org/ns/rdfa#"
+                                                processContents="lax"/>
                                         </xs:extension>
                                     </xs:simpleContent>
                                 </xs:complexType>
                             </xs:element>
                             <xs:element maxOccurs="unbounded" ref="author"/>
                             <xs:element name="keyword" maxOccurs="15">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                        <xs:minLength value="1"/>
-                                        <xs:maxLength value="25"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:string">
+                                            <xs:anyAttribute namespace="http://www.w3.org/ns/rdfa#"
+                                                processContents="lax"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
                             </xs:element>
                         </xs:sequence>
+                        <xs:anyAttribute namespace="http://www.w3.org/ns/rdfa#"
+                            processContents="lax"/>
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="body">
@@ -136,9 +174,6 @@
                 </xs:element>
             </xs:sequence>
             <xs:attribute name="id" type="xs:ID" use="required"/>
-            <xs:attribute name="recieved_date" type="xs:date"/>
-            <xs:attribute name="revised_date" type="xs:date"/>
-            <xs:attribute name="accepted_date" type="xs:date"/>
 
             <xs:attribute name="status" default="PENDING" use="optional">
                 <xs:simpleType>
@@ -152,6 +187,7 @@
                 </xs:simpleType>
             </xs:attribute>
             <xs:attribute default="1" name="version" type="xs:positiveInteger"/>
+            <xs:anyAttribute namespace="http://www.w3.org/ns/rdfa#" processContents="lax"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="affiliation">
@@ -162,6 +198,7 @@
                 <xs:element name="state" type="xs:string" minOccurs="0"/>
                 <xs:element name="country" type="xs:string"/>
             </xs:sequence>
+            <xs:anyAttribute namespace="http://www.w3.org/ns/rdfa#" processContents="lax"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="author">
@@ -176,6 +213,7 @@
                         </xs:element>
                         <xs:element ref="affiliation"/>
                     </xs:sequence>
+                    <xs:anyAttribute namespace="http://www.w3.org/ns/rdfa#" processContents="lax"/>
                 </xs:extension>
             </xs:complexContent>
         </xs:complexType>

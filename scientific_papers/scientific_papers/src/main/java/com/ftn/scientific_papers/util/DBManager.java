@@ -1,5 +1,11 @@
 package com.ftn.scientific_papers.util;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import javax.xml.transform.OutputKeys;
 
 import org.exist.xmldb.EXistResource;
@@ -8,20 +14,12 @@ import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.CompiledExpression;
 import org.xmldb.api.base.Database;
-import org.xmldb.api.base.Resource;
-import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
-import org.xmldb.api.modules.XPathQueryService;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import org.xmldb.api.modules.XQueryService;
+
 import com.ftn.scientific_papers.util.AuthenticationUtilities.ConnectionProperties;
 
 @Component
@@ -151,11 +149,11 @@ public class DBManager {
 		return res;
 	}
 
-	
-	public ResourceSet executeXQuery(String collectionId, String xqueryExpression, String xqueryFilePath) throws Exception {
+	public ResourceSet executeXQuery(String collectionId, String xqueryExpression, String xqueryFilePath)
+			throws Exception {
 
 		conn = AuthenticationUtilities.loadProperties();
-		
+
 		ResourceSet result;
 
 		// initialize database driver
@@ -181,10 +179,10 @@ public class DBManager {
 			xqueryService.setNamespace("b", TARGET_NAMESPACE);
 
 			// read xquery if expression is not provided
-			if(xqueryExpression.isEmpty()) {
+			if (xqueryExpression.isEmpty()) {
 				System.out.println("[INFO] Invoking XQuery service for: " + xqueryFilePath);
 				xqueryExpression = readFile(xqueryFilePath, StandardCharsets.UTF_8);
-	
+
 			}
 
 			// compile and execute the expression
@@ -202,7 +200,7 @@ public class DBManager {
 				}
 			}
 		}
-		
+
 		return result;
 	}
 
