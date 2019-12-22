@@ -5,7 +5,7 @@
     <xs:element name="evaluation_form">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="evaluation_form_author"/>
+                <xs:element ref="reviewer"/>
                 <xs:element name="scientific_paper_title">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
@@ -22,10 +22,11 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element ref="review_suggestions"/>
+                <xs:element ref="suggestions"/>
                 <xs:element ref="score_card"/>
-                <xs:element ref="recommendation_score"/>
-                <xs:element name="additional_comments_to_author">
+                <xs:element ref="overall_recommendation"/>
+                <xs:element name="additional_comments_to_author" form="qualified" maxOccurs="1"
+                    minOccurs="0">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
                             <xs:minLength value="0"/>
@@ -33,7 +34,7 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element name="additional_comments_to_editor">
+                <xs:element name="additional_comments_to_editor" minOccurs="0">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
                             <xs:minLength value="0"/>
@@ -43,14 +44,15 @@
                 </xs:element>
             </xs:sequence>
             <xs:attribute name="id" type="xs:ID"/>
-            <xs:attribute name="review_accepted" type="xs:date"/>
+            <xs:attribute name="review_accepted_date" type="xs:date"/>
             <xs:attribute name="review_due_date" type="xs:date"/>
+            <xs:attribute name="scientific_paper_ref" type="xs:string"/>
         </xs:complexType>
     </xs:element>
-    <xs:element name="recommendation_score">
+    <xs:element name="overall_recommendation">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="category">
+                <xs:element name="recommendation">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
                             <xs:enumeration value="Accept"/>
@@ -60,7 +62,7 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element name="explanation">
+                <xs:element name="comment">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
                             <xs:minLength value="0"/>
@@ -106,18 +108,18 @@
             <xs:attribute name="id" type="xs:ID"/>
         </xs:complexType>
     </xs:element>
-    <xs:element name="review_suggestions">
+    <xs:element name="suggestions">
         <xs:complexType>
             <xs:sequence>
-                <xs:element maxOccurs="unbounded" ref="review_suggestion"/>
+                <xs:element maxOccurs="unbounded" ref="suggestion"/>
             </xs:sequence>
             <xs:attribute name="id" type="xs:ID"/>
         </xs:complexType>
     </xs:element>
-    <xs:element name="review_suggestion">
+    <xs:element name="suggestion">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="scientific_paper_ref" type="xs:string"> </xs:element>
+                <xs:element name="ref" type="xs:string"> </xs:element>
                 <xs:element name="comment">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
@@ -130,7 +132,7 @@
             <xs:attribute name="id" type="xs:ID"/>
         </xs:complexType>
     </xs:element>
-    <xs:element name="evaluation_form_author">
+    <xs:element name="reviewer">
         <xs:complexType>
             <xs:complexContent>
                 <xs:extension base="TPerson">
