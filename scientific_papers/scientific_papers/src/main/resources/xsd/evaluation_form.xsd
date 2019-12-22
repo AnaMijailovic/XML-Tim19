@@ -23,7 +23,7 @@
                     </xs:simpleType>
                 </xs:element>
                 <xs:element ref="review_suggestions"/>
-                <xs:element ref="scorecard"/>
+                <xs:element ref="score_card"/>
                 <xs:element ref="recommendation_score"/>
                 <xs:element name="additional_comments_to_author">
                     <xs:simpleType>
@@ -72,7 +72,7 @@
             <xs:attribute name="id" type="xs:ID"/>
         </xs:complexType>
     </xs:element>
-    <xs:element name="scorecard">
+    <xs:element name="score_card">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="originality" type="TScore"> </xs:element>
@@ -117,7 +117,7 @@
     <xs:element name="review_suggestion">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="scientific_paper_ref" type="xs:ID"> </xs:element>
+                <xs:element name="scientific_paper_ref" type="xs:string"> </xs:element>
                 <xs:element name="comment">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
