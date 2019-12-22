@@ -1,4 +1,4 @@
-package com.ftn.scientific_papers.service;
+package com.ftn.scientific_papers.fuseki;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,13 +14,13 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.xml.sax.SAXException;
 
 import com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl;
 
 
-@Service
+@Component
 public class MetadataExtractor {
 	
 	private TransformerFactory transformerFactory;

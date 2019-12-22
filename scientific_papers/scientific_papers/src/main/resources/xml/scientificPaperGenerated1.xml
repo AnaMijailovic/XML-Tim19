@@ -6,16 +6,19 @@
  xmlns="https://github.com/AnaMijailovic/XML-Tim19"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="https://github.com/AnaMijailovic/XML-Tim19 file:/C:/Users/anaam/Desktop/XML%20Project/XML-Tim19/scientific_papers/scientific_papers/src/main/resources/xsd/scientific_paper.xsd" id="ID001"
-  rdfa:vocab="https://github.com/AnaMijailovic/XML-Tim19/predicate/"
-  rdfa:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper0">
-    <head>  
+  >
+    <head rdfa:vocab="https://github.com/AnaMijailovic/XML-Tim19/predicate/"
+  		  rdfa:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper0"
+  		  >  
         <recieved_date rdfa:property="pred:recieved" rdfa:datatype="xs:date">2006-05-04</recieved_date>
         <revised_date rdfa:property="pred:revised" rdfa:datatype="xs:date">2006-05-04</revised_date>
         <accepted_date rdfa:property="pred:accepted" rdfa:datatype="xs:date">2006-05-04</accepted_date>
         <title lang="lang1" rdfa:property="pred:titled" rdfa:datatype="xs:string">title0</title>
         <title lang="lang3" rdfa:property="pred:titled" rdfa:datatype="xs:string">title1</title>   
         <author rdfa:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author0"
-        		rdfa:rel="pred:worksIn" rdfa:href="https://github.com/AnaMijailovic/XML-Tim19/affiliation/affiliation0"
+        		rdfa:rel="pred:isTheAuthorOf" 
+        		rdfa:rev="pred:isWrittenBy"
+        		rdfa:href="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper0"
         		>
             <first_name>first_name0</first_name>
             <last_name>last_name0</last_name>
@@ -28,9 +31,12 @@
         <author>
             <first_name>first_name1</first_name>
             <last_name>last_name1</last_name>
-            <affiliation>
+            <affiliation rdfa:about="https://github.com/AnaMijailovic/XML-Tim19/affiliation/affiliation0"
+            		     rdfa:rel="pred:hasAMember" 
+            		     rdfa:rev="pred:isAMemberOf" 
+            		     rdfa:href="https://github.com/AnaMijailovic/XML-Tim19/authors/author0">
                 <name>name1</name>
-                <city>city1</city>
+                <city>city1</city> 
                 <country>country1</country>
             </affiliation>
         </author>

@@ -198,6 +198,7 @@
                 <xs:element name="state" type="xs:string" minOccurs="0"/>
                 <xs:element name="country" type="xs:string"/>
             </xs:sequence>
+            <xs:anyAttribute namespace="http://www.w3.org/ns/rdfa#" processContents="lax"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="author">

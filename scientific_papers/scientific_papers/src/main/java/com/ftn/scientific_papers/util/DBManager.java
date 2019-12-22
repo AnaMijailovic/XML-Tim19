@@ -149,11 +149,11 @@ public class DBManager {
 		return res;
 	}
 
-	
-	public ResourceSet executeXQuery(String collectionId, String xqueryExpression, String xqueryFilePath) throws Exception {
+	public ResourceSet executeXQuery(String collectionId, String xqueryExpression, String xqueryFilePath)
+			throws Exception {
 
 		conn = AuthenticationUtilities.loadProperties();
-		
+
 		ResourceSet result;
 
 		// initialize database driver
@@ -179,10 +179,10 @@ public class DBManager {
 			xqueryService.setNamespace("b", TARGET_NAMESPACE);
 
 			// read xquery if expression is not provided
-			if(xqueryExpression.isEmpty()) {
+			if (xqueryExpression.isEmpty()) {
 				System.out.println("[INFO] Invoking XQuery service for: " + xqueryFilePath);
 				xqueryExpression = readFile(xqueryFilePath, StandardCharsets.UTF_8);
-	
+
 			}
 
 			// compile and execute the expression
@@ -200,7 +200,7 @@ public class DBManager {
 				}
 			}
 		}
-		
+
 		return result;
 	}
 
