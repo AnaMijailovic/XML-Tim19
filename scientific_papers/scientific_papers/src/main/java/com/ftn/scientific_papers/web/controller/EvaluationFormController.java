@@ -1,4 +1,4 @@
-package com.ftn.scientific_papers.controller;
+package com.ftn.scientific_papers.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,28 +12,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.xmldb.api.modules.XMLResource;
 
-import com.ftn.scientific_papers.service.CoverLetterService;
-import com.ftn.scientific_papers.service.ScientificPaperService;
+import com.ftn.scientific_papers.service.EvaluationFormService;
 
 @RestController
-@RequestMapping(value = "/coverLetters")
-public class CoverLetterController {
-
+@RequestMapping(value = "/evaluationForms")
+public class EvaluationFormController {
+	
 	@Autowired
-	private CoverLetterService coverLetterService;
-
+	private EvaluationFormService evaluationFormService;
+	
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_XML_VALUE)
 	private ResponseEntity<String> findOne(@PathVariable("id") String id) throws Exception {
-		XMLResource resource = coverLetterService.findOne(id);
+		XMLResource resource = evaluationFormService.findOne(id);
 
 		return new ResponseEntity<>(resource.getContent().toString(), HttpStatus.OK);
 	}
 
 	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
-	public ResponseEntity<String> add(@RequestBody String scientificPaperXml) throws Exception {
+	public ResponseEntity<String> add(@RequestBody String evaluationFormXML) throws Exception {
 		
-		coverLetterService.save(scientificPaperXml);
-		return new ResponseEntity<>("Successfully saved cover letter", HttpStatus.CREATED);
+		evaluationFormService.save(evaluationFormXML);
+		return new ResponseEntity<>("Successfully saved", HttpStatus.CREATED);
 	}
-
 }
