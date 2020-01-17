@@ -1,4 +1,4 @@
-package com.ftn.scientific_papers.web.dto;
+package com.ftn.scientific_papers.dto;
 
 import javax.validation.constraints.NotBlank;
 

@@ -1,4 +1,4 @@
-package com.ftn.scientific_papers.web.controller;
+package com.ftn.scientific_papers.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

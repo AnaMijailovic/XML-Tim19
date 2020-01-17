@@ -18,15 +18,17 @@ import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
+import org.xmldb.api.modules.XPathQueryService;
 import org.xmldb.api.modules.XQueryService;
 
 import com.ftn.scientific_papers.util.AuthenticationUtilities.ConnectionProperties;
+
+import static com.ftn.scientific_papers.util.XUpdateTemplate.*;
 
 @Component
 public class DBManager {
 
 	private static ConnectionProperties conn;
-	private static final String TARGET_NAMESPACE = "https://github.com/AnaMijailovic/XML-Tim19";
 
 	public void save(String collectionId, String documentId, String xml) throws Exception {
 
@@ -150,6 +152,7 @@ public class DBManager {
 	}
 
 	public ResourceSet executeXQuery(String collectionId, String xqueryExpression, String xqueryFilePath)
+
 			throws Exception {
 
 		conn = AuthenticationUtilities.loadProperties();
@@ -201,6 +204,60 @@ public class DBManager {
 			}
 		}
 
+		return result;
+	}
+	
+	public ResourceSet executeXPath(String collectionId, String xPathExpression) throws Exception {
+		conn = AuthenticationUtilities.loadProperties();
+
+		ResourceSet result;
+
+		System.out.println("\t- collection ID: " + collectionId);
+        
+    	// initialize database driver
+    	System.out.println("[INFO] Loading driver class: " + conn.driver);
+		Class<?> cl = Class.forName(conn.driver);
+
+		Database database = (Database) cl.newInstance();
+		database.setProperty("create-database", "true");
+
+		DatabaseManager.registerDatabase(database);
+
+		Collection collection = null;
+
+		try {
+
+			// get the collection
+        	System.out.println("[INFO] Retrieving the collection: " + collectionId);
+			collection = DatabaseManager.getCollection(conn.uri + collectionId);
+			
+			if (collection == null) {
+				collection = getOrCreateCollection(collectionId);
+			}
+			
+			// get an instance of xpath query service
+            XPathQueryService xpathService = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
+            xpathService.setProperty("indent", "yes");
+            
+            // make the service aware of namespaces, using the default one
+            xpathService.setNamespace("", TARGET_NAMESPACE);
+            
+         // execute xpath expression 
+            System.out.println("[INFO] Invoking XPath query service for: " + xPathExpression);
+            result = xpathService.query(xPathExpression);
+			
+		} finally {
+        	
+            // don't forget to cleanup
+            if(collection != null) {
+                try { 
+                	collection.close();
+                } catch (XMLDBException xe) {
+                	xe.printStackTrace();
+                }
+            }
+        }
+		
 		return result;
 	}
 

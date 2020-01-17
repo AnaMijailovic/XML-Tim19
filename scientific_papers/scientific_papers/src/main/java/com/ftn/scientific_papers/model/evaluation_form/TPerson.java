@@ -10,46 +10,46 @@ package com.ftn.scientific_papers.model.evaluation_form;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlID;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
- * <p>Java class for anonymous complex type.
+ * <p>Java class for TPerson complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType&gt;
+ * &lt;complexType name="TPerson"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="recommendation"&gt;
+ *         &lt;element name="first_name"&gt;
  *           &lt;simpleType&gt;
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
- *               &lt;enumeration value="Accept"/&gt;
- *               &lt;enumeration value="Minor Revision"/&gt;
- *               &lt;enumeration value="Major Revision"/&gt;
- *               &lt;enumeration value="Reject"/&gt;
+ *               &lt;minLength value="1"/&gt;
+ *               &lt;maxLength value="20"/&gt;
  *             &lt;/restriction&gt;
  *           &lt;/simpleType&gt;
  *         &lt;/element&gt;
- *         &lt;element name="comment"&gt;
+ *         &lt;element name="middle_name" minOccurs="0"&gt;
  *           &lt;simpleType&gt;
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
- *               &lt;minLength value="0"/&gt;
- *               &lt;maxLength value="200"/&gt;
+ *               &lt;minLength value="1"/&gt;
+ *               &lt;maxLength value="20"/&gt;
+ *             &lt;/restriction&gt;
+ *           &lt;/simpleType&gt;
+ *         &lt;/element&gt;
+ *         &lt;element name="last_name"&gt;
+ *           &lt;simpleType&gt;
+ *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
+ *               &lt;minLength value="1"/&gt;
+ *               &lt;maxLength value="50"/&gt;
  *             &lt;/restriction&gt;
  *           &lt;/simpleType&gt;
  *         &lt;/element&gt;
  *       &lt;/sequence&gt;
- *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}ID" /&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
@@ -58,93 +58,93 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "recommendation",
-    "comment"
+@XmlType(name = "TPerson", propOrder = {
+    "firstName",
+    "middleName",
+    "lastName"
 })
-@XmlRootElement(name = "overall_recommendation")
-public class OverallRecommendation {
+@XmlSeeAlso({
+    Reviewer.class
+})
+public class TPerson {
 
-    @XmlElement(required = true)
-    protected String recommendation;
-    @XmlElement(required = true)
-    protected String comment;
-    @XmlAttribute(name = "id")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlID
-    @XmlSchemaType(name = "ID")
-    protected String id;
+    @XmlElement(name = "first_name", required = true)
+    protected String firstName;
+    @XmlElement(name = "middle_name")
+    protected String middleName;
+    @XmlElement(name = "last_name", required = true)
+    protected String lastName;
 
     /**
-     * Gets the value of the recommendation property.
+     * Gets the value of the firstName property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getRecommendation() {
-        return recommendation;
+    public String getFirstName() {
+        return firstName;
     }
 
     /**
-     * Sets the value of the recommendation property.
+     * Sets the value of the firstName property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setRecommendation(String value) {
-        this.recommendation = value;
+    public void setFirstName(String value) {
+        this.firstName = value;
     }
 
     /**
-     * Gets the value of the comment property.
+     * Gets the value of the middleName property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getComment() {
-        return comment;
+    public String getMiddleName() {
+        return middleName;
     }
 
     /**
-     * Sets the value of the comment property.
+     * Sets the value of the middleName property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setComment(String value) {
-        this.comment = value;
+    public void setMiddleName(String value) {
+        this.middleName = value;
     }
 
     /**
-     * Gets the value of the id property.
+     * Gets the value of the lastName property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getId() {
-        return id;
+    public String getLastName() {
+        return lastName;
     }
 
     /**
-     * Sets the value of the id property.
+     * Sets the value of the lastName property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setId(String value) {
-        this.id = value;
+    public void setLastName(String value) {
+        this.lastName = value;
     }
 
 }

@@ -1,9 +1,8 @@
-package com.ftn.scientific_papers.web.dto;
+package com.ftn.scientific_papers.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-
-import com.ftn.scientific_papers.model.user.Role;
+import javax.validation.constraints.NotNull;
 
 public class RegisterUserDTO {
 	
@@ -25,8 +24,8 @@ public class RegisterUserDTO {
 	@NotBlank
     private String passwordConfirm;
 	
-	@NotBlank
-	private Role role;
+	@NotNull
+	private Boolean isEditor;
 	
 	public RegisterUserDTO() {}
 
@@ -78,11 +77,11 @@ public class RegisterUserDTO {
 		this.passwordConfirm = passwordConfirm;
 	}
 
-	public Role getRole() {
-		return role;
+	public Boolean getIsEditor() {
+		return isEditor;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setIsEditor(Boolean isEditor) {
+		this.isEditor = isEditor;
 	}
 }
