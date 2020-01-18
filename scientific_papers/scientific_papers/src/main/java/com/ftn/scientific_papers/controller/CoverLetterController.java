@@ -16,7 +16,7 @@ import com.ftn.scientific_papers.service.CoverLetterService;
 import com.ftn.scientific_papers.service.ScientificPaperService;
 
 @RestController
-@RequestMapping(value = "/coverLetters")
+@RequestMapping(value = "/api/coverLetters")
 public class CoverLetterController {
 
 	@Autowired
