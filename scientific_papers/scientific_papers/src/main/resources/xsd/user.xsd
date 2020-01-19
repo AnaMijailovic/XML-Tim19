@@ -1,22 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="https://github.com/AnaMijailovic/XML-Tim19/user"
-    xmlns="https://github.com/AnaMijailovic/XML-Tim19/user">
-    <xs:element name="user">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="1"/>
-                <xs:element name="surname" type="xs:string" maxOccurs="1" minOccurs="1"/>
-                <xs:element name="username" type="xs:string" maxOccurs="1" minOccurs="1"/>
-                <xs:element name="password" type="xs:string" maxOccurs="1" minOccurs="1"/>
-                <xs:element name="role" type="xs:string" maxOccurs="1" minOccurs="1"/>
-                <xs:element name="email" type="TEmail"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+    targetNamespace="https://github.com/AnaMijailovic/XML-Tim19"
+    xmlns="https://github.com/AnaMijailovic/XML-Tim19">
+    <xs:element name="user" type="TUser"> </xs:element>
+    <xs:complexType name="TUser">
+        <xs:sequence>
+            <xs:element name="name" maxOccurs="1" minOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="32"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="surname" maxOccurs="1" minOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="32"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="username" maxOccurs="1" minOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="15"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="password" maxOccurs="1" minOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="6"/>
+                        <xs:maxLength value="15"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="email" type="TEmail"/>
+            <xs:element name="roles">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="role" type="TRole"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="is_editor" type="xs:boolean"/>
+        </xs:sequence>
+        <xs:attribute name="user_id" type="xs:string"/>
+    </xs:complexType>
     <xs:simpleType name="TEmail">
         <xs:restriction base="xs:string">
-            <xs:pattern value="[a-zA-Z0-9!#$%&amp;'*+/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*"/>
+            <xs:pattern value="[a-zA-Z0-9!#$%&amp;'*+/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*"
+            />
         </xs:restriction>
     </xs:simpleType>
+    <xs:complexType name="TRole">
+        <xs:attribute name="scientific_paper_id" type="xs:string"/>
+        <xs:attribute name="role">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="AUTHOR"/>
+                    <xs:enumeration value="REVIEWER"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
 </xs:schema>

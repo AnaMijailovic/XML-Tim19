@@ -1,6 +1,7 @@
 package com.ftn.scientific_papers.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
@@ -14,12 +15,15 @@ public class CoverLetterRepository {
 	@Autowired
 	private DBManager dbManager;
 	
-	static String spCollectionId = "/db/sample/cover_letters";
-	static String spSchemaPath = "src/main/resources/xsd/cover_letter.xsd"; 
+	@Value("${cover-letter-collection-id}")
+	private String coverLetterCollectionId;
+	
+	@Value("${cover-letter-schema-path}")
+	private String coverLetterSchemaPath;
 	
 	public XMLResource findOne(String id) throws Exception {
 		
-		 XMLResource result = dbManager.findOne(spCollectionId, id);
+		 XMLResource result = dbManager.findOne(coverLetterCollectionId, id);
 		 if(result == null) {
 			 throw new ResourceNotFoundException("cover letter with id " + id + " was not found");
 		 }
@@ -30,7 +34,7 @@ public class CoverLetterRepository {
 		// generate id
 		String id = "letter0";
 		try {
-			ResourceSet rs = dbManager.executeXQuery(spCollectionId, "count(/.)", "");
+			ResourceSet rs = dbManager.executeXQuery(coverLetterCollectionId, "count(/.)", "");
 			id = "letter" + rs.getIterator().nextResource().getContent().toString();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -40,7 +44,7 @@ public class CoverLetterRepository {
 		System.out.println("\nID: " + id);
 		
 		//save 
-		dbManager.save(spCollectionId, id, scientificPaperXml);
+		dbManager.save(coverLetterCollectionId, id, scientificPaperXml);
 		
 	}
 }

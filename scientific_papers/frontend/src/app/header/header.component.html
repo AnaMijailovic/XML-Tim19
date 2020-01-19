@@ -1,0 +1,15 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <span><b>Scientific Papers</b></span>
+        <!-- This fills the remaining space of the current row -->
+        <span class="example-fill-remaining-space"></span>
+        <button
+            mat-button
+            *ngFor="let link of links"
+            [routerLink]="link.path"
+            routerLinkActive="active"
+        >
+        {{ link.label }}
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>

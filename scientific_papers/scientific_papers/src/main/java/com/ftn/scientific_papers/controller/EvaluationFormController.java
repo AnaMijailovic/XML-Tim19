@@ -15,7 +15,7 @@ import org.xmldb.api.modules.XMLResource;
 import com.ftn.scientific_papers.service.EvaluationFormService;
 
 @RestController
-@RequestMapping(value = "/evaluationForms")
+@RequestMapping(value = "/api/evaluationForms")
 public class EvaluationFormController {
 	
 	@Autowired

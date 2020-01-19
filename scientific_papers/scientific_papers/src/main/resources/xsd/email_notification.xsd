@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="https://github.com/AnaMijailovic/XML-Tim19/email_notification"
-    xmlns="https://github.com/AnaMijailovic/XML-Tim19/email_notification"> 
+    targetNamespace="https://github.com/AnaMijailovic/XML-Tim19"
+    xmlns="https://github.com/AnaMijailovic/XML-Tim19"> 
     <xs:element name="email_notification">
         <xs:complexType>
             <xs:sequence>

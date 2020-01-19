@@ -15,7 +15,7 @@ import org.xmldb.api.modules.XMLResource;
 import com.ftn.scientific_papers.service.ScientificPaperService;
 
 @RestController
-@RequestMapping(value = "/scientificPapers")
+@RequestMapping(value = "/api/scientificPapers")
 public class ScientificPaperController {
 
 	@Autowired

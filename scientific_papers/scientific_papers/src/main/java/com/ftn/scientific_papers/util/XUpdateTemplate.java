@@ -8,7 +8,7 @@ import org.exist.xupdate.XUpdateProcessor;
  */
 public class XUpdateTemplate {
 
-	public static final String TARGET_NAMESPACE = "http://www.ftn.uns.ac.rs/examples/xmldb/bookstore";
+	public static final String TARGET_NAMESPACE = "https://github.com/AnaMijailovic/XML-Tim19";
 	
 	/*
 	 * There are two instructions in XUpdate that support insertion of nodes:

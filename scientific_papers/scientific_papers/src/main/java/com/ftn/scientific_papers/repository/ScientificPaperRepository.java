@@ -1,6 +1,7 @@
 package com.ftn.scientific_papers.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
@@ -14,12 +15,15 @@ public class ScientificPaperRepository {
 	@Autowired
 	private DBManager dbManager;
 	
-	static String spCollectionId = "/db/sample/scientific_papers";
-	static String spSchemaPath = "src/main/resources/xsd/scientific_paper.xsd"; 
+	@Value("${scientific-paper-collection-id}")
+	private String scientificPaperCollectionId;
+	
+	@Value("${scientific-paper-schema-path}")
+	private String scientificPaperSchemaPath; 
 	
 	public XMLResource findOne(String id) throws Exception {
 		
-		 XMLResource result = dbManager.findOne(spCollectionId, id);
+		 XMLResource result = dbManager.findOne(scientificPaperCollectionId, id);
 		 if(result == null) {
 			 throw new ResourceNotFoundException("Scientific paper with id " + id + " was not found");
 		 }
@@ -30,14 +34,14 @@ public class ScientificPaperRepository {
 		// generate id
 		String id = "paper0";				
 		try {
-			ResourceSet rs = dbManager.executeXQuery(spCollectionId, "count(/.)", "");
+			ResourceSet rs = dbManager.executeXQuery(scientificPaperCollectionId, "count(/.)", "");
 			id = "paper" + rs.getIterator().nextResource().getContent().toString();
 		}catch(Exception e) {
 			
 		}
 		System.out.println("\nID: " + id);	
 		//save 
-		dbManager.save(spCollectionId, id, scientificPaperXml);
+		dbManager.save(scientificPaperCollectionId, id, scientificPaperXml);
 		
 	}
 }
