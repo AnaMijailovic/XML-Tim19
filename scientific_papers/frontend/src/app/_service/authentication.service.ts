@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from "src/environments/environment";
 
 @Injectable()
 export class AuthenticationService {
@@ -9,9 +8,9 @@ export class AuthenticationService {
 
   login(username: string, password: string) {
     return this.http.post(
-      `${environment.apiUrl}/api/users/login`,
+      `/api/users/login`,
       {username: username, password: password},
-      {responseType: "text"}
+      {responseType: 'text'}
     );
   }
 
@@ -24,7 +23,7 @@ export class AuthenticationService {
     confirmPassword: string
   ) {
     return this.http.post(
-      `${environment.apiUrl}/api/users/register`,
+      `/api/users/register`,
       {
         name: name,
         surname: surname,
@@ -34,11 +33,11 @@ export class AuthenticationService {
         passwordConfirm: confirmPassword,
         isEditor: false
       },
-      {responseType: "text"}
+      {responseType: 'text'}
     );
   }
 
   logout() {
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
   }
 }

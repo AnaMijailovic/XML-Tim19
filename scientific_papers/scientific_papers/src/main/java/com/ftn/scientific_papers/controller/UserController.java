@@ -22,7 +22,7 @@ import com.ftn.scientific_papers.model.user.TUser.Roles;
 import com.ftn.scientific_papers.security.TokenUtils;
 import com.ftn.scientific_papers.service.CustomUserDetailsService;
 
-@CrossOrigin(origins = "http://localhost:4200")
+
 @RestController
 @RequestMapping(value = "/api/users")
 public class UserController {
