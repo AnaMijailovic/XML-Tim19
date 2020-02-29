@@ -9,7 +9,7 @@ export class AuthenticationService {
   login(username: string, password: string) {
     return this.http.post(
       `/api/users/login`,
-      {username: username, password: password},
+      {username, password},
       {responseType: 'text'}
     );
   }
@@ -25,11 +25,11 @@ export class AuthenticationService {
     return this.http.post(
       `/api/users/register`,
       {
-        name: name,
-        surname: surname,
-        username: username,
-        email: email,
-        password: password,
+        name,
+        surname,
+        username,
+        email,
+        password,
         passwordConfirm: confirmPassword,
         isEditor: false
       },
