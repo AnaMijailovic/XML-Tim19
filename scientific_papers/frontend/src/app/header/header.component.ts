@@ -8,13 +8,13 @@ import { AllowedRoutes } from '../_service/allowed-routes.service';
 })
 export class HeaderComponent implements OnInit {
   links = [];
-  
+
   constructor(private routes: AllowedRoutes) {
     this.routes.currentRoutes.subscribe(routes => (this.links = routes));
    }
 
   ngOnInit() {
-    this.routes.currentRoutes.subscribe(routes => (this.links = routes))
+    this.routes.currentRoutes.subscribe(routes => (this.links = routes));
   }
 
 }

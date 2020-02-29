@@ -20,15 +20,15 @@ export class RegisterComponent implements OnInit {
   ) {
     this.form = new FormGroup(
       {
-        name: new FormControl("", Validators.required),
-        surname: new FormControl("", Validators.required),
-        username: new FormControl("", Validators.required),
-        email: new FormControl("", [Validators.required, Validators.email]),
-        password: new FormControl("", [Validators.required, Validators.minLength(6)]),
-        confirmPassword: new FormControl("", [Validators.required, Validators.minLength(6)])
+        name: new FormControl('', Validators.required),
+        surname: new FormControl('', Validators.required),
+        username: new FormControl('', Validators.required),
+        email: new FormControl('', [Validators.required, Validators.email]),
+        password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+        confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)])
       },
-      { 
-        validators: this.checkPasswords 
+      {
+        validators: this.checkPasswords
       }
     );
   }
@@ -37,10 +37,10 @@ export class RegisterComponent implements OnInit {
   }
 
   checkPasswords(group: FormGroup) {
-    let password = group.controls.password.value;
-    let confirmPassword = group.controls.confirmPassword.value;
-    console.log(password == confirmPassword)
-    return password == confirmPassword ? null : {notSame: true};
+    const password = group.controls.password.value;
+    const confirmPassword = group.controls.confirmPassword.value;
+    console.log(password === confirmPassword);
+    return password === confirmPassword ? null : {notSame: true};
   }
 
   register() {
@@ -58,12 +58,12 @@ export class RegisterComponent implements OnInit {
       .subscribe(
         response => {
           alert(response);
-          this.router.navigate(["/login"])
+          this.router.navigate(['/login']);
         },
         response => {
           try {
-            let errorResponse = JSON.parse(response.error);
-            let errorAlert = "";
+            const errorResponse = JSON.parse(response.error);
+            let errorAlert = '';
             errorResponse.errors.array.forEach(e => {
               errorAlert += `${e.defaultMessage}\n`;
             });

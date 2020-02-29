@@ -17,11 +17,11 @@ export class LoginComponent implements OnInit {
     private authService: AuthenticationService,
     private router: Router,
     private allowedRoutes: AllowedRoutes
-  ) { 
+  ) {
     this.form = this.formBuilder.group({
-      username: ["", Validators.required],
-      password: ["", Validators.required]
-    })
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
   }
 
   ngOnInit() {}
@@ -31,14 +31,14 @@ export class LoginComponent implements OnInit {
 
     if (params.username && params.password) {
       this.authService.login(params.username, params.password).subscribe(
-        token => { localStorage.setItem("token", token);
-        this.router.navigate(["/"]);
-        this.allowedRoutes.updateRoutes();
+        token => { localStorage.setItem('token', token);
+                   this.router.navigate(['/']);
+                   this.allowedRoutes.updateRoutes();
       },
       response => {
         try {
-          let errorResponse = JSON.parse(response.error);
-          let errorAlert = "";
+          const errorResponse = JSON.parse(response.error);
+          let errorAlert = '';
           errorResponse.errors.array.forEach(e => {
             errorAlert += `${e.defaultMessage}\n`;
           });
