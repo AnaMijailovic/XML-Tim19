@@ -1,0 +1,20 @@
+#search-form-container {
+    width: 32%;
+    margin-left: 1%;
+    margin-top: 1%;
+    box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.3), 6px 6px 20px 6px rgba(0, 0, 0, 0.19);
+}
+
+.form-field {
+    width: 90%;
+}
+
+.search-card {
+    display: flex;
+    flex-direction: column;
+}
+
+#dates-container {
+    display: flex;
+    flex-direction: row;
+}

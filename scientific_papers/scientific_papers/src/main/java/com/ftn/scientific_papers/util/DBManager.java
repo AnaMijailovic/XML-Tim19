@@ -14,6 +14,7 @@ import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.CompiledExpression;
 import org.xmldb.api.base.Database;
+import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
@@ -22,6 +23,8 @@ import org.xmldb.api.modules.XPathQueryService;
 import org.xmldb.api.modules.XQueryService;
 
 import com.ftn.scientific_papers.util.AuthenticationUtilities.ConnectionProperties;
+import org.xmldb.api.base.Resource;
+
 
 import static com.ftn.scientific_papers.util.XUpdateTemplate.*;
 
@@ -259,6 +262,34 @@ public class DBManager {
         }
 		
 		return result;
+	}
+	
+	public String resourceSetToString(ResourceSet resourceSet) throws XMLDBException {
+		 // handle the results
+
+        String result = "";
+        
+        ResourceIterator i = resourceSet.getIterator();
+        Resource res = null;
+        
+        while(i.hasMoreResources()) {
+        
+        	try {
+                res = i.nextResource();
+                result += res.getContent();
+                System.out.println(res.getContent());
+                
+            } finally {
+                
+            	// don't forget to cleanup resources
+                try { 
+                	((EXistResource)res).freeResources(); 
+                } catch (XMLDBException xe) {
+                	xe.printStackTrace();
+                }
+            }}
+        
+        return result;
 	}
 
 	/**

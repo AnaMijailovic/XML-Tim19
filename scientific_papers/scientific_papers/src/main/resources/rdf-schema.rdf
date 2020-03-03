@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rdf:RDF  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xml:base="http://example.com/#"> 
+    
+    <rdfs:Class rdf:ID="ScientificPaper" />
+    <rdfs:Class rdf:ID="Author" />
+    <rdfs:Class rdf:ID="Affiliation" />
+    
+    <rdf:Property ID="recieved">
+        <rdfs:domain rdf:resource="#ScientificPaper"/> 
+    </rdf:Property>
+    
+    <rdf:Property ID="revised">
+        <rdfs:domain rdf:resource="#ScientificPaper"/> 
+    </rdf:Property>
+    
+    <rdf:Property ID="accepted">
+        <rdfs:domain rdf:resource="#ScientificPaper"/> 
+    </rdf:Property>
+    
+    <rdf:Property ID="titled">
+        <rdfs:domain rdf:resource="#ScientificPaper"/> 
+    </rdf:Property>
+    
+    <rdf:Property ID="isTheAuthorOf">
+        <rdfs:domain rdf:resource="#Author"/> 
+        <rdfs:range rdf:resource="#ScientificPaper" />
+    </rdf:Property>
+    
+    <rdf:Property ID="isWrittenBy">
+        <rdfs:domain rdf:resource="#ScientificPaper"/> 
+        <rdfs:range rdf:resource="#Author" />
+    </rdf:Property>
+    
+    <rdf:Property ID="keyword">
+        <rdfs:domain rdf:resource="#ScientificPaper"/> 
+    </rdf:Property>
+    
+    <rdf:Property ID="hasAMember">
+        <rdfs:domain rdf:resource="#Affiliation"/> 
+        <rdfs:range rdf:resource="#Author" />
+    </rdf:Property>
+    
+    <rdf:Property ID="isAMemberOf">
+        <rdfs:domain rdf:resource="#Author"/> 
+        <rdfs:range rdf:resource="#Affiliation" />
+    </rdf:Property>
+    
+</rdf:RDF>

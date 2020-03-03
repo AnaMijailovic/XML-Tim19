@@ -30,6 +30,20 @@ public class ScientificPaperRepository {
 		 return result;
 	}
 	
+	public String getAll() {
+		String xQueryPath = ".\\src\\main\\resources\\xQuery\\textSearch.txt";
+		String result = "";
+		try {
+			ResourceSet rs = dbManager.executeXQuery(scientificPaperCollectionId, "", xQueryPath);
+			result = dbManager.resourceSetToString(rs);
+			// System.out.println("Result: " + result);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public void save(String scientificPaperXml) throws Exception {
 		// generate id
 		String id = "paper0";				

@@ -5,7 +5,8 @@
  xmlns:rdfa="http://www.w3.org/ns/rdfa#"
  xmlns="https://github.com/AnaMijailovic/XML-Tim19"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/AnaMijailovic/XML-Tim19 file:/C:/Users/anaam/Desktop/XML%20Project/XML-Tim19/scientific_papers/scientific_papers/src/main/resources/xsd/scientific_paper.xsd" id="ID001"
+ xsi:schemaLocation="https://github.com/AnaMijailovic/XML-Tim19 file:/C:/Users/anaam/Desktop/XML%20Project/XML-Tim19/scientific_papers/scientific_papers/src/main/resources/xsd/scientific_paper.xsd" 
+ id="ID001" status="ACCEPTED"
   >
     <head rdfa:vocab="https://github.com/AnaMijailovic/XML-Tim19/predicate/"
   		  rdfa:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper0"
@@ -40,8 +41,8 @@
                 <country>country1</country>
             </affiliation>
         </author>
-        <keyword>keyword0</keyword>
-        <keyword>keyword1</keyword>
+        <keyword rdfa:property="pred:keyword" rdfa:datatype="xs:string">keyword0</keyword>
+        <keyword rdfa:property="pred:keyword" rdfa:datatype="xs:string">keyword1</keyword>
     </head>
     <body>
         <abstract id="ID003">

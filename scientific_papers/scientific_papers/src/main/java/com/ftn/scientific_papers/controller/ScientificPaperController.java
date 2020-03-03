@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,10 +17,18 @@ import com.ftn.scientific_papers.service.ScientificPaperService;
 
 @RestController
 @RequestMapping(value = "/api/scientificPapers")
+@CrossOrigin()
 public class ScientificPaperController {
 
 	@Autowired
 	private ScientificPaperService spService;
+	
+	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
+	private ResponseEntity<String> findAll(){
+		String resource = spService.getAll();
+		
+		return new ResponseEntity<>(resource, HttpStatus.OK);
+	}
 
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_XML_VALUE)
 	private ResponseEntity<String> findOne(@PathVariable("id") String id) throws Exception {

@@ -28,6 +28,10 @@ public class ScientificPaperService {
 		
 		return spRepository.findOne(id);
 	}
+	
+	public String getAll() {
+		return spRepository.getAll();
+	}
 
 	public void save(String scientificPaperXml) throws Exception {
 		
@@ -37,7 +41,7 @@ public class ScientificPaperService {
        // TODO change newMetadata.rdf path
        String rdfFilePath = "src/main/resources/rdf/newMetadata.rdf";
        metadataExtractor.extractMetadata(scientificPaperXml, rdfFilePath);
-       fusekiManager.saveMetadata(rdfFilePath, "/scientificPapers");
+       fusekiManager.saveMetadata(rdfFilePath, "/scientificPapers2");
        
        	// TODO Generate ids for chapters, paragraphs etc. 
         // TODO Check chapter levels (max is 5)
