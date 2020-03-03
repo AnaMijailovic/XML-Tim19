@@ -13,6 +13,6 @@ export class CustomErorStateMatcher implements ErrorStateMatcher {
             control.parent.invalid &&
             control.parent.dirty
         );
-        return invalidControl || invalidParent
+        return invalidControl || invalidParent;
     }
 }
