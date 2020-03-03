@@ -10,6 +10,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class HeaderComponent implements OnInit {
   links = [];
+
   generalSearchForm: FormGroup;
   @Output()
   sendSearchData = new EventEmitter<string>();
@@ -17,11 +18,13 @@ export class HeaderComponent implements OnInit {
   constructor(private routes: AllowedRoutes,
               public router: Router,
               private formBuilder: FormBuilder) {
+
     this.routes.currentRoutes.subscribe(routes => (this.links = routes));
    }
 
   ngOnInit() {
     this.routes.currentRoutes.subscribe(routes => (this.links = routes));
+
     this.createForm();
   }
 
@@ -37,6 +40,7 @@ export class HeaderComponent implements OnInit {
 
   generalSearch() {
     this.sendSearchData.emit(this.generalSearchForm.controls.searchData.value as string);
+
   }
 
 }
