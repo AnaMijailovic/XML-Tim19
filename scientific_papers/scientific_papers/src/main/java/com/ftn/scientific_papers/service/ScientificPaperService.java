@@ -29,8 +29,8 @@ public class ScientificPaperService {
 		return spRepository.findOne(id);
 	}
 	
-	public String getAll() {
-		return spRepository.getAll();
+	public String getAll(String searchText) {
+		return spRepository.getAll(searchText);
 	}
 
 	public void save(String scientificPaperXml) throws Exception {

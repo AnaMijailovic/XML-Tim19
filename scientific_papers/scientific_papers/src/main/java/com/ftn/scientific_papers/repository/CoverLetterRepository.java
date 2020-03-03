@@ -1,5 +1,7 @@
 package com.ftn.scientific_papers.repository;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -34,7 +36,7 @@ public class CoverLetterRepository {
 		// generate id
 		String id = "letter0";
 		try {
-			ResourceSet rs = dbManager.executeXQuery(coverLetterCollectionId, "count(/.)", "");
+			ResourceSet rs = dbManager.executeXQuery(coverLetterCollectionId, "count(/.)", new HashMap<>(), "");
 			id = "letter" + rs.getIterator().nextResource().getContent().toString();
 		} catch (Exception e) {
 			// TODO: handle exception

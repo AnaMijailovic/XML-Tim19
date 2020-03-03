@@ -2,6 +2,7 @@ package com.ftn.scientific_papers.repository;
 
 import java.io.ByteArrayOutputStream;
 import java.io.StringReader;
+import java.util.HashMap;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -67,7 +68,7 @@ public class UserRepository {
 
 	public void save(TUser user) {
 		try {
-			ResourceSet rs = dbManager.executeXQuery(userCollectionId, "count(/.)", "");
+			ResourceSet rs = dbManager.executeXQuery(userCollectionId, "count(/.)", new HashMap<>(), "");
 			String id = "user" + rs.getIterator().nextResource().getContent().toString();
 			
 			user.setUserId(id);

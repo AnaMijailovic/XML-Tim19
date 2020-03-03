@@ -1,10 +1,13 @@
 package com.ftn.scientific_papers.util;
 
+import static com.ftn.scientific_papers.util.XUpdateTemplate.TARGET_NAMESPACE;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 
 import javax.xml.transform.OutputKeys;
 
@@ -14,6 +17,7 @@ import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.CompiledExpression;
 import org.xmldb.api.base.Database;
+import org.xmldb.api.base.Resource;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
@@ -23,10 +27,6 @@ import org.xmldb.api.modules.XPathQueryService;
 import org.xmldb.api.modules.XQueryService;
 
 import com.ftn.scientific_papers.util.AuthenticationUtilities.ConnectionProperties;
-import org.xmldb.api.base.Resource;
-
-
-import static com.ftn.scientific_papers.util.XUpdateTemplate.*;
 
 @Component
 public class DBManager {
@@ -154,9 +154,8 @@ public class DBManager {
 		return res;
 	}
 
-	public ResourceSet executeXQuery(String collectionId, String xqueryExpression, String xqueryFilePath)
-
-			throws Exception {
+	public ResourceSet executeXQuery(String collectionId, String xqueryExpression, HashMap<String, String> parameterMap,
+			String xqueryFilePath) throws Exception {
 
 		conn = AuthenticationUtilities.loadProperties();
 
@@ -190,7 +189,13 @@ public class DBManager {
 				xqueryExpression = readFile(xqueryFilePath, StandardCharsets.UTF_8);
 
 			}
-
+			
+			for(String param: parameterMap.keySet())
+            {	
+				System.out.println(param + " " + parameterMap.get(param));
+                xqueryService.declareVariable(param, parameterMap.get(param));
+            }
+			
 			// compile and execute the expression
 			CompiledExpression compiledXquery = xqueryService.compile(xqueryExpression);
 			result = xqueryService.execute(compiledXquery);
@@ -209,16 +214,16 @@ public class DBManager {
 
 		return result;
 	}
-	
+
 	public ResourceSet executeXPath(String collectionId, String xPathExpression) throws Exception {
 		conn = AuthenticationUtilities.loadProperties();
 
 		ResourceSet result;
 
 		System.out.println("\t- collection ID: " + collectionId);
-        
-    	// initialize database driver
-    	System.out.println("[INFO] Loading driver class: " + conn.driver);
+
+		// initialize database driver
+		System.out.println("[INFO] Loading driver class: " + conn.driver);
 		Class<?> cl = Class.forName(conn.driver);
 
 		Database database = (Database) cl.newInstance();
@@ -231,65 +236,66 @@ public class DBManager {
 		try {
 
 			// get the collection
-        	System.out.println("[INFO] Retrieving the collection: " + collectionId);
+			System.out.println("[INFO] Retrieving the collection: " + collectionId);
 			collection = DatabaseManager.getCollection(conn.uri + collectionId);
-			
+
 			if (collection == null) {
 				collection = getOrCreateCollection(collectionId);
 			}
-			
+
 			// get an instance of xpath query service
-            XPathQueryService xpathService = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
-            xpathService.setProperty("indent", "yes");
-            
-            // make the service aware of namespaces, using the default one
-            xpathService.setNamespace("", TARGET_NAMESPACE);
-            
-         // execute xpath expression 
-            System.out.println("[INFO] Invoking XPath query service for: " + xPathExpression);
-            result = xpathService.query(xPathExpression);
-			
+			XPathQueryService xpathService = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
+			xpathService.setProperty("indent", "yes");
+
+			// make the service aware of namespaces, using the default one
+			xpathService.setNamespace("", TARGET_NAMESPACE);
+
+			// execute xpath expression
+			System.out.println("[INFO] Invoking XPath query service for: " + xPathExpression);
+			result = xpathService.query(xPathExpression);
+
 		} finally {
-        	
-            // don't forget to cleanup
-            if(collection != null) {
-                try { 
-                	collection.close();
-                } catch (XMLDBException xe) {
-                	xe.printStackTrace();
-                }
-            }
-        }
-		
+
+			// don't forget to cleanup
+			if (collection != null) {
+				try {
+					collection.close();
+				} catch (XMLDBException xe) {
+					xe.printStackTrace();
+				}
+			}
+		}
+
 		return result;
 	}
-	
-	public String resourceSetToString(ResourceSet resourceSet) throws XMLDBException {
-		 // handle the results
 
-        String result = "";
-        
-        ResourceIterator i = resourceSet.getIterator();
-        Resource res = null;
-        
-        while(i.hasMoreResources()) {
-        
-        	try {
-                res = i.nextResource();
-                result += res.getContent();
-                System.out.println(res.getContent());
-                
-            } finally {
-                
-            	// don't forget to cleanup resources
-                try { 
-                	((EXistResource)res).freeResources(); 
-                } catch (XMLDBException xe) {
-                	xe.printStackTrace();
-                }
-            }}
-        
-        return result;
+	public String resourceSetToString(ResourceSet resourceSet) throws XMLDBException {
+		// handle the results
+
+		String result = "";
+
+		ResourceIterator i = resourceSet.getIterator();
+		Resource res = null;
+
+		while (i.hasMoreResources()) {
+
+			try {
+				res = i.nextResource();
+				result += res.getContent();
+				System.out.println(res.getContent());
+
+			} finally {
+
+				// don't forget to cleanup resources
+				try {
+					((EXistResource) res).freeResources();
+				} catch (XMLDBException xe) {
+					xe.printStackTrace();
+				}
+			}
+		}
+
+		return result;
 	}
 
 	/**

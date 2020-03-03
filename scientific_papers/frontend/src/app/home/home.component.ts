@@ -19,20 +19,33 @@ export class HomeComponent implements OnInit {
               private spService: ScientificPaperService) { }
 
   ngOnInit() {
-    this.getScientificPapers();
+    this.getScientificPapers('');
   }
 
-  getScientificPapers() {
+  getScientificPapers(params: string) {
     this.papers = [];
 
-    this.spService.getScientificPapers().subscribe(
+    this.spService.getScientificPapers(params).subscribe(
       (response) => {
 
         if (response != null) {
-          const jsonResponse = JSON.parse(convert.xml2json(response, { compact: true, spaces: 4 } ));
 
-         // alert(JSON.stringify(jsonResponse.search.paper[0]));
-          for ( const paper of jsonResponse.search.paper ) {
+          const jsonResponse = JSON.parse(convert.xml2json(response, { compact: true, spaces: 4 } ));
+          let papers = jsonResponse.search.paper;
+
+          // TODO Remove this from here
+          // if response is undefined -> no results
+          if (!papers) {
+            this.showInfo('No results', '');
+            return;
+          }
+
+          // if not an array -> one result
+          if (!Array.isArray(papers)) {
+            papers = [papers];
+          }
+
+          for ( const paper of papers ) {
             const authorsList = [];
             for (const author of paper.author) {
               authorsList.push(author._text);
@@ -52,12 +65,15 @@ export class HomeComponent implements OnInit {
             };
 
             this.papers.push(scientificPaper);
-           // alert(JSON.stringify(scientificPaper));
+
           }
         }
-       // alert(JSON.stringify(this.papers));
       });
 
+  }
+
+  sendSearchData(searchText: string) {
+    this.getScientificPapers('?searchText=' + searchText);
   }
 
   showSuccess() {
@@ -68,8 +84,8 @@ export class HomeComponent implements OnInit {
     this.toastr.error('Hello world!', 'Toastr fun!');
   }
 
-  showInfo() {
-    this.toastr.info('Hello world!', 'Toastr fun!');
+  showInfo(message: string, header: string) {
+    this.toastr.info(message, header);
   }
 
   showWarning() {

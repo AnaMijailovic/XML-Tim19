@@ -5,7 +5,7 @@ return
 	<search>
 		{
 			for $sp in $collection
-			  where $sp/sp:scientific_paper/@status = "ACCEPTED"
+			  where $sp/sp:scientific_paper/@status = "ACCEPTED" and $sp//*[contains(text(), $searchText)]
 				return 
 				 <paper>
 					<id>{ data($sp/sp:scientific_paper/@id) }</id>

@@ -1,5 +1,7 @@
 package com.ftn.scientific_papers.repository;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -30,11 +32,15 @@ public class ScientificPaperRepository {
 		 return result;
 	}
 	
-	public String getAll() {
+	public String getAll(String searchText) {
 		String xQueryPath = ".\\src\\main\\resources\\xQuery\\textSearch.txt";
 		String result = "";
+		
+		HashMap<String, String> params = new HashMap<>();
+		params.put("searchText", searchText);
+		
 		try {
-			ResourceSet rs = dbManager.executeXQuery(scientificPaperCollectionId, "", xQueryPath);
+			ResourceSet rs = dbManager.executeXQuery(scientificPaperCollectionId, "", params, xQueryPath);
 			result = dbManager.resourceSetToString(rs);
 			// System.out.println("Result: " + result);
 		}catch(Exception e) {
@@ -46,9 +52,10 @@ public class ScientificPaperRepository {
 	
 	public void save(String scientificPaperXml) throws Exception {
 		// generate id
+	    // TODO Change this?
 		String id = "paper0";				
 		try {
-			ResourceSet rs = dbManager.executeXQuery(scientificPaperCollectionId, "count(/.)", "");
+			ResourceSet rs = dbManager.executeXQuery(scientificPaperCollectionId, "count(/.)", new HashMap<>(), "");
 			id = "paper" + rs.getIterator().nextResource().getContent().toString();
 		}catch(Exception e) {
 			

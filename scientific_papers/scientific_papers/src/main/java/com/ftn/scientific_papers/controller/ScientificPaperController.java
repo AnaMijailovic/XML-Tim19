@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.xmldb.api.modules.XMLResource;
 
@@ -24,8 +25,8 @@ public class ScientificPaperController {
 	private ScientificPaperService spService;
 	
 	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
-	private ResponseEntity<String> findAll(){
-		String resource = spService.getAll();
+	private ResponseEntity<String> findAll(@RequestParam(defaultValue = "") String searchText){
+		String resource = spService.getAll(searchText);
 		
 		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}
