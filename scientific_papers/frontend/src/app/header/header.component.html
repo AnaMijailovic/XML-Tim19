@@ -1,14 +1,17 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
-        <span><b>Scientific Papers</b></span>
+        <span><button mat-button (click)="goToHome()"><h4>Scientific Papers </h4></button></span>
+        <div>
+            <form id="general-search-form" noval [formGroup]="generalSearchForm">
+                &nbsp;
+                <i id="search-icon-btn" class="fa fa-search" aria-hidden="true" (click)="generalSearch()"></i>
+                <input matInput formControlName="searchData" type="text" id="search-input" placeholder="Search..." (keyup.enter)="generalSearch()">
+            </form>
+        </div>
         <!-- This fills the remaining space of the current row -->
         <span class="example-fill-remaining-space"></span>
-        <button
-            mat-button
-            *ngFor="let link of links"
-            [routerLink]="link.path"
-            routerLinkActive="active"
-        >
+        <button mat-button (click)="goToHome()"> Home </button>
+        <button mat-button *ngFor="let link of links" [routerLink]="link.path" routerLinkActive="active">
         {{ link.label }}
         </button>
     </mat-toolbar-row>

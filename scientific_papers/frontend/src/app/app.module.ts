@@ -14,6 +14,8 @@ import { HomeComponent } from './home/home.component';
 import { LogoutComponent } from './logout/logout.component';
 import { MaterialModule } from './material/material.module';
 import { ToastrModule } from 'ngx-toastr';
+import { SearchFormComponent } from './search-form/search-form.component';
+import { PaperCardComponent } from './paper-card/paper-card.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { ToastrModule } from 'ngx-toastr';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    LogoutComponent
+    LogoutComponent,
+    SearchFormComponent,
+    PaperCardComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,25 @@
+declare namespace sp="https://github.com/AnaMijailovic/XML-Tim19";
+let $collection := collection("/db/sample/scientific_papers")
+
+return
+	<search>
+		{
+			for $sp in $collection
+			  where $sp/sp:scientific_paper/@status = "ACCEPTED" and $sp//*[contains(text(), $searchText)]
+				return 
+				 <paper>
+					<id>{ data($sp/sp:scientific_paper/@id) }</id>
+					<title>{ data($sp/sp:scientific_paper/sp:head/sp:title[1]) }</title>
+					{
+						for $author in $sp//sp:author
+							return <author> { concat(data($author/sp:first_name), " ", data($author/sp:last_name)) } </author>
+					}
+					<accepted_date> { data($sp/sp:scientific_paper/sp:head/sp:accepted_date) } </accepted_date>
+					
+					{
+						for $keyword in $sp//sp:keyword
+							return <keyword> { $keyword/text() } </keyword>
+					}
+				 </paper>
+		}
+	</search>

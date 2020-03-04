@@ -5,17 +5,24 @@
  xmlns:rdfa="http://www.w3.org/ns/rdfa#"
  xmlns="https://github.com/AnaMijailovic/XML-Tim19"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/AnaMijailovic/XML-Tim19 file:/C:/Users/anaam/Desktop/XML%20Project/XML-Tim19/scientific_papers/scientific_papers/src/main/resources/xsd/scientific_paper.xsd" id="ID001">
+ xsi:schemaLocation="https://github.com/AnaMijailovic/XML-Tim19 file:/C:/Users/anaam/Desktop/XML%20Project/XML-Tim19/scientific_papers/scientific_papers/src/main/resources/xsd/scientific_paper.xsd" 
+ 	id="ID001" status="ACCEPTED">
     <head>
-        <recieved_date>2006-05-04</recieved_date>
-        <revised_date>2006-05-04</revised_date>
-        <accepted_date>2006-05-04</accepted_date>
-        <title lang="lang1">title0</title>
-        <title lang="lang3">title1</title>
-        <author>
-            <first_name>first_name0</first_name>
-            <last_name>last_name0</last_name>
-            <affiliation>
+        <recieved_date rdfa:property="pred:recieved" rdfa:datatype="xs:date">2006-05-04</recieved_date>
+        <revised_date rdfa:property="pred:revised" rdfa:datatype="xs:date">2006-05-04</revised_date>
+        <accepted_date rdfa:property="pred:accepted" rdfa:datatype="xs:date">2006-05-04</accepted_date>
+        <title lang="lang1" rdfa:property="pred:titled" rdfa:datatype="xs:string">title000</title>
+        <title lang="lang3" rdfa:property="pred:titled" rdfa:datatype="xs:string">title111</title>
+        <author rdfa:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author1"
+        		rdfa:rel="pred:isTheAuthorOf" 
+        		rdfa:rev="pred:isWrittenBy"
+        		rdfa:href="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper1">
+            <first_name>first_name11</first_name>
+            <last_name>last_name11</last_name>
+            <affiliation rdfa:about="https://github.com/AnaMijailovic/XML-Tim19/affiliation/affiliation0"
+            		     rdfa:rel="pred:hasAMember" 
+            		     rdfa:rev="pred:isAMemberOf" 
+            		     rdfa:href="https://github.com/AnaMijailovic/XML-Tim19/authors/author1">
                 <name>name0</name>
                 <city>city0</city>
                 <country>country0</country>
@@ -30,8 +37,8 @@
                 <country>country1</country>
             </affiliation>
         </author>
-        <keyword>keyword0</keyword>
-        <keyword>keyword1</keyword>
+        <keyword rdfa:property="pred:keyword" rdfa:datatype="xs:string">keyword0</keyword>
+        <keyword rdfa:property="pred:keyword" rdfa:datatype="xs:string">keyword1</keyword>
     </head>
     <body>
         <abstract id="ID003">

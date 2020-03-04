@@ -1,5 +1,7 @@
 package com.ftn.scientific_papers.repository;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -34,7 +36,7 @@ public class EvaluationFormRepository {
 		// generate id
 		String id = "paper0";				
 		try {
-			ResourceSet rs = dbManager.executeXQuery(evaluationFormCollectionId, "count(/.)", "");
+			ResourceSet rs = dbManager.executeXQuery(evaluationFormCollectionId, "count(/.)", new HashMap<>(), "");
 			id = "paper" + rs.getIterator().nextResource().getContent().toString();
 		}catch(Exception e) {
 			
