@@ -8,7 +8,7 @@
 <app-header (sendSearchData)="sendSearchData($event)"></app-header>
 <img src="../../assets/images/header.jpg" width="100%" height="22%">
 
-<app-search-form></app-search-form>
+<app-search-form (sendSearchParams)= "sendSearchParams($event)"></app-search-form>
 <div id="paper-cards">
     <app-paper-card *ngFor="let paper of papers" [paper]="paper"></app-paper-card>
-</div>
+</div> 

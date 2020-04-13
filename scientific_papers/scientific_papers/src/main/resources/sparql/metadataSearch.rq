@@ -1,0 +1,13 @@
+PREFIX xml: <https://github.com/AnaMijailovic/XML-Tim19/> 
+PREFIX pred: <https://github.com/AnaMijailovic/XML-Tim19/predicate/> 
+
+SELECT DISTINCT ?paper
+FROM <http://localhost:8080/fuseki/PapersDataset/data/scientificPapers2>
+WHERE {
+ # ?affiliation  pred:hasAMember ?author .
+ ?paper pred:titled ?title .
+ ?paper pred:keyword ?keyword .
+ #?subject ?predicate ?object
+ FILTER(CONTAINS(UCASE(str(?title)), UCASE("{{title}}") ) &&
+    CONTAINS(UCASE(str(?keyword)), UCASE("{{keyword}}") )) .
+}

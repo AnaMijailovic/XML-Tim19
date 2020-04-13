@@ -1,12 +1,19 @@
 package com.ftn.scientific_papers.service;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.text.StringSubstitutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.xmldb.api.modules.XMLResource;
 
 import com.ftn.scientific_papers.dom.DOMParser;
+import com.ftn.scientific_papers.dto.SearchData;
 import com.ftn.scientific_papers.fuseki.FusekiManager;
+import com.ftn.scientific_papers.fuseki.FusekiReader;
 import com.ftn.scientific_papers.fuseki.MetadataExtractor;
 import com.ftn.scientific_papers.repository.ScientificPaperRepository;
 
@@ -14,6 +21,7 @@ import com.ftn.scientific_papers.repository.ScientificPaperRepository;
 public class ScientificPaperService {
 	
 	static String spSchemaPath = "src/main/resources/xsd/scientific_paper.xsd";
+	private static final String QUERY_FILE_PATH = "src/main/resources/sparql/metadataSearch.rq";
 	
 	@Autowired
 	private ScientificPaperRepository spRepository;
@@ -32,7 +40,18 @@ public class ScientificPaperService {
 	public String getAll(String searchText) {
 		return spRepository.getAll(searchText);
 	}
+	
+	public void metadataSearch(SearchData searchData) throws IOException {
 
+		HashMap<String, String> values = new HashMap<>();
+		System.out.println("\nTitle: " + searchData.getTitle());
+		
+		values.put("keyword", searchData.getKeyword());
+		values.put("title", searchData.getTitle());
+
+		FusekiReader.executeQuery(QUERY_FILE_PATH, values);
+	}
+	
 	public void save(String scientificPaperXml) throws Exception {
 		
 	   // SAXParseExcetion is thrown when xml is not valid
