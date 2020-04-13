@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="https://github.com/AnaMijailovic/XML-Tim19"
-    xmlns="https://github.com/AnaMijailovic/XML-Tim19/cover_letter"> 
+    targetNamespace="https://github.com/AnaMijailovic/XML-Tim19/cover_letter"
+    xmlns="https://github.com/AnaMijailovic/XML-Tim19/cover_letter">
     <xs:element name="cover_letter">
         <xs:complexType>
             <xs:sequence>
@@ -10,9 +10,11 @@
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="sender_name" minOccurs="1" maxOccurs="1"/>
-                            <xs:element default="Faculty of Technical Sciences" name="university_name" minOccurs="1" maxOccurs="1"/>
+                            <xs:element default="Faculty of Technical Sciences"
+                                name="university_name" minOccurs="1" maxOccurs="1"/>
                             <xs:element ref="university_address"/>
-                            <xs:element default="+38121/450-810" name="phone_number" type="TPhoneNumber"/>
+                            <xs:element default="+38121/450-810" name="phone_number"
+                                type="TPhoneNumber"/>
                             <xs:element name="email" type="TEmail"/>
                         </xs:sequence>
                     </xs:complexType>
@@ -26,8 +28,8 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="date" type="xs:date"></xs:element> 
-                <xs:element name="cover_letter_body" minOccurs="1" maxOccurs="1"  >
+                <xs:element name="date" type="xs:date"/>
+                <xs:element name="cover_letter_body" minOccurs="1" maxOccurs="1">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
                             <xs:minLength value="0"/>
@@ -38,7 +40,8 @@
                 <xs:element name="cover_letter_closing" minOccurs="1" maxOccurs="1">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element form="qualified" minOccurs="0" name="signature" type="xs:base64Binary"/>
+                            <xs:element form="qualified" minOccurs="0" name="signature"
+                                type="xs:base64Binary"/>
                             <xs:element name="sender_name" type="xs:string"/>
                             <xs:element name="academic_title" type="xs:string"/>
                             <xs:element name="department_name" type="xs:string"/>
@@ -52,17 +55,18 @@
     <xs:element name="university_address">
         <xs:complexType>
             <xs:sequence>
-                <xs:element default="Trg Dositeja Obradovića" name="street" minOccurs="1" maxOccurs="1" type="xs:string"/>
+                <xs:element default="Trg Dositeja Obradovića" name="street" minOccurs="1"
+                    maxOccurs="1" type="xs:string"/>
                 <xs:element default="6" name="street_number" type="xs:positiveInteger"/>
                 <xs:element default="Novi Sad" name="city" type="xs:string"/>
                 <xs:element default="Serbia" name="country" type="xs:string"/>
                 <xs:element default="21000" name="postal_number">
-                <xs:simpleType>
-                    <xs:restriction base="xs:integer">
-                        <xs:minExclusive value="11000"/>
-                        <xs:maxExclusive value="40000"/>
-                    </xs:restriction>
-                </xs:simpleType>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                            <xs:minExclusive value="11000"/>
+                            <xs:maxExclusive value="40000"/>
+                        </xs:restriction>
+                    </xs:simpleType>
                 </xs:element>
             </xs:sequence>
         </xs:complexType>
@@ -74,7 +78,8 @@
     </xs:simpleType>
     <xs:simpleType name="TEmail">
         <xs:restriction base="xs:string">
-            <xs:pattern value="[a-zA-Z0-9!#$%&amp;'*+/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*"/>
+            <xs:pattern value="[a-zA-Z0-9!#$%&amp;'*+/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*"
+            />
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>
