@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/AnaMijailovic/XML-Tim19"
+    xmlns="https://github.com/AnaMijailovic/XML-Tim19">
+    <xs:element name="publishing-process">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="author-id" type="xs:string"/>
+                <xs:element minOccurs="0" name="editor-id" type="xs:string"/>
+                <xs:element maxOccurs="unbounded" name="paper-version">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="scientific-paper-id" type="xs:string"/>
+                            <xs:element name="cover-letter-id" type="xs:string"/>
+                            <xs:element minOccurs="0" name="version-reviews">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" minOccurs="0"
+                                            ref="version-review"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:ID"/>
+            <xs:attribute name="latestVersion" type="xs:positiveInteger"/>
+            <xs:attribute name="status">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="NEW_SUBMISSION"/>
+                        <xs:enumeration value="WAITING_FOR_REVIEWERS_ ACCEPTANCE"/>
+                        <xs:enumeration value="NEW_REVIEVER_NEEDED"/>
+                        <xs:enumeration value="REVIEWS_ACCEPTED"/>
+                        <xs:enumeration value="REVIEWS_DONE"/>
+                        <xs:enumeration value="ACCEPTED"/>
+                        <xs:enumeration value="REJECTED"/>
+                        <xs:enumeration value="NEW_REVISION"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="version-review">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="reviewer_id" type="xs:string"/>
+                <xs:element minOccurs="0" name="review_id" type="xs:string"/>
+            </xs:sequence>
+            <xs:attribute name="status">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="PENDING"/>
+                        <xs:enumeration value="ACCEPTED"/>
+                        <xs:enumeration value="REJECTED"/>
+                        <xs:enumeration value="FINISHED"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
