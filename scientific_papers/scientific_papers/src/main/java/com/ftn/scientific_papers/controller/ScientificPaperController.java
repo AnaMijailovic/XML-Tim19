@@ -48,7 +48,7 @@ public class ScientificPaperController {
 			resource = spService.getAll(searchText);
 		}else {
 			SearchData searchData = new SearchData(title, author, affiliation, keyword, fromDate, toDate);
-			spService.metadataSearch(searchData);
+			resource = spService.metadataSearch(searchData);
 		}
 		
 		return new ResponseEntity<>(resource, HttpStatus.OK);

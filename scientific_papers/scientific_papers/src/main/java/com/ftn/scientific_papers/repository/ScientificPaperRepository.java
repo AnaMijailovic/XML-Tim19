@@ -14,6 +14,7 @@ import com.ftn.scientific_papers.util.DBManager;
 @Repository
 public class ScientificPaperRepository {
 	
+	private static final String XQUERY_PATH = ".\\src\\main\\resources\\xQuery";
 	@Autowired
 	private DBManager dbManager;
 	
@@ -33,7 +34,7 @@ public class ScientificPaperRepository {
 	}
 	
 	public String getAll(String searchText) {
-		String xQueryPath = ".\\src\\main\\resources\\xQuery\\textSearch.txt";
+		String xQueryPath = XQUERY_PATH + "\\textSearch.txt";
 		String result = "";
 		
 		HashMap<String, String> params = new HashMap<>();
@@ -50,7 +51,32 @@ public class ScientificPaperRepository {
 		return result;
 	}
 	
-	public void save(String scientificPaperXml) throws Exception {
+	public String getById(String id) {
+		String xQueryPath = XQUERY_PATH + "\\findById.txt";
+		String result = "";
+		
+		HashMap<String, String> params = new HashMap<>();
+		params.put("id", id);
+		
+		try {
+			ResourceSet rs = dbManager.executeXQuery(scientificPaperCollectionId, "", params, xQueryPath);
+			result = dbManager.resourceSetToString(rs);
+			System.out.println("Result: " + result);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public boolean update(String scientificPaperXml, String id) throws Exception {
+		
+		dbManager.save(scientificPaperCollectionId, id, scientificPaperXml);
+		
+		return true;
+	}
+	
+	public String save(String scientificPaperXml) throws Exception {
 		// generate id
 	    // TODO Change this?
 		String id = "paper0";				
@@ -63,6 +89,7 @@ public class ScientificPaperRepository {
 		System.out.println("\nID: " + id);	
 		//save 
 		dbManager.save(scientificPaperCollectionId, id, scientificPaperXml);
+		return id;
 		
 	}
 }

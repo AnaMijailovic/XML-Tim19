@@ -2,8 +2,10 @@ package com.ftn.scientific_papers.fuseki;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.text.StringSubstitutor;
 import org.apache.jena.query.QueryExecution;
@@ -20,7 +22,7 @@ public class FusekiReader {
 	
 	private FusekiReader() {}
 	
-	public static void executeQuery(String filePath, Map<String, String> params) throws IOException {
+	public static Set<String> executeQuery(String filePath, Map<String, String> params) throws IOException {
 		
 		// load properties
 		FusekiConnectionProperties conn = FusekiAuthenticationUtilities.loadProperties();
@@ -40,6 +42,7 @@ public class FusekiReader {
 		String varName;
 		RDFNode varValue;
 		
+		Set<String> papers = new HashSet<>();
 		while(results.hasNext()) {
 		    
 			// A single answer from a SELECT query
@@ -52,6 +55,8 @@ public class FusekiReader {
 		    	varName = variableBindings.next();
 		    	varValue = querySolution.get(varName);
 		    	
+		    	if (varName.equals("paper"))
+		    		papers.add(varValue.toString());
 		    	System.out.println("bla bla: " + varName + ": " + varValue);
 		    }
 		    System.out.println();
@@ -62,6 +67,10 @@ public class FusekiReader {
 		query.close() ;
 		
 		System.out.println("[INFO] SPARQL Query End.");
+		
+		// Set of paper urls
+		// example:  https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper0
+		return papers;
 	}
 
 }
