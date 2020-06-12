@@ -9,6 +9,7 @@ return
 				return 
 				 <paper>
 					<id>{ data($sp/sp:scientific_paper/@id) }</id>
+					(: TODO Ovde dodaj i drugi naslov i jezik? :)
 					<title>{ data($sp/sp:scientific_paper/sp:head/sp:title[1]) }</title>
 					{
 						for $author in $sp//sp:author

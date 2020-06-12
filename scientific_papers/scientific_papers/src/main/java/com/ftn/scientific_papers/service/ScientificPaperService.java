@@ -1,10 +1,9 @@
 package com.ftn.scientific_papers.service;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.Map;
 
-import org.apache.commons.text.StringSubstitutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -44,10 +43,18 @@ public class ScientificPaperService {
 	public void metadataSearch(SearchData searchData) throws IOException {
 
 		HashMap<String, String> values = new HashMap<>();
-		System.out.println("\nTitle: " + searchData.getTitle());
 		
 		values.put("keyword", searchData.getKeyword());
 		values.put("title", searchData.getTitle());
+		values.put("author", searchData.getAuthor());
+		values.put("affiliation", searchData.getAffiliation());
+		// TODO Da li mi se poklapaju formati datuma u xml i ovde?
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		String fromDate = searchData.getFromDate() == null ? "" :  sdf.format(searchData.getFromDate());
+		String toDate = searchData.getToDate() == null ? "" :  sdf.format(searchData.getToDate());
+		values.put("fromDate", fromDate);		
+		values.put("toDate", toDate);
 
 		FusekiReader.executeQuery(QUERY_FILE_PATH, values);
 	}
@@ -60,7 +67,8 @@ public class ScientificPaperService {
        // TODO change newMetadata.rdf path
        String rdfFilePath = "src/main/resources/rdf/newMetadata.rdf";
        metadataExtractor.extractMetadata(scientificPaperXml, rdfFilePath);
-       fusekiManager.saveMetadata(rdfFilePath, "/scientificPapers2");
+       // zasto je ovde bilo /scientificPapers2 ?
+       fusekiManager.saveMetadata(rdfFilePath, "/scientificPapers");
        
        	// TODO Generate ids for chapters, paragraphs etc. 
         // TODO Check chapter levels (max is 5)

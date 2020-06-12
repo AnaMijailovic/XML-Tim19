@@ -52,7 +52,7 @@ public class FusekiReader {
 		    	varName = variableBindings.next();
 		    	varValue = querySolution.get(varName);
 		    	
-		    	System.out.println(varName + ": " + varValue);
+		    	System.out.println("bla bla: " + varName + ": " + varValue);
 		    }
 		    System.out.println();
 		}

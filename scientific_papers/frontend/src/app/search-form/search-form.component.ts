@@ -34,7 +34,7 @@ export class SearchFormComponent implements OnInit {
 
   onSearchSubmit() {
     const params: string = this.utilService.generateParams(this.searchForm.value);
-    alert('Params: ' + params);
+    // alert('Params: ' + params);
     this.sendSearchParams.emit(params);
   }
 

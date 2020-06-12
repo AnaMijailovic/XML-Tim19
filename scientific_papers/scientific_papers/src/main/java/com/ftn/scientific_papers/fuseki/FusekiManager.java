@@ -40,7 +40,7 @@ public class FusekiManager {
 		
 		//TODO Remove this later
 		// This will delete all of the triples in all of the named graphs 
-		//request.add(SparqlUtil.dropAll()); 
+		// request.add(SparqlUtil.dropAll()); 
 		
 		UpdateProcessor processor = UpdateExecutionFactory.createRemote(request, conn.updateEndpoint);
 		processor.execute();
