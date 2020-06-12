@@ -76,6 +76,10 @@ export class HomeComponent implements OnInit {
     this.getScientificPapers('?searchText=' + searchText);
   }
 
+  sendSearchParams(searchText: string) {
+    this.getScientificPapers('?' + searchText);
+  }
+
   showSuccess() {
     this.toastr.success('Hello world!', 'Toastr fun!');
   }

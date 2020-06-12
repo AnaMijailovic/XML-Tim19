@@ -1,35 +1,65 @@
 <rdf:RDF xmlns:rdfa="http://www.w3.org/ns/rdfa#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
-  <rdf:Description rdf:about="">
-    <pred:recieved xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="date">2006-05-04</pred:recieved>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper1">
+    <pred:recieved xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2011-05-04</pred:recieved>
   </rdf:Description>
-  <rdf:Description rdf:about="">
-    <pred:revised xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="date">2006-05-04</pred:revised>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper1">
+    <pred:revised xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2011-06-04</pred:revised>
   </rdf:Description>
-  <rdf:Description rdf:about="">
-    <pred:accepted xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="date">2006-05-04</pred:accepted>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper1">
+    <pred:accepted xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2011-07-04</pred:accepted>
   </rdf:Description>
-  <rdf:Description rdf:about="">
-    <pred:titled xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="string">title000</pred:titled>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper1">
+    <pred:titled xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">XML Databases</pred:titled>
   </rdf:Description>
-  <rdf:Description rdf:about="">
-    <pred:titled xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="string">title111</pred:titled>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper1">
+    <pred:titled xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">XML baze podataka</pred:titled>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author1">
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author2">
     <pred:isTheAuthorOf xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper1"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper1">
-    <pred:isWrittenBy xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/authors/author1"/>
+    <pred:isWrittenBy xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/authors/author2"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/affiliation/affiliation0">
-    <pred:hasAMember xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/authors/author1"/>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author2">
+    <pred:firstName xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Johanna</pred:firstName>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author1">
-    <pred:isAMemberOf xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/affiliation/affiliation0"/>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author2">
+    <pred:lastName xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Smith</pred:lastName>
   </rdf:Description>
-  <rdf:Description rdf:about="">
-    <pred:keyword xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="string">keyword0</pred:keyword>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/affiliation/affiliation1">
+    <pred:hasAMember xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/authors/author2"/>
   </rdf:Description>
-  <rdf:Description rdf:about="">
-    <pred:keyword xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="string">keyword1</pred:keyword>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author2">
+    <pred:isAMemberOf xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/affiliation/affiliation1"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/affiliation/affiliation1">
+    <pred:affiliationNamed xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MIT</pred:affiliationNamed>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author3">
+    <pred:isTheAuthorOf xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper1"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper1">
+    <pred:isWrittenBy xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/authors/author3"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author3">
+    <pred:firstName xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mariana</pred:firstName>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author3">
+    <pred:lastName xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Peterson</pred:lastName>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/affiliation/affiliation1">
+    <pred:hasAMember xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/authors/author3"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author3">
+    <pred:isAMemberOf xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/affiliation/affiliation1"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/affiliation/affiliation1">
+    <pred:affiliationNamed xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MIT</pred:affiliationNamed>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper1">
+    <pred:keyword xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">xml</pred:keyword>
+  </rdf:Description>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper1">
+    <pred:keyword xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">databases</pred:keyword>
   </rdf:Description>
 </rdf:RDF>

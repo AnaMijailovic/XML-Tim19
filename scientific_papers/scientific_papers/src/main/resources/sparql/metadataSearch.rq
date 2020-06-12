@@ -1,0 +1,27 @@
+PREFIX xml: <https://github.com/AnaMijailovic/XML-Tim19/> 
+PREFIX pred: <https://github.com/AnaMijailovic/XML-Tim19/predicate/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT DISTINCT ?paper
+# ?author ?acceptedDate ?last_name ?title
+FROM <http://localhost:8080/fuseki/PapersDataset/data/scientificPapers>
+WHERE {
+ ?paper pred:titled ?title .
+ ?paper pred:keyword ?keyword .
+ ?paper pred:isWrittenBy ?author .
+ ?paper pred:accepted ?acceptedDate .
+ ?author pred:firstName ?first_name .
+ ?author pred:lastName ?last_name .
+ ?author pred:isAMemberOf ?affiliation .
+ ?affiliation pred:affiliationNamed ?affiliation_name .
+ FILTER(CONTAINS(UCASE(str(?title)), UCASE("{{title}}") ) &&
+        CONTAINS(UCASE(str(?keyword)), UCASE("{{keyword}}")) &&
+        (CONTAINS(UCASE(str(?first_name)), UCASE("{{author}}")) ||
+        CONTAINS(UCASE(str(?last_name)), UCASE("{{author}}")) ||
+        CONTAINS(CONCAT(UCASE(str(?first_name)), " ", UCASE(str(?last_name))), UCASE("{{author}}"))) &&
+        CONTAINS(UCASE(str(?affiliation_name)), UCASE("{{affiliation}}")) &&
+        ( (xsd:date(?acceptedDate) >= xsd:date("{{fromDate}}") || "{{fromDate}}" = "") &&
+          (xsd:date(?acceptedDate) <= xsd:date("{{toDate}}") || "{{toDate}}" = "")) 
+        ) .
+}
+ORDER BY ?title

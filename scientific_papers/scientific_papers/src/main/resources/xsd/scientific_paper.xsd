@@ -20,13 +20,15 @@
 
     <xs:complexType name="TPerson">
         <xs:sequence>
-            <xs:element name="first_name">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:minLength value="1"/>
-                        <xs:maxLength value="20"/>
-                    </xs:restriction>
-                </xs:simpleType>
+            <xs:element name="first_name" minOccurs="1">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                            <xs:anyAttribute namespace="http://www.w3.org/ns/rdfa#"
+                                processContents="lax"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
             </xs:element>
             <xs:element name="middle_name" minOccurs="0">
                 <xs:simpleType>
@@ -37,12 +39,14 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element name="last_name">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:minLength value="1"/>
-                        <xs:maxLength value="50"/>
-                    </xs:restriction>
-                </xs:simpleType>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                            <xs:anyAttribute namespace="http://www.w3.org/ns/rdfa#"
+                                processContents="lax"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
             </xs:element>
         </xs:sequence>
     </xs:complexType>
@@ -193,7 +197,16 @@
     <xs:element name="affiliation">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="name" type="xs:string"/>
+                <xs:element name="name">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:anyAttribute namespace="http://www.w3.org/ns/rdfa#"
+                                    processContents="lax"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element name="city" type="xs:string"/>
                 <xs:element name="state" type="xs:string" minOccurs="0"/>
                 <xs:element name="country" type="xs:string"/>
