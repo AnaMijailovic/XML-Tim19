@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
 import com.ftn.scientific_papers.dom.DOMParser;
@@ -77,6 +78,19 @@ public class PublishingProcessService {
 		dbManager.executeXUpdate(collectionId, xUpdateExpression, processId);
 		System.out.println("Proces after adding cover letter id: \n" + findOne(processId).getContent().toString());
 		
+	}
+	
+	public void addNewPaperVersion(String processId, String paperVersionId) throws Exception{
+		String updatePath = "/publishing-process/paper-version[last()]";
+		String insertString = " <paper-version>\r\n" + 
+				           "        <scientific-paper-id> " + paperVersionId +"</scientific-paper-id>\r\n" + 
+				           "        <cover-letter-id></cover-letter-id>\r\n" + 
+				           "    </paper-version>";
+		
+		String xUpdateExpression =  String.format(XUpdateTemplate.INSERT_AFTER, updatePath, insertString);
+		
+		dbManager.executeXUpdate(collectionId, xUpdateExpression, processId);
+		System.out.println("Proces after adding new paper version: \n" + findOne(processId).getContent().toString());
 	}
 
 }

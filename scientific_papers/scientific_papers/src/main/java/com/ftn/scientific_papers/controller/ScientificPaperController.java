@@ -27,34 +27,28 @@ public class ScientificPaperController {
 
 	@Autowired
 	private ScientificPaperService spService;
-	
-	@Autowired 
+
+	@Autowired
 	private PublishingProcessService publishingProcessService;
-	
+
 	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
 	private ResponseEntity<String> findAll(@RequestParam(defaultValue = "") String searchText,
-			@RequestParam(defaultValue = "") String title,
-			@RequestParam(defaultValue = "") String author,
-			@RequestParam(defaultValue = "") String affiliation,
-			@RequestParam(defaultValue = "") String keyword,
+			@RequestParam(defaultValue = "") String title, @RequestParam(defaultValue = "") String author,
+			@RequestParam(defaultValue = "") String affiliation, @RequestParam(defaultValue = "") String keyword,
 			@RequestParam(required = false) Long fromDate, // timestamp
 			@RequestParam(required = false) Long toDate // timestamp
-			) throws IOException{
-		System.out.println("Title: " + title +
-						   " Author: " + author +
-						   " Affiliation: " + affiliation +
-						   " Keyword: " + keyword + 
-						   " From Date: " + fromDate + 
-						   " To Date: " + toDate);
+	) throws IOException {
+		System.out.println("Title: " + title + " Author: " + author + " Affiliation: " + affiliation + " Keyword: "
+				+ keyword + " From Date: " + fromDate + " To Date: " + toDate);
 		String resource = "";
-		if(title.equals("") && author.equals("") && affiliation.equals("") && keyword.equals("") &&
-				fromDate == null && toDate == null) {
+		if (title.equals("") && author.equals("") && affiliation.equals("") && keyword.equals("") && fromDate == null
+				&& toDate == null) {
 			resource = spService.getAll(searchText);
-		}else {
+		} else {
 			SearchData searchData = new SearchData(title, author, affiliation, keyword, fromDate, toDate);
 			resource = spService.metadataSearch(searchData);
 		}
-		
+
 		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}
 
@@ -66,11 +60,19 @@ public class ScientificPaperController {
 	}
 
 	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
-	public ResponseEntity<String> add(@RequestBody String scientificPaperXml) throws Exception {
-		
-		String paperId = spService.save(scientificPaperXml);
+	public ResponseEntity<String> addPaper(@RequestBody String scientificPaperXml) throws Exception {
+
+		String paperId = spService.save(scientificPaperXml, "1");
 		// TODO Get author id
 		String processId = publishingProcessService.createProcess(paperId, "changeit");
+		return new ResponseEntity<>(processId, HttpStatus.CREATED);
+	}
+
+	@PostMapping(value="/revision", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
+	public ResponseEntity<String> addPaperRevision(@RequestParam(("processId")) String processId,
+			@RequestBody String scientificPaperXml) throws Exception {
+
+		spService.addPaperRevision(processId, scientificPaperXml);
 		return new ResponseEntity<>(processId, HttpStatus.CREATED);
 	}
 

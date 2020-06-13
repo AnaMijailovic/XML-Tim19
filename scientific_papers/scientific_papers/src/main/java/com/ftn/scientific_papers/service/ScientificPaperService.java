@@ -17,9 +17,11 @@ import org.xmldb.api.modules.XMLResource;
 import com.ftn.scientific_papers.dom.DOMParser;
 import com.ftn.scientific_papers.dto.SearchData;
 import com.ftn.scientific_papers.exceptions.MaxChapterLevelsExcedeedException;
+import com.ftn.scientific_papers.exceptions.RevisionForbiddenException;
 import com.ftn.scientific_papers.fuseki.FusekiManager;
 import com.ftn.scientific_papers.fuseki.FusekiReader;
 import com.ftn.scientific_papers.fuseki.MetadataExtractor;
+import com.ftn.scientific_papers.repository.PublishingProcessRepository;
 import com.ftn.scientific_papers.repository.ScientificPaperRepository;
 
 @Service
@@ -33,9 +35,12 @@ public class ScientificPaperService {
 	
 	@Autowired
 	private ScientificPaperRepository spRepository;
+	
+	@Autowired
+	private PublishingProcessRepository publishingProcessRepository;
 
-//	@Autowired
-//	private PublishingProcessService publishingProcessService;
+ 	@Autowired
+ 	private PublishingProcessService publishingProcessService;
 
 	@Autowired
 	private MetadataExtractor metadataExtractor;
@@ -189,7 +194,7 @@ public class ScientificPaperService {
 		
 	}
 
-	public String save(String scientificPaperXml) throws Exception {
+	public String save(String scientificPaperXml, String paperVersion) throws Exception {
 
 		// SAXParseExcetion is thrown when xml is not valid
 		Document document = DOMParser.buildDocument(scientificPaperXml, spSchemaPath);
@@ -199,12 +204,15 @@ public class ScientificPaperService {
 		
 		// set ids and check chapter levels
 		generateIds(document, id);
-
+		
 		// change id in xml document -> needed for metadata search
 		// get scientific_paper element from dom and set id attribute value
 		NodeList paperNodeList = document.getElementsByTagName("scientific_paper");
 		Element paperElement = (Element) paperNodeList.item(0);
 		paperElement.getAttributes().getNamedItem("id").setNodeValue(id);
+		
+		// set paper version
+		paperElement.setAttribute("version", paperVersion.toString());
 
 		// get head element from dom and set rdfa:about attribute value
 		NodeList headNodeList = paperElement.getElementsByTagName("head");
@@ -233,6 +241,29 @@ public class ScientificPaperService {
 
 		return id;
 
+	}
+	
+	public void addPaperRevision(String processId, String scientificPaperXml) throws Exception {
+		
+		// TODO check author
+
+		// check process status
+		String processStatus = publishingProcessRepository.getProcessStatus(processId);
+		if(!processStatus.equals("NEW_REVISION")) {
+			throw new RevisionForbiddenException("");
+		 } 
+		
+		// get paper latest version from process
+	    Integer latestVersion = Integer.valueOf(publishingProcessRepository.getProcessLatestVersion(processId));
+		String newVersion = Integer.toString(latestVersion + 1);
+		// String newVersion = "33";
+		
+		String paperVersionId = save(scientificPaperXml, newVersion);
+				
+		publishingProcessService.addNewPaperVersion(processId, paperVersionId);
+		publishingProcessRepository.updateLatestVersion(processId, newVersion);
+		publishingProcessRepository.updateStatus(processId, "NEW_SUBMISSION");
+		
 	}
 
 }

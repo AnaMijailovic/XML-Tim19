@@ -10,6 +10,8 @@ import org.xmldb.api.modules.XMLResource;
 
 import com.ftn.scientific_papers.exceptions.ResourceNotFoundException;
 import com.ftn.scientific_papers.util.DBManager;
+import com.ftn.scientific_papers.util.FileUtil;
+import com.ftn.scientific_papers.util.XUpdateTemplate;
 
 @Repository
 public class PublishingProcessRepository {
@@ -27,6 +29,53 @@ public class PublishingProcessRepository {
 			throw new ResourceNotFoundException("Publishing process with id " + id + " was not found");
 		}
 		return result;
+	}
+
+	public String getProcessStatus(String processId) throws Exception {
+
+		String query = FileUtil.readFile("./src/main/resources/xQuery/getProcessStatus.txt");
+		HashMap<String, String> params = new HashMap<>();
+		params.put("id", processId);
+		System.out.println("Process id: " + processId);
+		ResourceSet rs = dbManager.executeXQuery(publishingProcessCollectionId, query, params, "");
+		System.out.println("status size " + rs.getSize());
+		String status = rs.getIterator()
+				.nextResource()
+				.getContent()
+				.toString();
+		System.out.println("Status from xQuery: " + status);
+		return status;
+	}
+
+	public String getProcessLatestVersion(String processId) throws Exception {
+
+		String xQueryPath = "./src/main/resources/xQuery/getProcessLatestVersion.txt";
+		
+		HashMap<String, String> params = new HashMap<>();
+		params.put("id", processId);
+		ResourceSet rs = dbManager.executeXQuery(publishingProcessCollectionId, "", params, xQueryPath);
+		System.out.println("version size " + rs.getSize());
+		String latestVersion = rs.getIterator().nextResource().getContent().toString();
+		System.out.println("Latest version from xQuery: " + latestVersion);
+		return latestVersion;
+	}
+
+	public void updateLatestVersion(String processId, String newVersion) throws Exception {
+
+		String updatePath = "/publishing-process/@latestVersion";
+		String xUpdateExpression = String.format(XUpdateTemplate.UPDATE, updatePath, newVersion);
+
+		dbManager.executeXUpdate(publishingProcessCollectionId, xUpdateExpression, processId);
+		System.out.println("Proces after updating latestVersion: \n" + findOne(processId).getContent().toString());
+	}
+
+	public void updateStatus(String processId, String newStatus) throws Exception {
+
+		String updatePath = "/publishing-process/@status";
+		String xUpdateExpression = String.format(XUpdateTemplate.UPDATE, updatePath, newStatus);
+
+		dbManager.executeXUpdate(publishingProcessCollectionId, xUpdateExpression, processId);
+		System.out.println("Proces after updating status: \n" + findOne(processId).getContent().toString());
 	}
 
 	public String getNextId() {
@@ -48,7 +97,7 @@ public class PublishingProcessRepository {
 		dbManager.save(publishingProcessCollectionId, id, publishingProcessXml);
 
 	}
-	
+
 	public void update(String publishingProcessXml, String id) throws Exception {
 
 		dbManager.save(publishingProcessCollectionId, id, publishingProcessXml);
