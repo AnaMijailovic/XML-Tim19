@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.xmldb.api.modules.XMLResource;
 
 import com.ftn.scientific_papers.dto.SearchData;
+import com.ftn.scientific_papers.service.PublishingProcessService;
 import com.ftn.scientific_papers.service.ScientificPaperService;
 
 @RestController
@@ -26,6 +27,9 @@ public class ScientificPaperController {
 
 	@Autowired
 	private ScientificPaperService spService;
+	
+	@Autowired 
+	private PublishingProcessService publishingProcessService;
 	
 	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
 	private ResponseEntity<String> findAll(@RequestParam(defaultValue = "") String searchText,
@@ -64,8 +68,10 @@ public class ScientificPaperController {
 	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> add(@RequestBody String scientificPaperXml) throws Exception {
 		
-		spService.save(scientificPaperXml);
-		return new ResponseEntity<>("Successfully saved", HttpStatus.CREATED);
+		String paperId = spService.save(scientificPaperXml);
+		// TODO Get author id
+		String processId = publishingProcessService.createProcess(paperId, "");
+		return new ResponseEntity<>(processId, HttpStatus.CREATED);
 	}
 
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<publishing-process xmlns="https://github.com/AnaMijailovic/XML-Tim19"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="https://github.com/AnaMijailovic/XML-Tim19 file:/C:/Users/anaam/Desktop/XML%20Project/XML-Tim19/scientific_papers/scientific_papers/src/main/resources/xsd/publishing_process.xsd"
+    status="NEW_SUBMISSION" latestVersion="1" id="changeit">
+    <author-id></author-id>
+    <editor-id></editor-id>
+    <paper-version>
+        <scientific-paper-id></scientific-paper-id>
+        <cover-letter-id></cover-letter-id>
+    </paper-version>
+</publishing-process>

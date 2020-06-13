@@ -29,6 +29,9 @@ public class ScientificPaperService {
 	@Autowired
 	private ScientificPaperRepository spRepository;
 	
+	@Autowired
+	private PublishingProcessService publishingProcessService;
+	
 	@Autowired 
 	private MetadataExtractor metadataExtractor;
 	
@@ -99,7 +102,7 @@ public class ScientificPaperService {
 		return paperIds;
 	}
 
-	public void save(String scientificPaperXml) throws Exception {
+	public String save(String scientificPaperXml) throws Exception {
 		
 	   // SAXParseExcetion is thrown when xml is not valid
        Document document =  DOMParser.buildDocument(scientificPaperXml, spSchemaPath);
@@ -107,8 +110,8 @@ public class ScientificPaperService {
        	// TODO Generate ids for chapters, paragraphs etc. 
         // TODO Check chapter levels (max is 5)
        
-       // Save to get id
-	   String id = spRepository.save(scientificPaperXml);
+       // Get id
+       String id = spRepository.getNextId();
 	   
 	   // change id in xml document	-> needed for metadata search   
 	   // get scientific_paper element from dom and set id attribute value
@@ -131,15 +134,17 @@ public class ScientificPaperService {
 		   authorElement.getAttributes().getNamedItem("rdfa:href").setNodeValue(aboutAttributeValue);
 	   }
 	  
-	   // Convert Document to string and update
+	   // Convert Document to string and save
 	   String newXml = DOMParser.getStringFromDocument(document);
 	   System.out.println("New: \n" +  newXml);
-	   spRepository.update(newXml, id);
+	   spRepository.save(newXml, id);
 	   
 	   // Save metadata 
        String rdfFilePath = "src/main/resources/rdf/newMetadata.rdf";
        metadataExtractor.extractMetadata(newXml, rdfFilePath);
        fusekiManager.saveMetadata(rdfFilePath, "/scientificPapers");
+       
+       return id;
 
 	}
 }
