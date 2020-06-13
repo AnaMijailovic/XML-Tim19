@@ -25,6 +25,7 @@ import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
 import org.xmldb.api.modules.XPathQueryService;
 import org.xmldb.api.modules.XQueryService;
+import org.xmldb.api.modules.XUpdateQueryService;
 
 import com.ftn.scientific_papers.util.AuthenticationUtilities.ConnectionProperties;
 
@@ -268,7 +269,46 @@ public class DBManager {
 
 		return result;
 	}
-
+	
+	public void executeXUpdate(String collectionId, String xUpdateExpression, String documentId) throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        
+    	// initialize database driver
+    	System.out.println("[INFO] Loading driver class: " + conn.driver);
+        Class<?> cl = Class.forName(conn.driver);
+        
+        Database database = (Database) cl.newInstance();
+        database.setProperty("create-database", "true");
+        
+        DatabaseManager.registerDatabase(database);
+        
+        Collection col = null;
+        
+        try { 
+        	
+        	// get the collection
+        	System.out.println("[INFO] Retrieving the collection: " + collectionId);
+            col = DatabaseManager.getCollection(conn.uri + collectionId, conn.user, conn.password);
+            col.setProperty("indent", "yes");
+        	
+            // get an instance of xupdate query service
+            System.out.println("[INFO] Fetching XUpdate service for the collection.");
+            XUpdateQueryService xupdateService = (XUpdateQueryService) col.getService("XUpdateQueryService", "1.0");
+            xupdateService.setProperty("indent", "yes");
+            xupdateService.updateResource(documentId, xUpdateExpression);
+            
+        } finally {        	
+            // don't forget to cleanup
+            if(col != null) {
+                try { 
+                	col.close();
+                } catch (XMLDBException xe) {
+                	xe.printStackTrace();
+                }
+            }
+        }
+	}
+	
+	
 	public String resourceSetToString(ResourceSet resourceSet) throws XMLDBException {
 		// handle the results
 

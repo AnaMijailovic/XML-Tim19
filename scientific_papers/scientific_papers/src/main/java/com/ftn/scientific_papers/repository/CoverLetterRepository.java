@@ -32,7 +32,7 @@ public class CoverLetterRepository {
 		 return result;
 	}
 	
-	public void save(String scientificPaperXml) throws Exception {
+	public String save(String scientificPaperXml) throws Exception {
 		// generate id
 		String id = "letter0";
 		try {
@@ -47,6 +47,7 @@ public class CoverLetterRepository {
 		
 		//save 
 		dbManager.save(coverLetterCollectionId, id, scientificPaperXml);
+		return id;
 		
 	}
 }

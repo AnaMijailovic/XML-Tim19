@@ -55,7 +55,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(customExceptionResponse, HttpStatus.FORBIDDEN);
 
     }
-    
+ /*   
     @ExceptionHandler(SAXParseException.class)
     public ResponseEntity<CustomExceptionResponse> saxParseExceptionExceptionHandler(Exception ex, WebRequest request) {
         CustomExceptionResponse customExceptionResponse = new CustomExceptionResponse();
@@ -64,7 +64,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         customExceptionResponse.setStatus(HttpStatus.BAD_REQUEST.value());
         return new ResponseEntity<>(customExceptionResponse, HttpStatus.BAD_REQUEST);
 
-    }
+    } */
     
     
     

@@ -21,15 +21,12 @@ public class CoverLetterService {
 		return coverLetterRepository.findOne(id);
 	}
 
-	public void save(String scientificPaperXml) throws Exception {
+	public String save(String scientificPaperXml) throws Exception {
 		
 	   // SAXParseExcetion is thrown when xml is not valid
        Document document =  DOMParser.buildDocument(scientificPaperXml, coverLetterSchemaPath);
-   
-       	// TODO Generate ids for chapters, paragraphs etc. 
-        // TODO Check chapter levels (max is 5)
        
-       coverLetterRepository.save(scientificPaperXml);
+       return coverLetterRepository.save(scientificPaperXml);
 
 	}
 }

@@ -1,0 +1,6 @@
+declare namespace sp="https://github.com/AnaMijailovic/XML-Tim19";
+let $collection := collection("/db/sample/publishing_process")
+
+for $pp in $collection
+where $pp/sp:publishing-process/@id = $id
+return data($pp/sp:publishing-process/@latestVersion)

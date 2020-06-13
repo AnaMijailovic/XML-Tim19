@@ -238,8 +238,8 @@
                 <xs:element maxOccurs="unbounded" name="paragraph" type="TComplexParagraph"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="chapter"/>
             </xs:sequence>
-            <xs:attribute name="id" type="xs:ID" use="required"/>
-            <xs:attribute name="level" use="required">
+            <xs:attribute name="id" type="xs:ID" use="optional"/>
+            <xs:attribute name="level" use="optional">
                 <xs:simpleType>
                     <xs:restriction base="xs:positiveInteger">
                         <xs:maxInclusive value="5"/>
