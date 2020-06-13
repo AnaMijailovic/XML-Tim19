@@ -41,9 +41,9 @@ public class PublishingProcessService {
 		// Read xml template
 		String template = FileUtil.readFile(templatePath);
 		System.out.println("Template: " + template);
-
+		
 		Document document = DOMParser.buildDocument(template, schemaPath);
-
+		
 		// Set publishing process id
 		String id = publishingProcessRepository.getNextId();
 

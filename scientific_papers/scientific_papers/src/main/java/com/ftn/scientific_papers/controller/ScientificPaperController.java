@@ -70,7 +70,7 @@ public class ScientificPaperController {
 		
 		String paperId = spService.save(scientificPaperXml);
 		// TODO Get author id
-		String processId = publishingProcessService.createProcess(paperId, "");
+		String processId = publishingProcessService.createProcess(paperId, "changeit");
 		return new ResponseEntity<>(processId, HttpStatus.CREATED);
 	}
 
