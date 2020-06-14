@@ -16,7 +16,7 @@ import org.xmldb.api.modules.XMLResource;
 
 import com.ftn.scientific_papers.dom.DOMParser;
 import com.ftn.scientific_papers.dto.SearchData;
-import com.ftn.scientific_papers.exceptions.MaxChapterLevelsExcedeedException;
+import com.ftn.scientific_papers.exceptions.MaxChapterLevelsExceededException;
 import com.ftn.scientific_papers.exceptions.ProcessStatusException;
 import com.ftn.scientific_papers.exceptions.RevisionForbiddenException;
 import com.ftn.scientific_papers.fuseki.FusekiManager;
@@ -114,7 +114,7 @@ public class ScientificPaperService {
 		return paperIds;
 	}
 
-	public void generateIds(Document document, String paperId) throws MaxChapterLevelsExcedeedException {
+	public void generateIds(Document document, String paperId) throws MaxChapterLevelsExceededException {
 
 		// Set abstract id
 		Element abstractEl = (Element) document.getElementsByTagName("abstract").item(0);
@@ -164,10 +164,11 @@ public class ScientificPaperService {
 	
 	// recursively set subchapter ids
 	// check max chapter level
-	public void setSubchapterIds(Element chapter, String parentId, int levelCount) throws MaxChapterLevelsExcedeedException {
+	public void setSubchapterIds(Element chapter, String parentId, int levelCount) throws MaxChapterLevelsExceededException {
 		
 		if(levelCount > maxChapterLevels) 
-			throw new MaxChapterLevelsExcedeedException("");
+			throw new MaxChapterLevelsExceededException("Max Chapter Levels Excedeed - maximum is " + maxChapterLevels
+					+ " levels");
 		
 		NodeList subchapters = chapter.getElementsByTagName("chapter");
 

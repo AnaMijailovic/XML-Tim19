@@ -60,7 +60,7 @@ public class ScientificPaperController {
 		return new ResponseEntity<>(resource.getContent().toString(), HttpStatus.OK);
 	}
 
-	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
+	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> addPaper(@RequestBody String scientificPaperXml) throws Exception {
 
 		String paperId = spService.save(scientificPaperXml, "1");

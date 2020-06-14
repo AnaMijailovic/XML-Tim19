@@ -16,6 +16,9 @@ import { MaterialModule } from './material/material.module';
 import { ToastrModule } from 'ngx-toastr';
 import { SearchFormComponent } from './search-form/search-form.component';
 import { PaperCardComponent } from './paper-card/paper-card.component';
+import { AddPaperFormComponent } from './add-paper-form/add-paper-form.component';
+import { ScientificPaperService } from './_service/scientific-paper.service';
+import { CoverLetterService } from './_service/cover-letter.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,8 @@ import { PaperCardComponent } from './paper-card/paper-card.component';
     HomeComponent,
     LogoutComponent,
     SearchFormComponent,
-    PaperCardComponent
+    PaperCardComponent,
+    AddPaperFormComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,7 @@ import { PaperCardComponent } from './paper-card/paper-card.component';
     BrowserAnimationsModule
 
   ],
-  providers: [AllowedRoutes, AuthenticationService],
+  providers: [AllowedRoutes, AuthenticationService, ScientificPaperService, CoverLetterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
