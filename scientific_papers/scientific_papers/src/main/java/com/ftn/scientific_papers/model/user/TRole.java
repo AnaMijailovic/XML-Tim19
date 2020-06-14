@@ -60,7 +60,12 @@ public class TRole {
         return scientificPaperId;
     }
 
-    /**
+    @Override
+	public String toString() {
+		return "TRole [scientificPaperId=" + scientificPaperId + ", role=" + role + "]";
+	}
+
+	/**
      * Sets the value of the scientificPaperId property.
      * 
      * @param value

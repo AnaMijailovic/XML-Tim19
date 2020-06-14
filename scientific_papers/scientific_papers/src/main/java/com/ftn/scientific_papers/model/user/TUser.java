@@ -92,7 +92,14 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "user")
 public class TUser {
 
-    @XmlElement(required = true)
+    @Override
+	public String toString() {
+		return "TUser [name=" + name + ", surname=" + surname + ", username=" + username + ", password=" + password
+				+ ", email=" + email + ", roles=" + roles + ", isEditor=" + isEditor + ", userId=" + userId + "]";
+	}
+
+
+	@XmlElement(required = true)
     protected String name;
     @XmlElement(required = true)
     protected String surname;
@@ -348,6 +355,16 @@ public class TUser {
                 role = new ArrayList<TRole>();
             }
             return this.role;
+        }
+        
+        @Override()
+        public String toString() {
+        	String s = "";
+        	for(TRole t : this.role) {
+        		s += t.toString();
+        	}
+        	return s;
+        	
         }
 
     }
