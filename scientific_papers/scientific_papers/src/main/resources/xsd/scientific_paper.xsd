@@ -187,6 +187,7 @@
                         <xs:enumeration value="REJECTED"/>
                         <xs:enumeration value="REVISION"/>
                         <xs:enumeration value="PENDING"/>
+                        <xs:enumeration value="WITHDRAWN"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:attribute>

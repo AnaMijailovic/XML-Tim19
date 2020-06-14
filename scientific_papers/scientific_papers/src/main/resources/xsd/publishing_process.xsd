@@ -36,6 +36,7 @@
                         <xs:enumeration value="REVIEWS_DONE"/>
                         <xs:enumeration value="ACCEPTED"/>
                         <xs:enumeration value="REJECTED"/>
+                        <xs:enumeration value="WITHDRAWN"/>
                         <xs:enumeration value="NEW_REVISION"/>
                     </xs:restriction>
                 </xs:simpleType>
