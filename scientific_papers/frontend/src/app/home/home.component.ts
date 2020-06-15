@@ -27,49 +27,7 @@ export class HomeComponent implements OnInit {
 
     this.spService.getScientificPapers(params).subscribe(
       (response) => {
-
-        if (response != null) {
-
-          const jsonResponse = JSON.parse(convert.xml2json(response, { compact: true, spaces: 4 } ));
-          let papers = jsonResponse.search.paper;
-
-          // TODO Remove this from here
-          // if response is undefined -> no results
-          if (!papers) {
-            this.showInfo('No results', '');
-            return;
-          }
-
-          // if not an array -> one result
-          if (!Array.isArray(papers)) {
-            papers = [papers];
-          }
-
-          for ( const paper of papers ) {
-            const authorsList = [];
-            for (const author of paper.author) {
-              authorsList.push(author._text);
-            }
-
-            const keywordsList = [];
-            for (const keyword of paper.keyword) {
-              keywordsList.push(keyword._text);
-            }
-
-            const scientificPaper: ScientificPaper = {
-                id : paper.id._text,
-                processId: paper.process_id._text,
-                paperStatus: paper.paper_status._text,
-                title : paper.title._text,
-                acceptedDate : paper.accepted_date._text,
-                authors : authorsList,
-                keywords: keywordsList
-            };
-
-            this.papers.push(scientificPaper);
-
-          }
-        }
+        this.papers = this.spService.responseToArray(response);
       });
 
   }
