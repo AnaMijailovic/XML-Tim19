@@ -38,11 +38,10 @@
             <xs:element name="roles">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element maxOccurs="unbounded" minOccurs="0" name="role" type="TRole"/>
+                        <xs:element maxOccurs="unbounded" ref="role"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="is_editor" type="xs:boolean"/>
         </xs:sequence>
         <xs:attribute name="user_id" type="xs:string"/>
     </xs:complexType>
@@ -53,14 +52,15 @@
         </xs:restriction>
     </xs:simpleType>
     <xs:complexType name="TRole">
-        <xs:attribute name="scientific_paper_id" type="xs:string"/>
         <xs:attribute name="role">
             <xs:simpleType>
                 <xs:restriction base="xs:string">
-                    <xs:enumeration value="AUTHOR"/>
-                    <xs:enumeration value="REVIEWER"/>
+                    <xs:enumeration value="ROLE_AUTHOR"/>
+                    <xs:enumeration value="ROLE_REVIEWER"/>
+                    <xs:enumeration value="ROLE_EDITOR"/>
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
     </xs:complexType>
+    <xs:element name="role" type="TRole"/>
 </xs:schema>

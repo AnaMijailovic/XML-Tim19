@@ -2,6 +2,7 @@ package com.ftn.scientific_papers.controller;
 
 import javax.validation.Valid;
 
+import com.ftn.scientific_papers.model.user.TRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,9 @@ import com.ftn.scientific_papers.model.user.TUser;
 import com.ftn.scientific_papers.model.user.TUser.Roles;
 import com.ftn.scientific_papers.security.TokenUtils;
 import com.ftn.scientific_papers.service.CustomUserDetailsService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -48,8 +52,14 @@ public class UserController {
 		user.setName(dto.getName());
 		user.setSurname(dto.getSurname());
 		user.setEmail(dto.getEmail());
-		user.setIsEditor(dto.getIsEditor());
-		user.setRoles(new Roles());
+
+		Roles roles = new Roles();
+		if (dto.getIsEditor()) {
+			roles.getRole().add(new TRole("ROLE_REVIEWER"));
+			roles.getRole().add(new TRole("ROLE_EDITOR"));
+		}
+		roles.getRole().add(new TRole("ROLE_AUTHOR"));
+		user.setRoles(roles);
 		
 		userDetailsService.registerUser(user);
 		
@@ -63,7 +73,7 @@ public class UserController {
 			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
 					dto.getUsername(), dto.getPassword());
 			
-			//authenticationManager.authenticate(token);
+			authenticationManager.authenticate(token);
 			UserDetails userDetails = userDetailsService.loadUserByUsername(dto.getUsername());
 			
 			String generatedToken = tokenUtils.generateToken(userDetails);
