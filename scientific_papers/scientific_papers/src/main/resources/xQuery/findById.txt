@@ -1,22 +1,29 @@
 declare namespace sp="https://github.com/AnaMijailovic/XML-Tim19";
 let $collection := collection("/db/sample/scientific_papers")
+let $processes := collection("/db/sample/publishing_process")
 
-for $sp in $collection
-    where $sp/sp:scientific_paper/@status = "ACCEPTED" and $sp/sp:scientific_paper/@id = $id
-	return 
-		<paper>
-			<id>{ data($sp/sp:scientific_paper/@id) }</id>
-				(: TODO Ovde dodaj i drugi naslov i jezik? :)
-			<title>{ data($sp/sp:scientific_paper/sp:head/sp:title[1]) }</title>
-			{
-				for $author in $sp//sp:author
-				return <author> { concat(data($author/sp:first_name), " ", data($author/sp:last_name)) } </author>
-			}
-				<accepted_date> { data($sp/sp:scientific_paper/sp:head/sp:accepted_date) } </accepted_date>
+
+			for $sp in $collection
+			 for $pp in $processes
+			  where $pp/sp:publishing-process/sp:paper-version[last()]/sp:scientific-paper-id/text() = $sp/sp:scientific_paper/@id and
+			 ( ($loggedAuthor = "" and $sp/sp:scientific_paper/@status = "ACCEPTED") or 
+			  ($loggedAuthor != "" and $loggedAuthor = $pp/sp:publishing-process/sp:author-id/text())) and 
+			   $sp/sp:scientific_paper/@id = $id
+				return 
+				 <paper>
+					<id>{ data($sp/sp:scientific_paper/@id) }</id>
+					<paper_status> { data($sp/sp:scientific_paper/@status) } </paper_status>
+					<process_id>{ data($pp/sp:publishing-process/@id) }</process_id>
+					(: TODO Ovde dodaj i drugi naslov i jezik? :)
+					<title>{ data($sp/sp:scientific_paper/sp:head/sp:title[1]) }</title>
+					{
+						for $author in $sp//sp:author
+							return <author> { concat(data($author/sp:first_name), " ", data($author/sp:last_name)) } </author>
+					}
+					<accepted_date> { data($sp/sp:scientific_paper/sp:head/sp:accepted_date) } </accepted_date>
 					
-			{
-				for $keyword in $sp//sp:keyword
-					return <keyword> { $keyword/text() } </keyword>
-			}
-		</paper>
-
+					{
+						for $keyword in $sp//sp:keyword
+							return <keyword> { $keyword/text() } </keyword>
+					}
+				 </paper>

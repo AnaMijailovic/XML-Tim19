@@ -98,24 +98,24 @@ export class AddPaperFormComponent implements OnInit {
   paperFileChange(files: any, change: any) {
     const reader = new FileReader();
     reader.readAsText(files[0], 'UTF-8');
-    reader.onload  = (evt) => {
-        alert(evt.target.result);
-        this.paper = evt.target.result.toString();
+    reader.onload  = () => {
+        this.paper = reader.result.toString();
+        this.toastr.success('Success', 'File added');
     };
-    reader.onerror = (evt) => {
-       alert('Reading file error');
+    reader.onerror = () => {
+      this.toastr.error('Error', 'Failed to read file');
     };
   }
 
   letterFileChange(files: any, change: any) {
     const reader = new FileReader();
     reader.readAsText(files[0], 'UTF-8');
-    reader.onload  = (evt) => {
-        alert(evt.target.result);
-        this.letter = evt.target.result.toString();
+    reader.onload  = () => {
+        this.letter = reader.result.toString();
+        this.toastr.success('Success', 'File added');
     };
-    reader.onerror = (evt) => {
-       alert('Reading file error');
+    reader.onerror = () => {
+      this.toastr.error('Error', 'Failed to read file');
     };
   }
 

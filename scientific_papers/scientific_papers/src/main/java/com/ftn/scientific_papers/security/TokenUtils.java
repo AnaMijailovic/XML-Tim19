@@ -4,12 +4,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
 public class TokenUtils {
@@ -68,6 +71,11 @@ public class TokenUtils {
         claims.put("created", new Date(System.currentTimeMillis()));
         claims.put("roles", userDetails.getAuthorities());
         return Jwts.builder().setClaims(claims).setExpiration(new Date(System.currentTimeMillis() + expiration * 1000)).signWith(SignatureAlgorithm.HS512, secret).compact();
+    }
+    
+    public String getUsernameFromRequest(HttpServletRequest request) {
+    	String token = request.getHeader("Authorization").substring(7);
+    	return getUsernameFromToken(token);
     }
 
 }

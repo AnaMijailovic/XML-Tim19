@@ -20,6 +20,7 @@ import { AddPaperFormComponent } from './add-paper-form/add-paper-form.component
 import { ScientificPaperService } from './_service/scientific-paper.service';
 import { CoverLetterService } from './_service/cover-letter.service';
 import { TokenInterceptorService } from './_service/token-interceptor.service';
+import { AuthorPapersComponent } from './author-papers/author-papers.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,9 @@ import { TokenInterceptorService } from './_service/token-interceptor.service';
     LogoutComponent,
     SearchFormComponent,
     PaperCardComponent,
-    AddPaperFormComponent
+    AddPaperFormComponent,
+    AuthorPapersComponent,
+    AuthorPapersComponent
   ],
   imports: [
     BrowserModule,

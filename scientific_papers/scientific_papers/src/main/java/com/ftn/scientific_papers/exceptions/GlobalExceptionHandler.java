@@ -46,7 +46,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     }
     
-    @ExceptionHandler(ForbiddenException.class)
+    @ExceptionHandler({ForbiddenException.class, RevisionForbiddenException.class})
     public ResponseEntity<CustomExceptionResponse> forbiddenExceptionHandler(Exception ex, WebRequest request) {
         CustomExceptionResponse customExceptionResponse = new CustomExceptionResponse();
         customExceptionResponse.setTimestamp(LocalDateTime.now());

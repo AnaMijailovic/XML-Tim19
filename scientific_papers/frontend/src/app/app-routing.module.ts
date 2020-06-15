@@ -5,6 +5,7 @@ import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { LogoutComponent } from './logout/logout.component';
 import { AddPaperFormComponent } from './add-paper-form/add-paper-form.component';
+import { AuthorPapersComponent } from './author-papers/author-papers.component';
 
 
 const routes: Routes = [
@@ -12,7 +13,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
   { path: 'logout', component: LogoutComponent},
-  { path: 'add-paper', component: AddPaperFormComponent}
+  { path: 'add-paper', component: AddPaperFormComponent},
+  { path: 'my-papers', component: AuthorPapersComponent}
 ];
 
 @NgModule({

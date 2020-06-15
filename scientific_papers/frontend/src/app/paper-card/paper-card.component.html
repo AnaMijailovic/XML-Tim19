@@ -4,6 +4,16 @@
     </mat-card-header>
     <mat-card-content flex>
         <table>
+                <tr>
+                        <td>
+                            <b>Id:</b> {{ paper.id }}
+                        </td>
+                    </tr>
+                    <tr>
+                            <td>
+                                <b>Process Id:</b> {{ paper.processId }}
+                            </td>
+                        </tr>
             <tr>
                 <td>
                     <b>Authors:</b> <span *ngFor="let author of paper.authors"> {{ author }} </span>
@@ -19,6 +29,11 @@
                     <b>Published:</b> {{ paper.acceptedDate }}
                 </td>
             </tr>
+            <tr>
+                    <td>
+                        <b>Status:</b> {{ paper.paperStatus }}
+                    </td>
+                </tr>
         </table>
         <button mat-raised-button color="primary" class="view-paper-btn"> View </button>
     </mat-card-content>

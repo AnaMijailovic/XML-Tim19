@@ -1,25 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
-import { ScientificPaperService } from '../_service/scientific-paper.service';
+import { UtilService } from '../_service/util.service';
 import { ScientificPaper } from '../_model/scientificPaper.model';
+import { ScientificPaperService } from '../_service/scientific-paper.service';
+import { ToastrService } from 'ngx-toastr';
 
 declare var require: any;
 const convert = require('xml-js');
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'app-author-papers',
+  templateUrl: './author-papers.component.html',
+  styleUrls: ['./author-papers.component.scss']
 })
-export class HomeComponent implements OnInit {
-
+export class AuthorPapersComponent implements OnInit {
   papers: ScientificPaper[] = [];
 
-  constructor(private toastr: ToastrService,
-              private spService: ScientificPaperService) { }
+  constructor(private utilService: UtilService,
+              private spService: ScientificPaperService,
+              private toastr: ToastrService) { }
 
   ngOnInit() {
-    this.getScientificPapers('');
   }
 
   getScientificPapers(params: string) {
@@ -32,11 +32,11 @@ export class HomeComponent implements OnInit {
 
           const jsonResponse = JSON.parse(convert.xml2json(response, { compact: true, spaces: 4 } ));
           let papers = jsonResponse.search.paper;
-
+          alert(papers);
           // TODO Remove this from here
           // if response is undefined -> no results
           if (!papers) {
-            this.showInfo('No results', '');
+            this.toastr.info('No results', '');
             return;
           }
 
@@ -75,27 +75,20 @@ export class HomeComponent implements OnInit {
   }
 
   sendSearchData(searchText: string) {
-    this.getScientificPapers('?searchText=' + searchText);
+
+    this.getScientificPapers('?searchText=' + searchText +
+                             '&loggedAuthor=' + this.utilService.getLoggedUser() );
   }
 
-  sendSearchParams(searchText: string) {
-    this.getScientificPapers('?' + searchText);
-  }
+  sendSearchParams(params: string) {
+    if (params === '') {
+      params = 'loggedAuthor=' + this.utilService.getLoggedUser();
+    } else {
+      params = params + '&loggedAuthor=' + this.utilService.getLoggedUser();
+    }
 
-  showSuccess() {
-    this.toastr.success('Hello world!', 'Toastr fun!');
-  }
+    alert('papehf: ' + params);
+    this.getScientificPapers('?' + params);
 
-  showError() {
-    this.toastr.error('Hello world!', 'Toastr fun!');
   }
-
-  showInfo(message: string, header: string) {
-    this.toastr.info(message, header);
-  }
-
-  showWarning() {
-    this.toastr.warning('Hello world!', 'Toastr fun!');
-  }
-
 }

@@ -75,6 +75,18 @@ public class PublishingProcessRepository {
 		System.out.println("Latest version from xQuery: " + latestVersion);
 		return latestVersion;
 	}
+	
+	public String getAuthorFromProcess(String processId) throws Exception {
+
+		String xQueryPath = "./src/main/resources/xQuery/getAuthorFromProcess.txt";
+		
+		HashMap<String, String> params = new HashMap<>();
+		params.put("id", processId);
+		ResourceSet rs = dbManager.executeXQuery(publishingProcessCollectionId, "", params, xQueryPath);
+		String author = rs.getIterator().nextResource().getContent().toString();
+		System.out.println("Author: " + author);
+		return author;
+	}
 
 	public void updateLatestVersion(String processId, String newVersion) throws Exception {
 

@@ -30,7 +30,7 @@ public class CoverLetterController {
 	private PublishingProcessService publishingProcessService;
 
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_XML_VALUE)
-	private ResponseEntity<String> findOne(@PathVariable("id") String id) throws Exception {
+	public ResponseEntity<String> findOne(@PathVariable("id") String id) throws Exception {
 		XMLResource resource = coverLetterService.findOne(id);
 
 		return new ResponseEntity<>(resource.getContent().toString(), HttpStatus.OK);

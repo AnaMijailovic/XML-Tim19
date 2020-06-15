@@ -54,16 +54,16 @@ public class ScientificPaperService {
 		return spRepository.findOne(id);
 	}
 
-	public String getAll(String searchText) {
-		return spRepository.getAll(searchText);
+	public String getAll(String searchText, String loggedAuthor) {
+		return spRepository.getAll(searchText, loggedAuthor);
 	}
 
-	public String getByIds(Set<String> ids) {
+	public String getByIds(Set<String> ids, String loggedAuthor) {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("<search>");
 
-		ids.forEach(id -> sb.append(spRepository.getById(id)));
+		ids.forEach(id -> sb.append(spRepository.getById(id, loggedAuthor)));
 
 		sb.append("</search>");
 
@@ -73,7 +73,7 @@ public class ScientificPaperService {
 
 	// sparql query returns a set of urls of matching papers
 	// xQuerys are then executed to find papers with that ids
-	public String metadataSearch(SearchData searchData) throws IOException {
+	public String metadataSearch(SearchData searchData, String loggedAuthor) throws IOException {
 
 		HashMap<String, String> values = new HashMap<>();
 
@@ -93,7 +93,7 @@ public class ScientificPaperService {
 		Set<String> paperURLs = FusekiReader.executeQuery(QUERY_FILE_PATH, values);
 		Set<String> paperIds = getIdsFromUrls(paperURLs);
 
-		return getByIds(paperIds);
+		return getByIds(paperIds, loggedAuthor);
 
 	}
 
@@ -245,20 +245,23 @@ public class ScientificPaperService {
 
 	}
 	
-	public void addPaperRevision(String processId, String scientificPaperXml) throws Exception {
+	public void addPaperRevision(String processId, String scientificPaperXml, String authorUsername) throws Exception {
 		
-		// TODO check author
+		// check author
+		String authorFromProcess = publishingProcessRepository.getAuthorFromProcess(processId);
+		if(!authorFromProcess.equals(authorUsername)) {
+			throw new RevisionForbiddenException("You are not the author of this paper");
+		} 
 
 		// check process status
 		String processStatus = publishingProcessRepository.getProcessStatus(processId);
 		if(!processStatus.equals("NEW_REVISION")) {
-			throw new RevisionForbiddenException("");
+			throw new RevisionForbiddenException("Revision is forbidden in this phase of publishing process");
 		} 
 		
 		// get paper latest version from process
 	    Integer latestVersion = Integer.valueOf(publishingProcessRepository.getProcessLatestVersion(processId));
 		String newVersion = Integer.toString(latestVersion + 1);
-		// String newVersion = "33";
 		
 		String paperVersionId = save(scientificPaperXml, newVersion);
 				
@@ -268,12 +271,18 @@ public class ScientificPaperService {
 		
 	}
 	
-	public void withdrawScientificPaper(String paperId) throws Exception {
-		// TODO check author
+	public void withdrawScientificPaper(String paperId, String authorUsername) throws Exception {
 		
 		String processId = publishingProcessService.findOneByPaperId(paperId);
 		String status = publishingProcessRepository.getProcessStatus(processId);
 		
+		// check author
+		String authorFromProcess = publishingProcessRepository.getAuthorFromProcess(processId);
+		if(!authorFromProcess.equals(authorUsername)) {
+			throw new RevisionForbiddenException("You are not the author of this paper");
+		} 
+		
+		// check publishing process status
 		if(status.equalsIgnoreCase("WITHDRAWN"))
 			throw new ProcessStatusException("Papers has already been withrawn");
 		

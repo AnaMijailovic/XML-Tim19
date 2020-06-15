@@ -33,7 +33,7 @@ export class AllowedRoutes {
 
         if (role.authority === 'ROLE_AUTHOR') {
           components.push({path: 'add-paper', label: 'Add paper'});
-          components.push({path: 'submitted-papers', label: 'Submitted papers'});
+          components.push({path: 'my-papers', label: 'My papers'});
         }
 
         if (role.authority === 'ROLE_REVIEWER') {
