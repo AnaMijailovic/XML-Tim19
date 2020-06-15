@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
 import com.ftn.scientific_papers.dom.DOMParser;
@@ -35,6 +34,10 @@ public class PublishingProcessService {
 	
 	public XMLResource findOne(String id) throws Exception {
 		return publishingProcessRepository.findOne(id);
+	}
+	
+	public String findOneByPaperId(String paperId) throws Exception {
+		return publishingProcessRepository.findOneByPaperId(paperId);
 	}
 	
 	public String createProcess(String paperId, String authorId) throws Exception {
@@ -83,7 +86,7 @@ public class PublishingProcessService {
 	public void addNewPaperVersion(String processId, String paperVersionId) throws Exception{
 		String updatePath = "/publishing-process/paper-version[last()]";
 		String insertString = " <paper-version>\r\n" + 
-				           "        <scientific-paper-id> " + paperVersionId +"</scientific-paper-id>\r\n" + 
+				           "        <scientific-paper-id>" + paperVersionId +"</scientific-paper-id>\r\n" + 
 				           "        <cover-letter-id></cover-letter-id>\r\n" + 
 				           "    </paper-version>";
 		

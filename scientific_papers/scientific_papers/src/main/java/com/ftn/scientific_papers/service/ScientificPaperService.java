@@ -17,6 +17,7 @@ import org.xmldb.api.modules.XMLResource;
 import com.ftn.scientific_papers.dom.DOMParser;
 import com.ftn.scientific_papers.dto.SearchData;
 import com.ftn.scientific_papers.exceptions.MaxChapterLevelsExcedeedException;
+import com.ftn.scientific_papers.exceptions.ProcessStatusException;
 import com.ftn.scientific_papers.exceptions.RevisionForbiddenException;
 import com.ftn.scientific_papers.fuseki.FusekiManager;
 import com.ftn.scientific_papers.fuseki.FusekiReader;
@@ -251,7 +252,7 @@ public class ScientificPaperService {
 		String processStatus = publishingProcessRepository.getProcessStatus(processId);
 		if(!processStatus.equals("NEW_REVISION")) {
 			throw new RevisionForbiddenException("");
-		 } 
+		} 
 		
 		// get paper latest version from process
 	    Integer latestVersion = Integer.valueOf(publishingProcessRepository.getProcessLatestVersion(processId));
@@ -264,6 +265,22 @@ public class ScientificPaperService {
 		publishingProcessRepository.updateLatestVersion(processId, newVersion);
 		publishingProcessRepository.updateStatus(processId, "NEW_SUBMISSION");
 		
+	}
+	
+	public void withdrawScientificPaper(String paperId) throws Exception {
+		// TODO check author
+		
+		String processId = publishingProcessService.findOneByPaperId(paperId);
+		String status = publishingProcessRepository.getProcessStatus(processId);
+		
+		if(status.equalsIgnoreCase("WITHDRAWN"))
+			throw new ProcessStatusException("Papers has already been withrawn");
+		
+		if(status.equalsIgnoreCase("ACCEPTED"))
+			throw new ProcessStatusException("You cannot withraw published papers");
+		
+		publishingProcessRepository.updateStatus(processId, "WITHDRAWN");
+		spRepository.updateStatus(paperId, "WITHDRAWN");
 	}
 
 }

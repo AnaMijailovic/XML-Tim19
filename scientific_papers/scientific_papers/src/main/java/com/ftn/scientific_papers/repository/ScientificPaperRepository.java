@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.xmldb.api.base.ResourceSet;
+import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
 import com.ftn.scientific_papers.exceptions.ResourceNotFoundException;
 import com.ftn.scientific_papers.util.DBManager;
+import com.ftn.scientific_papers.util.XUpdateTemplate;
 
 @Repository
 public class ScientificPaperRepository {
@@ -67,6 +69,15 @@ public class ScientificPaperRepository {
 		}
 
 		return result;
+	}
+	
+	public void updateStatus(String paperId, String newStatus) throws Exception {
+		
+		String updatePath = "/scientific_paper/@status";
+		String xUpdateExpression = String.format(XUpdateTemplate.UPDATE, updatePath, newStatus);
+
+		dbManager.executeXUpdate(scientificPaperCollectionId, xUpdateExpression, paperId);
+		System.out.println("Paper after updating status: \n" + findOne(paperId).getContent().toString());
 	}
 
 	public boolean update(String scientificPaperXml, String id) throws Exception {

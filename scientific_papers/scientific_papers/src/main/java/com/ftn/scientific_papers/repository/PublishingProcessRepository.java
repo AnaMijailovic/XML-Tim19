@@ -30,6 +30,22 @@ public class PublishingProcessRepository {
 		}
 		return result;
 	}
+	
+	public String findOneByPaperId(String paperId) throws Exception {
+
+		String xQueryPath = "./src/main/resources/xQuery/getProcessByPaperId.txt";
+		
+		HashMap<String, String> params = new HashMap<>();
+		params.put("id", paperId);
+		ResourceSet result = dbManager.executeXQuery(publishingProcessCollectionId, "", params, xQueryPath);
+		
+		if(result.getSize() == 0)
+			throw new ResourceNotFoundException("Proces for paper with id: " + paperId +  " was not found.");
+		
+		String processId = result.getIterator().nextResource().getContent().toString();
+		System.out.println("ProcessId from xQuery: " + processId);
+		return processId;
+	}
 
 	public String getProcessStatus(String processId) throws Exception {
 
