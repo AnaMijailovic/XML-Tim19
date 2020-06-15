@@ -14,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ftn.scientific_papers.exceptions.UsernameTakenException;
-import com.ftn.scientific_papers.model.user.Role;
 import com.ftn.scientific_papers.model.user.TRole;
 import com.ftn.scientific_papers.model.user.TUser;
 import com.ftn.scientific_papers.repository.UserRepository;
@@ -37,26 +36,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 			
 		} else {
 			List<GrantedAuthority> authorities = new ArrayList<>();
-			
-			if (user.isIsEditor()) {
-				authorities.add(new SimpleGrantedAuthority("ROLE_EDITOR"));
-			} 
-			
+
 			if (user.getRoles() != null) {
 				for (String role : user.getRoles().getRole().stream().map(TRole::getRole).distinct()
 						.collect(Collectors.toList())) {
-					if (role.equalsIgnoreCase(Role.AUTHOR.toString())) {
-						authorities.add(new SimpleGrantedAuthority("ROLE_AUTHOR"));
-					} else if (role.equalsIgnoreCase(Role.EDITOR.toString())) {
-						authorities.add(new SimpleGrantedAuthority("ROLE_EDITOR"));
-					}
+					authorities.add(new SimpleGrantedAuthority(role));
 				}
 			}
-			
-			if (authorities.isEmpty()) {
-				authorities.add(new SimpleGrantedAuthority("ROLE_AUTHOR"));
-			}
-			
+
 			return new org.springframework.security.core.userdetails.User(
                     user.getUsername(),
                     user.getPassword(),

@@ -28,7 +28,7 @@ export class AllowedRoutes {
       // TODO: Dopuniti sa putanjama!
       decodedToken.roles.forEach(role => {
         if (role.authority === 'ROLE_EDITOR') {
-
+          components.push({path: '/submissions-in-process', label: 'Submissions in process'});
         }
 
         if (role.authority === 'ROLE_AUTHOR') {
@@ -37,11 +37,11 @@ export class AllowedRoutes {
         }
 
         if (role.authority === 'ROLE_REVIEWER') {
-          components.push({path: 'reviewes', label: 'Reviewes'});
+          components.push({path: '/reviewes', label: 'Reviewes'});
         }
       });
 
-      components.push({path: '/profile', label: 'Profile'});
+      //components.push({path: '/profile', label: 'Profile'});
       components.push({path: '/logout', label: 'Logout'});
       this.routes.next(components);
     }
