@@ -2,6 +2,8 @@ package com.ftn.scientific_papers.repository;
 
 import java.util.HashMap;
 
+import static com.ftn.scientific_papers.util.XUpdateTemplate.TARGET_NAMESPACE;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -10,11 +12,17 @@ import org.xmldb.api.modules.XMLResource;
 
 import com.ftn.scientific_papers.exceptions.ResourceNotFoundException;
 import com.ftn.scientific_papers.util.DBManager;
+import com.ftn.scientific_papers.util.FileUtil;
+import com.ftn.scientific_papers.util.RetriveFromDB;
 
 @Repository
 public class ScientificPaperRepository {
 
 	private static final String XQUERY_PATH = ".\\src\\main\\resources\\xQuery";
+	public static final String XSL_PATH = ".\\src\\main\\resources\\xsl";
+	public static final String XSLFO_PATH = ".\\src\\main\\resources\\xsl_fo";
+
+	
 	@Autowired
 	private DBManager dbManager;
 
@@ -94,5 +102,19 @@ public class ScientificPaperRepository {
 
 		dbManager.save(scientificPaperCollectionId, id, scientificPaperXml);
 
+	}
+
+	public String findOneScientificPaper(String id) throws Exception {
+		
+		String xQueryPath = XQUERY_PATH + "\\findById.txt";
+
+		
+		HashMap<String, String> params = new HashMap<>();
+		params.put("ID", id);
+
+		ResourceSet resultSet = RetriveFromDB.executeXQuery(
+			scientificPaperCollectionId, xQueryPath, params, TARGET_NAMESPACE);
+		
+		return FileUtil.resourceSetToString(resultSet);
 	}
 }

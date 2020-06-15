@@ -1,5 +1,6 @@
 package com.ftn.scientific_papers.controller;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,5 +76,19 @@ public class ScientificPaperController {
 		spService.addPaperRevision(processId, scientificPaperXml);
 		return new ResponseEntity<>(processId, HttpStatus.CREATED);
 	}
+	
 
+	@GetMapping(value = "/html/{id}", produces = MediaType.TEXT_HTML_VALUE)
+	public ResponseEntity<String> getScientificPaperByIdHTML(@PathVariable("id") String id) throws Exception {
+		String result = spService.convertXMLtoHTML(id);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<byte[]> getScientificPublicationByIdPDF(@PathVariable("id") String id) throws Exception {
+		ByteArrayOutputStream result = spService.convertXMLtoPDF(id);
+		return new ResponseEntity<>(result.toByteArray(), HttpStatus.OK);
+	}
+	
+	
 }

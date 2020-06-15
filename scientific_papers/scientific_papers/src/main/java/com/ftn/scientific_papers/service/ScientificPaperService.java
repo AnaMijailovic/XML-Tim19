@@ -1,5 +1,6 @@
 package com.ftn.scientific_papers.service;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -23,12 +24,16 @@ import com.ftn.scientific_papers.fuseki.FusekiReader;
 import com.ftn.scientific_papers.fuseki.MetadataExtractor;
 import com.ftn.scientific_papers.repository.PublishingProcessRepository;
 import com.ftn.scientific_papers.repository.ScientificPaperRepository;
+import com.ftn.scientific_papers.util.XSLFOTransformer.XSLFOTransformer;
 
 @Service
 public class ScientificPaperService {
 
 	static String spSchemaPath = "src/main/resources/xsd/scientific_paper.xsd";
 	private static final String QUERY_FILE_PATH = "src/main/resources/sparql/metadataSearch.rq";
+	
+	@Autowired
+	private XSLFOTransformer xslFoTransformer;
 	
 	@Value("${max-chapter-levels}")
 	private int maxChapterLevels;
@@ -265,5 +270,20 @@ public class ScientificPaperService {
 		publishingProcessRepository.updateStatus(processId, "NEW_SUBMISSION");
 		
 	}
+
+	public String convertXMLtoHTML(String id) throws Exception {
+		String scientificPaper = spRepository.findOneScientificPaper(id);
+		String spHTML = xslFoTransformer.generateHTML(scientificPaper, spRepository.XSL_PATH); //  "\\scientificRepository.xsl"
+		return spHTML;
+	}
+
+	public ByteArrayOutputStream convertXMLtoPDF(String id) throws Exception {
+		String scientificPaper = spRepository.findOneScientificPaper(id);
+		ByteArrayOutputStream spPDF = xslFoTransformer.generatePDF(scientificPaper, spRepository.XSLFO_PATH);
+		return spPDF;
+		
+	}
+
+	
 
 }
