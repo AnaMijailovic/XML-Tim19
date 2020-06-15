@@ -14,6 +14,7 @@ const convert = require('xml-js');
 export class HomeComponent implements OnInit {
 
   papers: ScientificPaper[] = [];
+  allPapers: ScientificPaper[] = [];
 
   constructor(private toastr: ToastrService,
               private spService: ScientificPaperService) { }
@@ -28,6 +29,7 @@ export class HomeComponent implements OnInit {
     this.spService.getScientificPapers(params).subscribe(
       (response) => {
         this.papers = this.spService.responseToArray(response);
+        this.allPapers = this.papers;
       });
 
   }

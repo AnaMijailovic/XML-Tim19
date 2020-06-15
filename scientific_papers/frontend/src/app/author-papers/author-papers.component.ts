@@ -14,12 +14,14 @@ const convert = require('xml-js');
 })
 export class AuthorPapersComponent implements OnInit {
   papers: ScientificPaper[] = [];
+  allPapers: ScientificPaper[] = [];
 
   constructor(private utilService: UtilService,
               private spService: ScientificPaperService,
               private toastr: ToastrService) { }
 
   ngOnInit() {
+    this.getScientificPapers('?loggedAuthor=' + this.utilService.getLoggedUser());
   }
 
   getScientificPapers(params: string) {
@@ -28,7 +30,21 @@ export class AuthorPapersComponent implements OnInit {
     this.spService.getScientificPapers(params).subscribe(
       (response) => {
         this.papers = this.spService.responseToArray(response);
+        this.allPapers = this.papers;
       });
+
+  }
+
+  filterByStatus(status: string) {
+    // filter by status
+
+    if (status !== 'ALL') {
+      this.papers = this.allPapers.filter( (event) => {
+      return event.paperStatus === status;
+    });
+    } else {
+      this.papers = this.allPapers;
+    }
 
   }
 

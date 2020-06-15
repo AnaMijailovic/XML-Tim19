@@ -18,8 +18,8 @@ export class AllowedRoutes {
     const components = [];
 
     if (!token) {
-      components.push({path: 'login', label: 'Login'});
-      components.push({path: 'register', label: 'Register'});
+      components.push({path: '/login', label: 'Login'});
+      components.push({path: '/register', label: 'Register'});
 
       this.routes.next(components);
     } else {
@@ -32,8 +32,8 @@ export class AllowedRoutes {
         }
 
         if (role.authority === 'ROLE_AUTHOR') {
-          components.push({path: 'add-paper', label: 'Add paper'});
-          components.push({path: 'my-papers', label: 'My papers'});
+          components.push({path: '/add-paper', label: 'Add paper'});
+          components.push({path: '/my-papers', label: 'My papers'});
         }
 
         if (role.authority === 'ROLE_REVIEWER') {
@@ -41,8 +41,8 @@ export class AllowedRoutes {
         }
       });
 
-      components.push({path: 'profile', label: 'Profile'});
-      components.push({path: 'logout', label: 'Logout'});
+      components.push({path: '/profile', label: 'Profile'});
+      components.push({path: '/logout', label: 'Logout'});
       this.routes.next(components);
     }
   }
