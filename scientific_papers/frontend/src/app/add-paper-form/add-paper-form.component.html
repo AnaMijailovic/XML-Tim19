@@ -1,0 +1,42 @@
+<app-header></app-header>
+<img src="../../assets/images/header.jpg" width="100%" height="22%">
+
+<form id="add-paper-form" [formGroup]="form">
+
+    <mat-card id="add-paper-card">
+            <h3>Add new scientific paper</h3>
+            <br/>
+        <div>
+            <input hidden formControlName="scientificPaper" id="scientificPaper" type="file" name="file" (change)="paperFileChange($event.target.files)" accept=".xml">
+
+            <button class="margin5" mat-raised-button (click)="openPaperInput()">Select Paper</button>
+            <button
+            class='submit-btn'
+            mat-raised-button
+            color="primary"
+            (click)="submitPaper()"
+        >
+            Submit Paper
+        </button>
+        </div>
+        <br/>
+        <div>
+            <input hidden formControlName="coverLetter" id="coverLetter" type="file" name="file" (change)="letterFileChange($event.target.files)" accept=".xml">
+
+            <button class="margin5" mat-raised-button (click)="openLetterInput()">Select Letter</button>
+
+            <button
+            class='submit-btn'
+            mat-raised-button
+            color="primary"
+            (click)="submitLetter()"
+        >
+            Submit Letter
+        </button>
+        </div>
+
+        <br/>
+      
+    </mat-card>
+
+</form>

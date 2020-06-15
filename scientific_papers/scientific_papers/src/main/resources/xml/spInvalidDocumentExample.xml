@@ -14,8 +14,7 @@
         <recieved_date rdfa:property="pred:recieved" rdfa:datatype="xs:date">2006-05-04</recieved_date>
         <revised_date rdfa:property="pred:revised" rdfa:datatype="xs:date">2006-05-04</revised_date>
         <accepted_date rdfa:property="pred:accepted" rdfa:datatype="xs:date">2006-05-04</accepted_date>
-        <title lang="lang1" rdfa:property="pred:titled" rdfa:datatype="xs:string">title0</title>
-        <title lang="lang3" rdfa:property="pred:titled" rdfa:datatype="xs:string">title1</title>   
+
         <author rdfa:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author0"
         		rdfa:rel="pred:isTheAuthorOf" 
         		rdfa:rev="pred:isWrittenBy"

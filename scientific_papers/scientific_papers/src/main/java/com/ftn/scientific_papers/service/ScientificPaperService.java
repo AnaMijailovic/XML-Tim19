@@ -16,7 +16,7 @@ import org.xmldb.api.modules.XMLResource;
 
 import com.ftn.scientific_papers.dom.DOMParser;
 import com.ftn.scientific_papers.dto.SearchData;
-import com.ftn.scientific_papers.exceptions.MaxChapterLevelsExcedeedException;
+import com.ftn.scientific_papers.exceptions.MaxChapterLevelsExceededException;
 import com.ftn.scientific_papers.exceptions.ProcessStatusException;
 import com.ftn.scientific_papers.exceptions.RevisionForbiddenException;
 import com.ftn.scientific_papers.fuseki.FusekiManager;
@@ -54,16 +54,16 @@ public class ScientificPaperService {
 		return spRepository.findOne(id);
 	}
 
-	public String getAll(String searchText) {
-		return spRepository.getAll(searchText);
+	public String getAll(String searchText, String loggedAuthor) {
+		return spRepository.getAll(searchText, loggedAuthor);
 	}
 
-	public String getByIds(Set<String> ids) {
+	public String getByIds(Set<String> ids, String loggedAuthor) {
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("<search>");
 
-		ids.forEach(id -> sb.append(spRepository.getById(id)));
+		ids.forEach(id -> sb.append(spRepository.getById(id, loggedAuthor)));
 
 		sb.append("</search>");
 
@@ -73,7 +73,7 @@ public class ScientificPaperService {
 
 	// sparql query returns a set of urls of matching papers
 	// xQuerys are then executed to find papers with that ids
-	public String metadataSearch(SearchData searchData) throws IOException {
+	public String metadataSearch(SearchData searchData, String loggedAuthor) throws IOException {
 
 		HashMap<String, String> values = new HashMap<>();
 
@@ -93,7 +93,7 @@ public class ScientificPaperService {
 		Set<String> paperURLs = FusekiReader.executeQuery(QUERY_FILE_PATH, values);
 		Set<String> paperIds = getIdsFromUrls(paperURLs);
 
-		return getByIds(paperIds);
+		return getByIds(paperIds, loggedAuthor);
 
 	}
 
@@ -114,7 +114,7 @@ public class ScientificPaperService {
 		return paperIds;
 	}
 
-	public void generateIds(Document document, String paperId) throws MaxChapterLevelsExcedeedException {
+	public void generateIds(Document document, String paperId) throws MaxChapterLevelsExceededException {
 
 		// Set abstract id
 		Element abstractEl = (Element) document.getElementsByTagName("abstract").item(0);
@@ -164,10 +164,11 @@ public class ScientificPaperService {
 	
 	// recursively set subchapter ids
 	// check max chapter level
-	public void setSubchapterIds(Element chapter, String parentId, int levelCount) throws MaxChapterLevelsExcedeedException {
+	public void setSubchapterIds(Element chapter, String parentId, int levelCount) throws MaxChapterLevelsExceededException {
 		
 		if(levelCount > maxChapterLevels) 
-			throw new MaxChapterLevelsExcedeedException("");
+			throw new MaxChapterLevelsExceededException("Max Chapter Levels Excedeed - maximum is " + maxChapterLevels
+					+ " levels");
 		
 		NodeList subchapters = chapter.getElementsByTagName("chapter");
 
@@ -244,20 +245,23 @@ public class ScientificPaperService {
 
 	}
 	
-	public void addPaperRevision(String processId, String scientificPaperXml) throws Exception {
+	public void addPaperRevision(String processId, String scientificPaperXml, String authorUsername) throws Exception {
 		
-		// TODO check author
+		// check author
+		String authorFromProcess = publishingProcessRepository.getAuthorFromProcess(processId);
+		if(!authorFromProcess.equals(authorUsername)) {
+			throw new RevisionForbiddenException("You are not the author of this paper");
+		} 
 
 		// check process status
 		String processStatus = publishingProcessRepository.getProcessStatus(processId);
 		if(!processStatus.equals("NEW_REVISION")) {
-			throw new RevisionForbiddenException("");
+			throw new RevisionForbiddenException("Revision is forbidden in this phase of publishing process");
 		} 
 		
 		// get paper latest version from process
 	    Integer latestVersion = Integer.valueOf(publishingProcessRepository.getProcessLatestVersion(processId));
 		String newVersion = Integer.toString(latestVersion + 1);
-		// String newVersion = "33";
 		
 		String paperVersionId = save(scientificPaperXml, newVersion);
 				
@@ -267,12 +271,18 @@ public class ScientificPaperService {
 		
 	}
 	
-	public void withdrawScientificPaper(String paperId) throws Exception {
-		// TODO check author
+	public void withdrawScientificPaper(String paperId, String authorUsername) throws Exception {
 		
 		String processId = publishingProcessService.findOneByPaperId(paperId);
 		String status = publishingProcessRepository.getProcessStatus(processId);
 		
+		// check author
+		String authorFromProcess = publishingProcessRepository.getAuthorFromProcess(processId);
+		if(!authorFromProcess.equals(authorUsername)) {
+			throw new RevisionForbiddenException("You are not the author of this paper");
+		} 
+		
+		// check publishing process status
 		if(status.equalsIgnoreCase("WITHDRAWN"))
 			throw new ProcessStatusException("Papers has already been withrawn");
 		

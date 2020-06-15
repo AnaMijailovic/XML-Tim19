@@ -27,8 +27,18 @@ public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFil
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-        String authToken = httpRequest.getHeader("X-Auth-Token");
+        String authToken = httpRequest.getHeader("Authorization");
+
+		if (authToken != null && authToken.startsWith("Bearer ")) {
+			authToken =  authToken.substring(7);
+		}
+		
+		//System.out.print("\nToken: " + authToken);
+		//authToken = authToken.replace("\"","");
+		//System.out.print("\nToken: " + authToken);
+
         String username = tokenUtils.getUsernameFromToken(authToken);
+        System.out.println("Username: " + username);
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);

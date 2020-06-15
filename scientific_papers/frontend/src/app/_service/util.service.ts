@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import * as jwt_decode from 'jwt-decode';
+import { decode } from 'punycode';
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +21,19 @@ export class UtilService {
       }
     }).filter(Boolean).join('&');
 
+  }
+
+  getLoggedUser() {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      return '';
+
+    } else {
+      const decodedToken = jwt_decode(token);
+      // alert(JSON.stringify(decodedToken));
+      // alert('Username: ' + decodedToken.sub);
+      return decodedToken.sub;
+    }
   }
 }

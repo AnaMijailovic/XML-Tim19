@@ -8,7 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AllowedRoutes } from './_service/allowed-routes.service';
 import { AuthenticationService } from './_service/authentication.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 import { LogoutComponent } from './logout/logout.component';
@@ -16,6 +16,11 @@ import { MaterialModule } from './material/material.module';
 import { ToastrModule } from 'ngx-toastr';
 import { SearchFormComponent } from './search-form/search-form.component';
 import { PaperCardComponent } from './paper-card/paper-card.component';
+import { AddPaperFormComponent } from './add-paper-form/add-paper-form.component';
+import { ScientificPaperService } from './_service/scientific-paper.service';
+import { CoverLetterService } from './_service/cover-letter.service';
+import { TokenInterceptorService } from './_service/token-interceptor.service';
+import { AuthorPapersComponent } from './author-papers/author-papers.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +31,10 @@ import { PaperCardComponent } from './paper-card/paper-card.component';
     HomeComponent,
     LogoutComponent,
     SearchFormComponent,
-    PaperCardComponent
+    PaperCardComponent,
+    AddPaperFormComponent,
+    AuthorPapersComponent,
+    AuthorPapersComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +53,15 @@ import { PaperCardComponent } from './paper-card/paper-card.component';
     BrowserAnimationsModule
 
   ],
-  providers: [AllowedRoutes, AuthenticationService],
+  providers: [AllowedRoutes,
+              AuthenticationService,
+              ScientificPaperService,
+              CoverLetterService,
+              {
+                provide: HTTP_INTERCEPTORS,
+                useClass: TokenInterceptorService,
+                multi: true
+              }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

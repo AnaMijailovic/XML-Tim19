@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +20,7 @@ import com.ftn.scientific_papers.service.PublishingProcessService;
 
 @RestController
 @RequestMapping(value = "/api/coverLetters")
+@CrossOrigin
 public class CoverLetterController {
 
 	@Autowired
@@ -27,19 +30,20 @@ public class CoverLetterController {
 	private PublishingProcessService publishingProcessService;
 
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_XML_VALUE)
-	private ResponseEntity<String> findOne(@PathVariable("id") String id) throws Exception {
+	public ResponseEntity<String> findOne(@PathVariable("id") String id) throws Exception {
 		XMLResource resource = coverLetterService.findOne(id);
 
 		return new ResponseEntity<>(resource.getContent().toString(), HttpStatus.OK);
 	}
-
-	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
+	
+	@PreAuthorize("hasRole('ROLE_AUTHOR')")
+	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> add(@RequestParam(("processId")) String processId, @RequestBody String scientificPaperXml) throws Exception {
 		
 		// TODO Exception if processId dosn't exist
 		String coverLetterId = coverLetterService.save(scientificPaperXml);
 		publishingProcessService.addCoverLetter(processId, coverLetterId);
-		return new ResponseEntity<>("Successfully saved cover letter", HttpStatus.CREATED);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 }

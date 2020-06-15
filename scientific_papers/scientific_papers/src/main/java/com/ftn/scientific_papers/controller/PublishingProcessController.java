@@ -21,7 +21,7 @@ public class PublishingProcessController {
 	private PublishingProcessService publishingProcessService;
 
 	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
-	private ResponseEntity<String> findOne(@RequestParam(("paperId")) String paperId) throws Exception {
+	public ResponseEntity<String> findOne(@RequestParam(("paperId")) String paperId) throws Exception {
 		String resource = publishingProcessService.findOneByPaperId(paperId);
 		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}

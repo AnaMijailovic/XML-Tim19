@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.xmldb.api.base.ResourceSet;
-import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
 import com.ftn.scientific_papers.exceptions.ResourceNotFoundException;
@@ -35,30 +34,31 @@ public class ScientificPaperRepository {
 		return result;
 	}
 
-	public String getAll(String searchText) {
+	public String getAll(String searchText, String loggedAuthor) {
 		String xQueryPath = XQUERY_PATH + "\\textSearch.txt";
 		String result = "";
 
 		HashMap<String, String> params = new HashMap<>();
 		params.put("searchText", searchText);
+		params.put("loggedAuthor", loggedAuthor);
 
 		try {
 			ResourceSet rs = dbManager.executeXQuery(scientificPaperCollectionId, "", params, xQueryPath);
 			result = dbManager.resourceSetToString(rs);
-			// System.out.println("Result: " + result);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		System.out.println("\nResult: \n" + result);
 		return result;
 	}
 
-	public String getById(String id) {
+	public String getById(String id, String loggedAuthor) {
 		String xQueryPath = XQUERY_PATH + "\\findById.txt";
 		String result = "";
 
 		HashMap<String, String> params = new HashMap<>();
 		params.put("id", id);
+		params.put("loggedAuthor", loggedAuthor);
 
 		try {
 			ResourceSet rs = dbManager.executeXQuery(scientificPaperCollectionId, "", params, xQueryPath);
@@ -70,9 +70,9 @@ public class ScientificPaperRepository {
 
 		return result;
 	}
-	
+
 	public void updateStatus(String paperId, String newStatus) throws Exception {
-		
+
 		String updatePath = "/scientific_paper/@status";
 		String xUpdateExpression = String.format(XUpdateTemplate.UPDATE, updatePath, newStatus);
 
@@ -89,7 +89,6 @@ public class ScientificPaperRepository {
 
 	public String getNextId() {
 		// generate id
-		// TODO Change this?
 		String id = "paper0";
 		try {
 			ResourceSet rs = dbManager.executeXQuery(scientificPaperCollectionId, "count(/.)", new HashMap<>(), "");
@@ -97,7 +96,6 @@ public class ScientificPaperRepository {
 		} catch (Exception e) {
 
 		}
-		System.out.println("\nID: " + id);
 		return id;
 	}
 
