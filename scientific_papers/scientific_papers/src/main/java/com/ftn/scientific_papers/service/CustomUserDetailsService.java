@@ -52,6 +52,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 		}
 	}
 
+	public TUser findById(String userId) {
+		return userRepository.findById(userId);
+	}
+
 	public void registerUser(TUser user) {
 		if (userRepository.findByUsername(user.getUsername()) != null) {
 			throw new UsernameTakenException();
@@ -60,5 +64,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userRepository.save(user);
 	}
+
 
 }

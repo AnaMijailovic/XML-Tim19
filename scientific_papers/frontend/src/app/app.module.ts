@@ -21,6 +21,7 @@ import { ScientificPaperService } from './_service/scientific-paper.service';
 import { CoverLetterService } from './_service/cover-letter.service';
 import { TokenInterceptorService } from './_service/token-interceptor.service';
 import { AuthorPapersComponent } from './author-papers/author-papers.component';
+import { EditorPageComponent } from './editor-page/editor-page.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AuthorPapersComponent } from './author-papers/author-papers.component';
     PaperCardComponent,
     AddPaperFormComponent,
     AuthorPapersComponent,
-    AuthorPapersComponent
+    AuthorPapersComponent,
+    EditorPageComponent
   ],
   imports: [
     BrowserModule,

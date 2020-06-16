@@ -1,5 +1,6 @@
 package com.ftn.scientific_papers.service;
 
+import com.ftn.scientific_papers.model.publishing_process.PublishingProcess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,8 @@ import com.ftn.scientific_papers.repository.PublishingProcessRepository;
 import com.ftn.scientific_papers.util.DBManager;
 import com.ftn.scientific_papers.util.FileUtil;
 import com.ftn.scientific_papers.util.XUpdateTemplate;
+
+import java.util.List;
 
 @Service
 public class PublishingProcessService {
@@ -31,6 +34,10 @@ public class PublishingProcessService {
 	
 	@Autowired
 	private DBManager dbManager;
+
+	public List<PublishingProcess> getAll() {
+		return  publishingProcessRepository.getAll();
+	}
 	
 	public XMLResource findOne(String id) throws Exception {
 		return publishingProcessRepository.findOne(id);
@@ -38,6 +45,10 @@ public class PublishingProcessService {
 	
 	public String findOneByPaperId(String paperId) throws Exception {
 		return publishingProcessRepository.findOneByPaperId(paperId);
+	}
+
+	public String getAuthorByProcessId(String processId) throws Exception {
+		return publishingProcessRepository.getAuthorFromProcess(processId);
 	}
 	
 	public String createProcess(String paperId, String authorId) throws Exception {

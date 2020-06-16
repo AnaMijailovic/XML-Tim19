@@ -66,6 +66,41 @@ public class UserRepository {
 		}
 	}
 
+	public TUser findById(String userId) {
+		try {
+			String xPathExpression = String.format("//user[user_id='%s']", userId);
+			ResourceSet result = dbManager.executeXPath(userCollectionId, xPathExpression);
+
+			if (result == null) {
+				return null;
+			}
+
+			ResourceIterator i = result.getIterator();
+			Resource res = null;
+			TUser user = null;
+
+			while(i.hasMoreResources()) {
+
+				try {
+					res = i.nextResource();
+					user = unmarshallUser(res.getContent().toString());
+				} finally {
+					// don't forget to cleanup resources
+					try {
+						((EXistResource)res).freeResources();
+					} catch (XMLDBException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+			return user;
+
+		} catch (Exception e) {
+			throw new DatabaseException("Exception while finding user by id.");
+		}
+	}
+
 	public void save(TUser user) {
 		try {
 			ResourceSet rs = dbManager.executeXQuery(userCollectionId, "count(/.)", new HashMap<>(), "");
@@ -101,4 +136,6 @@ public class UserRepository {
 		
 		return (TUser) unmarshaller.unmarshal(new StringReader(userXML));
 	}
+
+
 }
