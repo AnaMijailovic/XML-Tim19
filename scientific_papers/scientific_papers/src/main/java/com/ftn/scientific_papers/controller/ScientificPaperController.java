@@ -97,12 +97,12 @@ public class ScientificPaperController {
 	}
 	
 	@PreAuthorize("hasRole('ROLE_AUTHOR')")
-	@DeleteMapping(value="/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+	@DeleteMapping(value="/{id}")
 	public ResponseEntity<String> withdrawScientificPaper(@PathVariable("id")String paperId) throws Exception{
 		
 		// Get author username from token
 	    String username = tokenUtils.getUsernameFromRequest(request);
 		spService.withdrawScientificPaper(paperId, username);
-		return new ResponseEntity<>("Deleted", HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

@@ -79,7 +79,7 @@ public class PublishingProcessRepository {
 	public String getAuthorFromProcess(String processId) throws Exception {
 
 		String xQueryPath = "./src/main/resources/xQuery/getAuthorFromProcess.txt";
-		
+		System.out.println("Proccessss id: " + processId);
 		HashMap<String, String> params = new HashMap<>();
 		params.put("id", processId);
 		ResourceSet rs = dbManager.executeXQuery(publishingProcessCollectionId, "", params, xQueryPath);

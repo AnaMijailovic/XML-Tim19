@@ -6,6 +6,8 @@ import { ScientificPaper } from '../_model/scientificPaper.model';
 declare var require: any;
 const convert = require('xml-js');
 
+const URL = 'http://localhost:8088/api/scientificPapers';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -29,6 +31,15 @@ export class ScientificPaperService {
       })
     };
     return this.http.post('http://localhost:8088/api/scientificPapers', paperXml, httpOptions);
+  }
+
+  withdrawPaper(paperId: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Response-Type': 'text'
+      })
+    };
+    return this.http.delete(URL + '/' + paperId, httpOptions);
   }
 
   responseToArray(response: any): ScientificPaper[] {

@@ -25,6 +25,12 @@
                     </td>
                 </tr>
         </table>
-        <button mat-raised-button color="primary" class="view-paper-btn"> View </button>
+        <div id="btns-div" align="right">
+                <button *ngIf="paper.paperStatus === 'REVISION'" mat-raised-button color="primary" class="view-paper-btn"
+                >Add revision</button>
+            <button *ngIf="paper.paperStatus !== 'ACCEPTED' && paper.paperStatus !== 'WITHDRAWN'" mat-raised-button color="primary" class="view-paper-btn"
+            (click)="confirmWithdraw(paper.title, paper.id )" > Withdraw </button>
+            <button mat-raised-button color="primary" class="view-paper-btn"> View </button>
+        </div>
     </mat-card-content>
 </mat-card>
