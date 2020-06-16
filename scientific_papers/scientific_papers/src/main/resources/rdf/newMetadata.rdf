@@ -1,27 +1,27 @@
 <rdf:RDF xmlns:rdfa="http://www.w3.org/ns/rdfa#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper9">
-    <pred:recieved xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2011-05-04</pred:recieved>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper15">
+    <pred:recieved xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2020-06-16</pred:recieved>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper9">
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper15">
     <pred:revised xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2011-06-04</pred:revised>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper9">
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper15">
     <pred:accepted xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2011-07-04</pred:accepted>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper9">
-    <pred:titled xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Machine learning</pred:titled>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper15">
+    <pred:titled xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">XML Databases</pred:titled>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper9">
-    <pred:titled xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Masinsko ucenje</pred:titled>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper15">
+    <pred:titled xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">XML Baze podataka</pred:titled>
   </rdf:Description>
   <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author2">
-    <pred:isTheAuthorOf xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper9"/>
+    <pred:isTheAuthorOf xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper15"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper9">
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper15">
     <pred:isWrittenBy xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/authors/author2"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author2">
-    <pred:firstName xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Simona</pred:firstName>
+    <pred:firstName xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Johanna</pred:firstName>
   </rdf:Description>
   <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author2">
     <pred:lastName xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Smith</pred:lastName>
@@ -36,9 +36,9 @@
     <pred:affiliationNamed xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">IT Center LA</pred:affiliationNamed>
   </rdf:Description>
   <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author3">
-    <pred:isTheAuthorOf xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper9"/>
+    <pred:isTheAuthorOf xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper15"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper9">
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper15">
     <pred:isWrittenBy xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/authors/author3"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author3">
@@ -56,10 +56,10 @@
   <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/affiliation/affiliation1">
     <pred:affiliationNamed xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">IT Center LA</pred:affiliationNamed>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper9">
-    <pred:keyword xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">machine learning</pred:keyword>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper15">
+    <pred:keyword xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">xml</pred:keyword>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper9">
-    <pred:keyword xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">artificial intelligence</pred:keyword>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper15">
+    <pred:keyword xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">databases</pred:keyword>
   </rdf:Description>
 </rdf:RDF>

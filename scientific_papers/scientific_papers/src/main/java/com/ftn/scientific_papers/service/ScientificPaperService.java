@@ -2,6 +2,7 @@ package com.ftn.scientific_papers.service;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +12,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 import org.xmldb.api.modules.XMLResource;
 
 import com.ftn.scientific_papers.dom.DOMParser;
@@ -30,6 +33,7 @@ public class ScientificPaperService {
 
 	static String spSchemaPath = "src/main/resources/xsd/scientific_paper.xsd";
 	private static final String QUERY_FILE_PATH = "src/main/resources/sparql/metadataSearch.rq";
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
 	@Value("${max-chapter-levels}")
 	private int maxChapterLevels;
@@ -82,12 +86,14 @@ public class ScientificPaperService {
 		values.put("author", searchData.getAuthor());
 		values.put("affiliation", searchData.getAffiliation());
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-		String fromDate = searchData.getFromDate() == null ? "" : sdf.format(searchData.getFromDate());
-		String toDate = searchData.getToDate() == null ? "" : sdf.format(searchData.getToDate());
-		values.put("fromDate", fromDate);
-		values.put("toDate", toDate);
+		String acceptedFromDate = searchData.getAcceptedFromDate() == null ? "" : sdf.format(searchData.getAcceptedFromDate());
+		String acceptedToDate = searchData.getAcceptedToDate() == null ? "" : sdf.format(searchData.getAcceptedToDate());
+		String recievedFromDate = searchData.getRecievedFromDate() == null ? "" : sdf.format(searchData.getRecievedFromDate());
+		String recievedToDate = searchData.getRecievedToDate() == null ? "" : sdf.format(searchData.getRecievedToDate());
+		values.put("acceptedFromDate", acceptedFromDate);
+		values.put("acceptedToDate", acceptedToDate);
+		values.put("recievedFromDate", recievedFromDate);
+		values.put("recievedToDate", recievedToDate);
 
 		// execute sparql query
 		Set<String> paperURLs = FusekiReader.executeQuery(QUERY_FILE_PATH, values);
@@ -215,7 +221,10 @@ public class ScientificPaperService {
 		
 		// set paper version
 		paperElement.setAttribute("version", paperVersion.toString());
-
+		
+		// set paper status
+		paperElement.setAttribute("status", "PENDING");
+		
 		// get head element from dom and set rdfa:about attribute value
 		NodeList headNodeList = paperElement.getElementsByTagName("head");
 		Element headElement = (Element) headNodeList.item(0);
@@ -230,7 +239,14 @@ public class ScientificPaperService {
 			Element authorElement = (Element) authorsNodeList.item(i);
 			authorElement.getAttributes().getNamedItem("rdfa:href").setNodeValue(aboutAttributeValue);
 		}
-
+		
+		// set recieved date
+		NodeList recievedDateList = paperElement.getElementsByTagName("recieved_date");
+		if(recievedDateList.getLength() > 0) {
+			Element recievedDateElement = (Element) recievedDateList.item(0);
+			recievedDateElement.setTextContent(sdf.format(new Date()));
+		} 
+		
 		// Convert Document to string and save
 		String newXml = DOMParser.getStringFromDocument(document);
 		System.out.println("New: \n" + newXml);
@@ -286,7 +302,8 @@ public class ScientificPaperService {
 		if(status.equalsIgnoreCase("WITHDRAWN"))
 			throw new ProcessStatusException("Papers has already been withrawn");
 		
-		if(status.equalsIgnoreCase("ACCEPTED"))
+		if(status.equalsIgnoreCase("ACCEPTED") || status.equalsIgnoreCase("REJECTED") || 
+		   status.equalsIgnoreCase("WITHDRAWN"))
 			throw new ProcessStatusException("You cannot withraw published papers");
 		
 		publishingProcessRepository.updateStatus(processId, "WITHDRAWN");

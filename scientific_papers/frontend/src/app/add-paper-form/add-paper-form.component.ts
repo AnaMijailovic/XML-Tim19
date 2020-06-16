@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationService } from '../_service/authentication.service';
 import { Router } from '@angular/router';
@@ -17,6 +17,9 @@ export class AddPaperFormComponent implements OnInit {
   letter: string;
   processId: string;
 
+  revisionProcessId: string;
+  revisionPaperTitle: string;
+
   constructor(private formBuilder: FormBuilder,
               private spService: ScientificPaperService,
               private cvService: CoverLetterService,
@@ -32,6 +35,12 @@ export class AddPaperFormComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
+    const revisionData =  JSON.parse(localStorage.getItem('revisionData'));
+    if (revisionData) {
+      this.revisionPaperTitle = revisionData.paperTitle;
+      this.revisionProcessId = revisionData.processId;
+      localStorage.removeItem('revisionData');
+    }
   }
 
   submitPaper() {
@@ -40,7 +49,14 @@ export class AddPaperFormComponent implements OnInit {
       return;
     }
 
-    this.spService.addScientificPaper(this.paper).subscribe(
+    let postReq: any;
+    if (this.revisionPaperTitle ) {
+      postReq = this.spService.addPaperReview(this.paper, this.revisionProcessId);
+    } else {
+      postReq = this.spService.addScientificPaper(this.paper);
+    }
+
+    postReq.subscribe(
       (response => {
         this.toastr.success('Success', 'Scientific paper submitted');
         this.processId = response.toString();

@@ -4,7 +4,8 @@
 <form id="add-paper-form" [formGroup]="form">
 
     <mat-card id="add-paper-card">
-            <h3>Add new scientific paper</h3>
+            <h3 *ngIf="!revisionPaperTitle">Add new scientific paper</h3>
+            <h3 *ngIf="revisionPaperTitle">Add revision of {{revisionPaperTitle}}</h3>
             <br/>
         <div>
             <input hidden formControlName="scientificPaper" id="scientificPaper" type="file" name="file" (change)="paperFileChange($event.target.files)" accept=".xml">

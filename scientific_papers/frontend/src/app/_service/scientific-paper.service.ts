@@ -15,7 +15,12 @@ export class ScientificPaperService {
 
   constructor(private http: HttpClient) { }
 
-
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/xml',
+      'Response-Type': 'text'
+    })
+  };
 
   getScientificPapers(params: string): Observable<string> {
 
@@ -24,22 +29,17 @@ export class ScientificPaperService {
   }
 
   addScientificPaper(paperXml: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/xml',
-        'Response-Type': 'text'
-      })
-    };
-    return this.http.post('http://localhost:8088/api/scientificPapers', paperXml, httpOptions);
+
+    return this.http.post('http://localhost:8088/api/scientificPapers', paperXml, this.httpOptions);
+  }
+
+  addPaperReview(paperXml: string, processId: string) {
+
+    return this.http.post(URL + '/revision?processId=' + processId, paperXml, this.httpOptions);
   }
 
   withdrawPaper(paperId: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Response-Type': 'text'
-      })
-    };
-    return this.http.delete(URL + '/' + paperId, httpOptions);
+    return this.http.delete(URL + '/' + paperId, this.httpOptions);
   }
 
   responseToArray(response: any): ScientificPaper[] {
@@ -75,6 +75,7 @@ export class ScientificPaperService {
             processId: paper.process_id._text,
             paperStatus: paper.paper_status._text,
             title : paper.title._text,
+            recievedDate: paper.recieved_date._text,
             acceptedDate : paper.accepted_date._text,
             authors : authorsList,
             keywords: keywordsList

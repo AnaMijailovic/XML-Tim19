@@ -10,6 +10,7 @@ WHERE {
  ?paper pred:keyword ?keyword .
  ?paper pred:isWrittenBy ?author .
  ?paper pred:accepted ?acceptedDate .
+ ?paper pred:recieved ?recievedDate .
  ?author pred:firstName ?first_name .
  ?author pred:lastName ?last_name .
  ?author pred:isAMemberOf ?affiliation .
@@ -20,8 +21,10 @@ WHERE {
         CONTAINS(UCASE(str(?last_name)), UCASE("{{author}}")) ||
         CONTAINS(CONCAT(UCASE(str(?first_name)), " ", UCASE(str(?last_name))), UCASE("{{author}}"))) &&
         CONTAINS(UCASE(str(?affiliation_name)), UCASE("{{affiliation}}")) &&
-        ( (xsd:date(?acceptedDate) >= xsd:date("{{fromDate}}") || "{{fromDate}}" = "") &&
-          (xsd:date(?acceptedDate) <= xsd:date("{{toDate}}") || "{{toDate}}" = "")) 
+        ( (xsd:date(?acceptedDate) >= xsd:date("{{acceptedFromDate}}") || "{{acceptedFromDate}}" = "") &&
+          (xsd:date(?acceptedDate) <= xsd:date("{{acceptedToDate}}") || "{{acceptedToDate}}" = "") )  &&
+        ( (xsd:date(?recievedDate) >= xsd:date("{{recievedFromDate}}") || "{{recievedFromDate}}" = "") &&
+          (xsd:date(?recievedDate) <= xsd:date("{{recievedToDate}}") || "{{recievedToDate}}" = "") ) 
         ) .
 }
 ORDER BY ?title

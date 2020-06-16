@@ -5,6 +5,7 @@ export interface ScientificPaper {
     paperStatus: string;
     title: string;
     authors: string[];
+    recievedDate: string[];
     acceptedDate: string;
     keywords: string[];
 }

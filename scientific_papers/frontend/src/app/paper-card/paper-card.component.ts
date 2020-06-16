@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ScientificPaper } from '../_model/scientificPaper.model';
 import { MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { ScientificPaperService } from '../_service/scientific-paper.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-paper-card',
@@ -17,7 +18,8 @@ export class PaperCardComponent implements OnInit {
 
   constructor( public dialog: MatDialog,
                private spService: ScientificPaperService,
-               private toastr: ToastrService) { }
+               private toastr: ToastrService,
+               private router: Router) { }
 
   ngOnInit() {
   }
@@ -49,6 +51,11 @@ export class PaperCardComponent implements OnInit {
 
     });
 
+  }
+
+  addRevision(paperTitle: string, processId: string ) {
+      localStorage.setItem('revisionData', JSON.stringify({paperTitle, processId}));
+      this.router.navigate(['/add-paper']);
   }
 
 }
