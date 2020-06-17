@@ -26,8 +26,10 @@ export class SearchFormComponent implements OnInit {
       author: ['', []],
       affiliation: ['', []],
       keyword: ['', []],
-      fromDate: ['', []],
-      toDate: ['', []],
+      acceptedFromDate: ['', []],
+      acceptedToDate: ['', []],
+      recievedFromDate: ['', []],
+      recievedToDate: ['', []],
     });
 
   }

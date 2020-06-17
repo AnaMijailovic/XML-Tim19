@@ -6,6 +6,8 @@ import { ScientificPaper } from '../_model/scientificPaper.model';
 declare var require: any;
 const convert = require('xml-js');
 
+const URL = 'http://localhost:8088/api/scientificPapers';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,20 +15,35 @@ export class ScientificPaperService {
 
   constructor(private http: HttpClient) { }
 
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/xml',
+      'Response-Type': 'text'
+    })
+  };
+
+  getTemplate(): Observable<string> {
+    return this.http.get(URL + '/template', { responseType: 'text' });
+  }
+
   getScientificPapers(params: string): Observable<string> {
 
-    return this.http.get('http://localhost:8088/api/scientificPapers' + params, { responseType: 'text' });
+    return this.http.get(URL + params, { responseType: 'text' });
 
   }
 
   addScientificPaper(paperXml: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/xml',
-        'Response-Type': 'text'
-      })
-    };
-    return this.http.post('http://localhost:8088/api/scientificPapers', paperXml, httpOptions);
+
+    return this.http.post(URL, paperXml, this.httpOptions);
+  }
+
+  addPaperReview(paperXml: string, processId: string) {
+
+    return this.http.post(URL + '/revision?processId=' + processId, paperXml, this.httpOptions);
+  }
+
+  withdrawPaper(paperId: string) {
+    return this.http.delete(URL + '/' + paperId, this.httpOptions);
   }
 
   responseToArray(response: any): ScientificPaper[] {
@@ -62,6 +79,7 @@ export class ScientificPaperService {
             processId: paper.process_id._text,
             paperStatus: paper.paper_status._text,
             title : paper.title._text,
+            recievedDate: paper.recieved_date._text,
             acceptedDate : paper.accepted_date._text,
             authors : authorsList,
             keywords: keywordsList

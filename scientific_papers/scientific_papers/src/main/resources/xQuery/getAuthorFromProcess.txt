@@ -3,4 +3,4 @@ let $collection := collection("/db/sample/publishing_process")
 
 for $pp in $collection
 where $pp/sp:publishing-process/@id = $id
-return data($pp/sp:publishing-process/author-id/text())
+return data($pp/sp:publishing-process/sp:author-id/text())

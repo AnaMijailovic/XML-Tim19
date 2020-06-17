@@ -20,6 +20,7 @@ let $processes := collection("/db/sample/publishing_process")
 						for $author in $sp//sp:author
 							return <author> { concat(data($author/sp:first_name), " ", data($author/sp:last_name)) } </author>
 					}
+					<recieved_date> { data($sp/sp:scientific_paper/sp:head/sp:recieved_date) } </recieved_date>
 					<accepted_date> { data($sp/sp:scientific_paper/sp:head/sp:accepted_date) } </accepted_date>
 					
 					{

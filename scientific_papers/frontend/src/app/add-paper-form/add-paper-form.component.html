@@ -4,39 +4,35 @@
 <form id="add-paper-form" [formGroup]="form">
 
     <mat-card id="add-paper-card">
-            <h3>Add new scientific paper</h3>
-            <br/>
+        <h3 *ngIf="!revisionPaperTitle">Add new scientific paper</h3>
+        <h3 *ngIf="revisionPaperTitle">Add revision of {{revisionPaperTitle}}</h3>
+        <br />
         <div>
-            <input hidden formControlName="scientificPaper" id="scientificPaper" type="file" name="file" (change)="paperFileChange($event.target.files)" accept=".xml">
+            <input hidden formControlName="scientificPaper" id="scientificPaper" type="file" name="file"
+                (change)="paperFileChange($event.target.files)" accept=".xml">
 
             <button class="margin5" mat-raised-button (click)="openPaperInput()">Select Paper</button>
-            <button
-            class='submit-btn'
-            mat-raised-button
-            color="primary"
-            (click)="submitPaper()"
-        >
-            Submit Paper
-        </button>
+            <button class='submit-btn' mat-raised-button color="primary" (click)="submitPaper()">
+                Submit Paper
+            </button>
         </div>
-        <br/>
+        <br />
         <div>
-            <input hidden formControlName="coverLetter" id="coverLetter" type="file" name="file" (change)="letterFileChange($event.target.files)" accept=".xml">
+            <input hidden formControlName="coverLetter" id="coverLetter" type="file" name="file"
+                (change)="letterFileChange($event.target.files)" accept=".xml">
 
             <button class="margin5" mat-raised-button (click)="openLetterInput()">Select Letter</button>
 
-            <button
-            class='submit-btn'
-            mat-raised-button
-            color="primary"
-            (click)="submitLetter()"
-        >
-            Submit Letter
-        </button>
+            <button class='submit-btn' mat-raised-button color="primary" (click)="submitLetter()">
+                Submit Letter
+            </button>
         </div>
 
-        <br/>
-      
-    </mat-card>
+        <br />
+        <br />
+        <button id="xml-editor-btn" mat-raised-button color="primary" (click)="openEditor()">
+                Use xml editor
+        </button>
 
+    </mat-card>
 </form>

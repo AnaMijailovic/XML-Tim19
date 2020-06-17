@@ -21,6 +21,9 @@ import { ScientificPaperService } from './_service/scientific-paper.service';
 import { CoverLetterService } from './_service/cover-letter.service';
 import { TokenInterceptorService } from './_service/token-interceptor.service';
 import { AuthorPapersComponent } from './author-papers/author-papers.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { ScientificPaperEditorComponent } from './scientific-paper-editor/scientific-paper-editor.component';
+import { CoverLetterEditorComponent } from './cover-letter-editor/cover-letter-editor.component';
 import { EditorPageComponent } from './editor-page/editor-page.component';
 import { PublishingProcessCardComponent } from './publishing-process-card/publishing-process-card.component';
 import { AssignReviewerDialogComponentComponent } from './assign-reviewer-dialog-component/assign-reviewer-dialog-component.component';
@@ -38,6 +41,9 @@ import { AssignReviewerDialogComponentComponent } from './assign-reviewer-dialog
     AddPaperFormComponent,
     AuthorPapersComponent,
     AuthorPapersComponent,
+    ConfirmationDialogComponent,
+    ScientificPaperEditorComponent,
+    CoverLetterEditorComponent
     EditorPageComponent,
     PublishingProcessCardComponent,
     AssignReviewerDialogComponentComponent
@@ -68,7 +74,7 @@ import { AssignReviewerDialogComponentComponent } from './assign-reviewer-dialog
                 useClass: TokenInterceptorService,
                 multi: true
               }],
-  bootstrap: [AppComponent],
-  entryComponents: [AssignReviewerDialogComponentComponent]
+  entryComponents: [AssignReviewerDialogComponentComponent,ConfirmationDialogComponent ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
