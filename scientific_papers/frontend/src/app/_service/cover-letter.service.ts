@@ -11,6 +11,10 @@ export class CoverLetterService {
 
   constructor(private http: HttpClient) { }
 
+  getTemplate(): Observable<string> {
+    return this.http.get(URL + '/template', { responseType: 'text' });
+  }
+
   addCoverLetter(letterXml: string, processId: string) {
     const httpOptions = {
       headers: new HttpHeaders({

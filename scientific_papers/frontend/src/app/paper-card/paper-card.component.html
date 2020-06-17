@@ -16,6 +16,11 @@
             </tr>
             <tr>
                 <td>
+                    <b>Recieved:</b> {{ paper.recievedDate }}
+                </td>
+            </tr>
+            <tr>
+                <td>
                     <b>Published:</b> {{ paper.acceptedDate }}
                 </td>
             </tr>
@@ -25,6 +30,12 @@
                     </td>
                 </tr>
         </table>
-        <button mat-raised-button color="primary" class="view-paper-btn"> View </button>
+        <div id="btns-div" align="right">
+                <button *ngIf="paper.paperStatus === 'REVISION'" mat-raised-button color="primary" class="view-paper-btn"
+                (click)="addRevision(paper.title, paper.processId )" >Add revision</button>
+            <button *ngIf="paper.paperStatus === 'PENDING' || paper.paperStatus === 'REVISION' || paper.paperStatus === 'REVIEWING'" mat-raised-button color="primary" class="view-paper-btn"
+            (click)="confirmWithdraw(paper.title, paper.id )" > Withdraw </button>
+            <button mat-raised-button color="primary" class="view-paper-btn"> View </button>
+        </div>
     </mat-card-content>
 </mat-card>

@@ -1,5 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ScientificPaper } from '../_model/scientificPaper.model';
+import { MatDialog } from '@angular/material';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { ScientificPaperService } from '../_service/scientific-paper.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-paper-card',
@@ -11,9 +16,46 @@ export class PaperCardComponent implements OnInit {
   @Input()
   paper: ScientificPaper;
 
-  constructor() { }
+  constructor( public dialog: MatDialog,
+               private spService: ScientificPaperService,
+               private toastr: ToastrService,
+               private router: Router) { }
 
   ngOnInit() {
+  }
+
+  withdrawPaper(paperId: string) {
+    this.spService.withdrawPaper(paperId).subscribe(
+      (response => {
+        this.toastr.success('Success', 'Scientific paper withrawn');
+      }), (error => {
+          if (error.error.exception) {
+            this.toastr.error('Error', error.error.exception);
+          } else {
+            this.toastr.error('Error', 'Some error happend');
+            console.log(JSON.stringify(error));
+          }
+      })
+    );
+  }
+
+  confirmWithdraw(title: string, paperId: string) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+     data: 'Are you sure you want to withdraw paper  ' + title + '?'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if ( result === true ) {
+        this.withdrawPaper(paperId);
+       }
+
+    });
+
+  }
+
+  addRevision(paperTitle: string, processId: string ) {
+      localStorage.setItem('revisionData', JSON.stringify({paperTitle, processId}));
+      this.router.navigate(['/add-paper']);
   }
 
 }

@@ -41,7 +41,7 @@ export class AllowedRoutes {
         }
       });
 
-      //components.push({path: '/profile', label: 'Profile'});
+      // components.push({path: '/profile', label: 'Profile'});
       components.push({path: '/logout', label: 'Logout'});
       this.routes.next(components);
     }

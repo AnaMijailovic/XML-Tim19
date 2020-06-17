@@ -15,16 +15,29 @@
             </mat-form-field>
             <span id="dates-container">
             <mat-form-field>
-                <input matInput formControlName="fromDate" [matDatepicker]="pickerFrom" placeholder="From date">
-                <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
-                <mat-datepicker #pickerFrom></mat-datepicker>
+                <input matInput formControlName="acceptedFromDate" [matDatepicker]="pickerAcceptedFrom" placeholder="Accepted from date">
+                <mat-datepicker-toggle matSuffix [for]="pickerAcceptedFrom"></mat-datepicker-toggle>
+                <mat-datepicker #pickerAcceptedFrom></mat-datepicker>
             </mat-form-field>
             &nbsp;
             <mat-form-field >
-                <input matInput formControlName="toDate" [matDatepicker]="pickerTo" placeholder="To date">
-                <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
-                <mat-datepicker #pickerTo></mat-datepicker>
+                <input matInput formControlName="acceptedToDate" [matDatepicker]="pickerAcceptedTo" placeholder="Accepted to date">
+                <mat-datepicker-toggle matSuffix [for]="pickerAcceptedTo"></mat-datepicker-toggle>
+                <mat-datepicker #pickerAcceptedTo></mat-datepicker>
             </mat-form-field>
+            </span>
+            <span id="dates-container">
+                <mat-form-field>
+                    <input matInput formControlName="recievedFromDate" [matDatepicker]="pickerRecievedFrom" placeholder="Recieved from date">
+                    <mat-datepicker-toggle matSuffix [for]="pickerRecievedFrom"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerRecievedFrom></mat-datepicker>
+                </mat-form-field>
+                &nbsp;
+                <mat-form-field >
+                    <input matInput formControlName="recievedToDate" [matDatepicker]="pickerRecievedTo" placeholder="Recieved to date">
+                    <mat-datepicker-toggle matSuffix [for]="pickerRecievedTo"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerRecievedTo></mat-datepicker>
+                </mat-form-field>
             </span>
             <br>
             <button mat-raised-button color="primary" type="submit">
