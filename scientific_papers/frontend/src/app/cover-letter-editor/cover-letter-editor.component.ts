@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { XonomyService } from '../_service/xonomy.service';
+import { XonomyCoverLetterService } from '../_service/xonomy-cover-letter.service';
 import { CoverLetterService } from '../_service/cover-letter.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -15,7 +15,7 @@ export class CoverLetterEditorComponent implements OnInit {
   coverLetter: string;
   processId: string;
 
-  constructor(private xonomyService: XonomyService,
+  constructor(private xonomyService: XonomyCoverLetterService,
               private clService: CoverLetterService,
               private toastr: ToastrService) { }
 
@@ -30,7 +30,7 @@ export class CoverLetterEditorComponent implements OnInit {
     this.coverLetter = '<cover_letter xmlns="https://github.com/AnaMijailovic/XML-Tim19/cover_letter" ' +
     'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ></cover_letter> ';
     const xonomy = document.getElementById('xonomy-letter-editor');
-    Xonomy.render(this.coverLetter, xonomy, this.xonomyService.scientificPaperElement);
+    Xonomy.render(this.coverLetter, xonomy, this.xonomyService.coverLetterElement);
   }
 
   addLetterXonomy() {
