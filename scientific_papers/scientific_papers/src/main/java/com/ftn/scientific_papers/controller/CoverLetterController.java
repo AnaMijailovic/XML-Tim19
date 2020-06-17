@@ -38,10 +38,10 @@ public class CoverLetterController {
 	
 	@PreAuthorize("hasRole('ROLE_AUTHOR')")
 	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE)
-	public ResponseEntity<String> add(@RequestParam(("processId")) String processId, @RequestBody String scientificPaperXml) throws Exception {
+	public ResponseEntity<String> add(@RequestParam(("processId")) String processId, @RequestBody String coverLetterXml) throws Exception {
 		
 		// TODO Exception if processId dosn't exist
-		String coverLetterId = coverLetterService.save(scientificPaperXml);
+		String coverLetterId = coverLetterService.save(coverLetterXml);
 		publishingProcessService.addCoverLetter(processId, coverLetterId);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}

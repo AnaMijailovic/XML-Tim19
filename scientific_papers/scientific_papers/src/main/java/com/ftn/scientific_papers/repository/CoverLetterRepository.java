@@ -13,6 +13,7 @@ import com.ftn.scientific_papers.util.DBManager;
 
 @Repository
 public class CoverLetterRepository {
+	public static final String COVER_LETTER_XSL_FO_PATH = "src/main/resources/xsl-fo/coverLetter_fo.xsl";
 	
 	@Autowired
 	private DBManager dbManager;
