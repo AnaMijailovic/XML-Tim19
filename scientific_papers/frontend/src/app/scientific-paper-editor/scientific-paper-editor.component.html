@@ -2,7 +2,8 @@
 <img src="../../assets/images/header.jpg" width="100%" height="22%">
 
 <mat-card id='sp-editor'>
-        <h2>Scientific paper editor</h2>
+        <h2 *ngIf="!revisionPaperTitle" >Add new scientific paper</h2>
+        <h2 *ngIf="revisionPaperTitle">Add revision of {{revisionPaperTitle}}</h2>
         <div id="xonomy-editor"></div>
         <br/>
         <button mat-raised-button color="primary" (click)="loadSpTemplate()">Load template</button>

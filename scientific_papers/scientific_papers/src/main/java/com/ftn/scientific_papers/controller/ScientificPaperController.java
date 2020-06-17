@@ -79,6 +79,12 @@ public class ScientificPaperController {
 		return new ResponseEntity<>(resource.getContent().toString(), HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/template", produces = MediaType.APPLICATION_XML_VALUE)
+	public ResponseEntity<String> getScientificPaperTemplate() throws Exception {
+
+		return new ResponseEntity<>( spService.getTemplate(), HttpStatus.OK);
+	}
+	
 	@PreAuthorize("hasRole('ROLE_AUTHOR')")
 	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> addPaper(@RequestBody String scientificPaperXml) throws Exception {

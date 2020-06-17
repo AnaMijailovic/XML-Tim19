@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { XonomyService } from '../_service/xonomy.service';
-import { Router } from '@angular/router';
+import { CoverLetterService } from '../_service/cover-letter.service';
+import { ToastrService } from 'ngx-toastr';
 
 declare const Xonomy: any;
 
@@ -12,35 +13,64 @@ declare const Xonomy: any;
 export class CoverLetterEditorComponent implements OnInit {
 
   coverLetter: string;
+  processId: string;
 
   constructor(private xonomyService: XonomyService,
-              private router: Router) { }
+              private clService: CoverLetterService,
+              private toastr: ToastrService) { }
 
   ngOnInit() {
-     // TODO Get template from backend
-     this.coverLetter = '<scientific_paper xmlns:jxb="http://java.sun.com/xml/ns/jaxb" ' +
-     'xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" ' +
-     'xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" ' +
-     'xmlns:rdfa="http://www.w3.org/ns/rdfa#" ' +
-     'xmlns="https://github.com/AnaMijailovic/XML-Tim19" ' +
-     'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' +
-     'xmlns:xs="http://www.w3.org/2001/XMLSchema#" id="" status="" version=""></scientific_paper>';
-     const xonomy = document.getElementById('xonomy-letter-editor');
-     Xonomy.render(this.coverLetter, xonomy, this.xonomyService.scientificPaperElement);
+    this.processId = localStorage.getItem('processId');
+    localStorage.removeItem('processId');
+    this.setXonomy();
+
+  }
+
+  setXonomy() {
+    this.coverLetter = '<cover_letter xmlns="https://github.com/AnaMijailovic/XML-Tim19/cover_letter" ' +
+    'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ></cover_letter> ';
+    const xonomy = document.getElementById('xonomy-letter-editor');
+    Xonomy.render(this.coverLetter, xonomy, this.xonomyService.scientificPaperElement);
   }
 
   addLetterXonomy() {
-    alert(Xonomy.harvest() as string);
+    // alert(Xonomy.harvest() as string);
     this.coverLetter = Xonomy.harvest() as string;
     this.submitLetter();
   }
 
   submitLetter() {
-    alert('Submit');
+
+    // this.toastr.success('Success', 'About to submit');
+    this.clService.addCoverLetter(this.coverLetter, this.processId).subscribe(
+      (response => {
+        this.toastr.success('Success', 'Cover letter submitted');
+        this.processId = response.toString();
+      }), (error => {
+        if (error.error.exception) {
+          this.toastr.error('Error', error.error.exception);
+        } else {
+          this.toastr.error('Error', 'Some error happend');
+          console.log(JSON.stringify(error));
+        }
+      })
+    );
   }
 
   loadClTemplate() {
-    alert('Load template');
+    this.clService.getTemplate().subscribe(
+      (response => {
+        const xonomy = document.getElementById('xonomy-letter-editor');
+        Xonomy.render(response, xonomy, this.xonomyService.scientificPaperElement);
+      }), (error => {
+        if (error.error.exception) {
+          this.toastr.error('Error', error.error.exception);
+        } else {
+          this.toastr.error('Error', 'Some error happend');
+          console.log(JSON.stringify(error));
+        }
+      })
+    );
   }
 
 }

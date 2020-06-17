@@ -81,7 +81,7 @@ export class AddPaperFormComponent implements OnInit {
       return;
     }
 
-    if (this.paper === '' || this.paper === undefined || this.paper === null ) {
+    if (this.letter === '' || this.letter === undefined || this.letter === null ) {
       this.toastr.error('Error', 'You must choose cover letter');
       return;
     }
@@ -135,6 +135,8 @@ export class AddPaperFormComponent implements OnInit {
   }
 
   openEditor() {
+    localStorage.setItem('revisionData', JSON.stringify({paperTitle: this.revisionPaperTitle,
+                                                         processId: this.revisionProcessId}));
     this.router.navigate(['/add-paper-editor']);
   }
 

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-
     targetNamespace="https://github.com/AnaMijailovic/XML-Tim19/cover_letter"
     xmlns="https://github.com/AnaMijailovic/XML-Tim19/cover_letter">
 
     <xs:element name="cover_letter">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="cover_letter_header" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="cover_letter_header" minOccurs="1" maxOccurs="1" type="xs:string"/>
                 <xs:element name="sender" minOccurs="1" maxOccurs="1">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="sender_name" minOccurs="1" maxOccurs="1"/>
+                            <xs:element name="sender_name" minOccurs="1" maxOccurs="1"
+                                type="xs:string"/>
                             <xs:element default="Faculty of Technical Sciences"
-                                name="university_name" minOccurs="1" maxOccurs="1"/>
+                                name="university_name" minOccurs="1" maxOccurs="1" type="xs:string"/>
                             <xs:element ref="university_address"/>
                             <xs:element default="+38121/450-810" name="phone_number"
                                 type="TPhoneNumber"/>

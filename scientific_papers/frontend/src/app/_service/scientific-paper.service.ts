@@ -22,15 +22,19 @@ export class ScientificPaperService {
     })
   };
 
+  getTemplate(): Observable<string> {
+    return this.http.get(URL + '/template', { responseType: 'text' });
+  }
+
   getScientificPapers(params: string): Observable<string> {
 
-    return this.http.get('http://localhost:8088/api/scientificPapers' + params, { responseType: 'text' });
+    return this.http.get(URL + params, { responseType: 'text' });
 
   }
 
   addScientificPaper(paperXml: string) {
 
-    return this.http.post('http://localhost:8088/api/scientificPapers', paperXml, this.httpOptions);
+    return this.http.post(URL, paperXml, this.httpOptions);
   }
 
   addPaperReview(paperXml: string, processId: string) {

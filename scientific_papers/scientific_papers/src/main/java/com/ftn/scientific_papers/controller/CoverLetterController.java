@@ -36,6 +36,12 @@ public class CoverLetterController {
 		return new ResponseEntity<>(resource.getContent().toString(), HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/template", produces = MediaType.APPLICATION_XML_VALUE)
+	public ResponseEntity<String> getScientificPaperTemplate() throws Exception {
+
+		return new ResponseEntity<>( coverLetterService.getTemplate(), HttpStatus.OK);
+	}
+	
 	@PreAuthorize("hasRole('ROLE_AUTHOR')")
 	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> add(@RequestParam(("processId")) String processId, @RequestBody String scientificPaperXml) throws Exception {

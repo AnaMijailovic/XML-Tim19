@@ -1,65 +1,71 @@
 <rdf:RDF xmlns:rdfa="http://www.w3.org/ns/rdfa#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper15">
-    <pred:recieved xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2020-06-16</pred:recieved>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper24">
+    <pred:recieved xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="date">2020-06-17</pred:recieved>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper15">
-    <pred:revised xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2011-06-04</pred:revised>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper24">
+    <pred:revised xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="date"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper15">
-    <pred:accepted xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2011-07-04</pred:accepted>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper24">
+    <pred:accepted xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="date"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper15">
-    <pred:titled xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">XML Databases</pred:titled>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper24">
+    <pred:titled xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="string">title0</pred:titled>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper15">
-    <pred:titled xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">XML Baze podataka</pred:titled>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper24">
+    <pred:titled xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="string">title1</pred:titled>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author2">
-    <pred:isTheAuthorOf xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper15"/>
+  <rdf:Description rdf:about="author0">
+    <pred:isTheAuthorOf xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper24"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper15">
-    <pred:isWrittenBy xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/authors/author2"/>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper24">
+    <pred:isWrittenBy xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="author0"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author2">
-    <pred:firstName xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Johanna</pred:firstName>
+  <rdf:Description rdf:about="author0">
+    <pred:firstName xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="string">first_name0</pred:firstName>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author2">
-    <pred:lastName xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Smith</pred:lastName>
+  <rdf:Description rdf:about="author0">
+    <pred:lastName xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="string">last_name0</pred:lastName>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/affiliation/affiliation1">
-    <pred:hasAMember xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/authors/author2"/>
+  <rdf:Description rdf:about="affiliation">
+    <pred:hasAMember xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="author0"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author2">
-    <pred:isAMemberOf xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/affiliation/affiliation1"/>
+  <rdf:Description rdf:about="author0">
+    <pred:isAMemberOf xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="affiliation"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/affiliation/affiliation1">
-    <pred:affiliationNamed xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">IT Center LA</pred:affiliationNamed>
+  <rdf:Description rdf:about="affiliation">
+    <pred:affiliationNamed xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="string">name0</pred:affiliationNamed>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author3">
-    <pred:isTheAuthorOf xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper15"/>
+  <rdf:Description rdf:about="author1">
+    <pred:isTheAuthorOf xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper24"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper15">
-    <pred:isWrittenBy xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/authors/author3"/>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper24">
+    <pred:isWrittenBy xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="author1"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author3">
-    <pred:firstName xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mariana</pred:firstName>
+  <rdf:Description rdf:about="author1">
+    <pred:firstName xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="string">first_name1</pred:firstName>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author3">
-    <pred:lastName xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Peterson</pred:lastName>
+  <rdf:Description rdf:about="author1">
+    <pred:lastName xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="string">last_name1</pred:lastName>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/affiliation/affiliation1">
-    <pred:hasAMember xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/authors/author3"/>
+  <rdf:Description rdf:about="affiliation">
+    <pred:hasAMember xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="author1"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/authors/author3">
-    <pred:isAMemberOf xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/affiliation/affiliation1"/>
+  <rdf:Description rdf:about="author1">
+    <pred:isAMemberOf xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="affiliation"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/affiliation/affiliation1">
-    <pred:affiliationNamed xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">IT Center LA</pred:affiliationNamed>
+  <rdf:Description rdf:about="affiliation">
+    <pred:affiliationNamed xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="string">name1</pred:affiliationNamed>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper15">
-    <pred:keyword xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">xml</pred:keyword>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper24">
+    <pred:keyword xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="string">keyword0</pred:keyword>
   </rdf:Description>
-  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper15">
-    <pred:keyword xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">databases</pred:keyword>
+  <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper24">
+    <pred:keyword xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="string">keyword1</pred:keyword>
+  </rdf:Description>
+  <rdf:Description rdf:about="">
+    <pred:titled xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="string">title2</pred:titled>
+  </rdf:Description>
+  <rdf:Description rdf:about="">
+    <pred:titled xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="string">title3</pred:titled>
   </rdf:Description>
 </rdf:RDF>
