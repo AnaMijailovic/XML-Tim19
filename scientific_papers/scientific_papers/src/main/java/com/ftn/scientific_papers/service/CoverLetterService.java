@@ -34,19 +34,19 @@ public class CoverLetterService {
 		return coverLetterRepository.findOne(id);
 	}
   
-  public XMLResource findOneXml(String id) throws Exception {
+    public XMLResource findOneXml(String id) throws Exception {
 		XMLResource coverLetterXml = coverLetterRepository.findOne(id);
 		return coverLetterXml;
 	}
   
-  public byte[] findOnePdf(String id) throws Exception {
+    public byte[] findOnePdf(String id) throws Exception {
 		String xmlString = coverLetterRepository.findOne(id).getContent().toString();
 		String xslString = CoverLetterRepository.COVER_LETTER_XSL_FO_PATH;
 		ByteArrayOutputStream coverLetterPdf = xslfoTransformer.generatePDF(xmlString, xslString); 
 		return coverLetterPdf.toByteArray();
-  }
+    }
   
-  public String getTemplate() throws IOException {
+    public String getTemplate() throws IOException {
 		
 		return FileUtil.readFile(clTemplatePath);
 

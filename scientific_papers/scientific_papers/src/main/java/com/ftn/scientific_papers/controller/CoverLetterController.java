@@ -36,13 +36,13 @@ public class CoverLetterController {
 
 		return new ResponseEntity<>(resource.getContent().toString(), HttpStatus.OK);
 	}
-  @GetMapping(value = "/xml/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+    @GetMapping(value = "/xml/{id}", produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> findOneXml(@PathVariable("id") String id) throws Exception {
 		XMLResource resource = coverLetterService.findOneXml(id);
 		return new ResponseEntity<>(resource.getContent().toString(), HttpStatus.OK);
 	}
   
-  @GetMapping(value = "/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+    @GetMapping(value = "/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<byte[]> findOnePdf(@PathVariable("id") String id) throws Exception {
 
 		byte[] contents = coverLetterService.findOnePdf(id);
@@ -51,7 +51,7 @@ public class CoverLetterController {
         headers.add("Content-Disposition", "inline; filename=" + id + ".pdf");
         ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
         return response;
-  }
+    }
   
  	@GetMapping(value = "/template", produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> getScientificPaperTemplate() throws Exception {
