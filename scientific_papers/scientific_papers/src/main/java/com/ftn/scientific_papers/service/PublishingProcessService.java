@@ -126,9 +126,8 @@ public class PublishingProcessService {
 		try {
 			PublishingProcess publishingProcess = publishingProcessRepository.findOneUnmarshalled(processId);
 
-			for (PublishingProcess.PaperVersion paperVersion: publishingProcess.getPaperVersion()) {
-				scientificPaperRepository.updateStatus(paperVersion.getScientificPaperId(), status);
-			}
+			String paperId = publishingProcess.getPaperVersion().get(publishingProcess.getLatestVersion().intValue()-1).getScientificPaperId();
+			scientificPaperRepository.updateStatus(paperId, status);
 
 			publishingProcessRepository.updateStatus(processId, status);
 		} catch (Exception e) {

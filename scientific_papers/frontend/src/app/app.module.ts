@@ -43,7 +43,7 @@ import { AssignReviewerDialogComponentComponent } from './assign-reviewer-dialog
     AuthorPapersComponent,
     ConfirmationDialogComponent,
     ScientificPaperEditorComponent,
-    CoverLetterEditorComponent
+    CoverLetterEditorComponent,
     EditorPageComponent,
     PublishingProcessCardComponent,
     AssignReviewerDialogComponentComponent
@@ -74,7 +74,7 @@ import { AssignReviewerDialogComponentComponent } from './assign-reviewer-dialog
                 useClass: TokenInterceptorService,
                 multi: true
               }],
-  entryComponents: [AssignReviewerDialogComponentComponent,ConfirmationDialogComponent ],
+  entryComponents: [AssignReviewerDialogComponentComponent, ConfirmationDialogComponent ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

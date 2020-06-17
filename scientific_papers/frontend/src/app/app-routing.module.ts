@@ -22,6 +22,7 @@ const routes: Routes = [
   { path: 'add-cover-letter-editor', component: CoverLetterEditorComponent},
   { path: 'my-papers', component: AuthorPapersComponent},
   { path: 'submissions-in-process', component: EditorPageComponent}
+]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
