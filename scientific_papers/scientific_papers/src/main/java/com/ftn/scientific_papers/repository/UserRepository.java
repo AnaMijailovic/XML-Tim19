@@ -68,7 +68,7 @@ public class UserRepository {
 
 	public TUser findById(String userId) {
 		try {
-			String xPathExpression = String.format("//user[user_id='%s']", userId);
+			String xPathExpression = String.format("//user[@user_id='%s']", userId);
 			ResourceSet result = dbManager.executeXPath(userCollectionId, xPathExpression);
 
 			if (result == null) {

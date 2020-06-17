@@ -4,20 +4,22 @@ import java.util.List;
 
 public class PublishingProcessDTO {
     String processId;
-    String paperTitle;
-    String author;
-    String editor;
+    List<String> paperTitles;
+    List<String> authors;
+    String editorUsername;
+    String editorName;
     List<String> reviewers;
     String status;
     String version;
 
     public PublishingProcessDTO() {}
 
-    public PublishingProcessDTO(String processId, String paperTitle, String author, String editor, List<String> reviewers, String status, String version) {
+    public PublishingProcessDTO(String processId, List<String> paperTitles, List<String> authors, String editorId, String editorName, List<String> reviewers, String status, String version) {
         this.processId = processId;
-        this.paperTitle = paperTitle;
-        this.author = author;
-        this.editor = editor;
+        this.paperTitles = paperTitles;
+        this.authors = authors;
+        this.editorUsername = editorId;
+        this.editorName = editorName;
         this.reviewers = reviewers;
         this.status = status;
         this.version = version;
@@ -31,28 +33,36 @@ public class PublishingProcessDTO {
         this.processId = processId;
     }
 
-    public String getPaperTitle() {
-        return paperTitle;
+    public List<String> getPaperTitles() {
+        return paperTitles;
     }
 
-    public void setPaperTitle(String paperTitle) {
-        this.paperTitle = paperTitle;
+    public void setPaperTitles(List<String> paperTitles) {
+        this.paperTitles = paperTitles;
     }
 
-    public String getAuthor() {
-        return author;
+    public List<String> getAuthors() {
+        return authors;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthors(List<String> authors) {
+        this.authors = authors;
     }
 
-    public String getEditor() {
-        return editor;
+    public String getEditorUsername() {
+        return editorUsername;
     }
 
-    public void setEditor(String editor) {
-        this.editor = editor;
+    public void setEditorUsername(String editorUsername) {
+        this.editorUsername = editorUsername;
+    }
+
+    public String getEditorName() {
+        return editorName;
+    }
+
+    public void setEditorName(String editorName) {
+        this.editorName = editorName;
     }
 
     public List<String> getReviewers() {

@@ -56,6 +56,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 		return userRepository.findById(userId);
 	}
 
+	public TUser findByUsername(String username) {
+		return userRepository.findByUsername(username);
+	}
+
 	public void registerUser(TUser user) {
 		if (userRepository.findByUsername(user.getUsername()) != null) {
 			throw new UsernameTakenException();

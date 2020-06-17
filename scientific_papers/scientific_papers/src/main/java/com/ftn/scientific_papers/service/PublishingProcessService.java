@@ -1,5 +1,6 @@
 package com.ftn.scientific_papers.service;
 
+import com.ftn.scientific_papers.exceptions.ResourceNotFoundException;
 import com.ftn.scientific_papers.model.publishing_process.PublishingProcess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,6 +42,10 @@ public class PublishingProcessService {
 	
 	public XMLResource findOne(String id) throws Exception {
 		return publishingProcessRepository.findOne(id);
+	}
+
+	public PublishingProcess findOneUnmarshalled(String id)  {
+		return publishingProcessRepository.findOneUnmarshalled(id);
 	}
 	
 	public String findOneByPaperId(String paperId) throws Exception {
@@ -107,4 +112,7 @@ public class PublishingProcessService {
 		System.out.println("Proces after adding new paper version: \n" + findOne(processId).getContent().toString());
 	}
 
+	public void assignEditor(String processId, String userId) throws Exception {
+		publishingProcessRepository.assignEditor(processId, userId);
+	}
 }

@@ -13,8 +13,6 @@ export class ScientificPaperService {
 
   constructor(private http: HttpClient) { }
 
-
-
   getScientificPapers(params: string): Observable<string> {
 
     return this.http.get('http://localhost:8088/api/scientificPapers' + params, { responseType: 'text' });

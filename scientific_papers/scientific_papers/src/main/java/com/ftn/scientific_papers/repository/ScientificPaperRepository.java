@@ -48,7 +48,7 @@ public class ScientificPaperRepository {
 
 	public ScientificPaper findOneUnmarshalled(String id) {
 		try {
-			String xPathExpression = String.format("//scientific_paper[id='%s']", id);
+			String xPathExpression = String.format("/scientific_paper[@id='%s']", id);
 			ResourceSet result = dbManager.executeXPath(scientificPaperCollectionId, xPathExpression);
 
 			if (result == null) {

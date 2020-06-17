@@ -55,7 +55,7 @@ public class ScientificPaperService {
 		return spRepository.findOne(id);
 	}
 
-	public ScientificPaper findOneUnmarshalled(String id) throws Exception {
+	public ScientificPaper findOneUnmarshalled(String id) {
 
 		return spRepository.findOneUnmarshalled(id);
 	}
