@@ -6,6 +6,8 @@ import { HomeComponent } from './home/home.component';
 import { LogoutComponent } from './logout/logout.component';
 import { AddPaperFormComponent } from './add-paper-form/add-paper-form.component';
 import { AuthorPapersComponent } from './author-papers/author-papers.component';
+import { ScientificPaperEditorComponent } from './scientific-paper-editor/scientific-paper-editor.component';
+import { CoverLetterEditorComponent } from './cover-letter-editor/cover-letter-editor.component';
 
 
 const routes: Routes = [
@@ -14,6 +16,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent},
   { path: 'logout', component: LogoutComponent},
   { path: 'add-paper', component: AddPaperFormComponent},
+  { path: 'add-paper-editor', component:  ScientificPaperEditorComponent},
+  { path: 'add-cover-letter-editor', component: CoverLetterEditorComponent},
   { path: 'my-papers', component: AuthorPapersComponent}
 ];
 

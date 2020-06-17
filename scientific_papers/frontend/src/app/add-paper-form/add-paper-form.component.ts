@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from '../_service/authentication.service';
 import { Router } from '@angular/router';
 import { ScientificPaperService } from '../_service/scientific-paper.service';
 import { CoverLetterService } from '../_service/cover-letter.service';
@@ -17,6 +16,9 @@ export class AddPaperFormComponent implements OnInit {
   letter: string;
   processId: string;
 
+  revisionProcessId: string;
+  revisionPaperTitle: string;
+
   constructor(private formBuilder: FormBuilder,
               private spService: ScientificPaperService,
               private cvService: CoverLetterService,
@@ -32,6 +34,12 @@ export class AddPaperFormComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
+    const revisionData =  JSON.parse(localStorage.getItem('revisionData'));
+    if (revisionData) {
+      this.revisionPaperTitle = revisionData.paperTitle;
+      this.revisionProcessId = revisionData.processId;
+      localStorage.removeItem('revisionData');
+    }
   }
 
   submitPaper() {
@@ -40,7 +48,14 @@ export class AddPaperFormComponent implements OnInit {
       return;
     }
 
-    this.spService.addScientificPaper(this.paper).subscribe(
+    let postReq: any;
+    if (this.revisionPaperTitle ) {
+      postReq = this.spService.addPaperReview(this.paper, this.revisionProcessId);
+    } else {
+      postReq = this.spService.addScientificPaper(this.paper);
+    }
+
+    postReq.subscribe(
       (response => {
         this.toastr.success('Success', 'Scientific paper submitted');
         this.processId = response.toString();
@@ -66,7 +81,7 @@ export class AddPaperFormComponent implements OnInit {
       return;
     }
 
-    if (this.paper === '' || this.paper === undefined || this.paper === null ) {
+    if (this.letter === '' || this.letter === undefined || this.letter === null ) {
       this.toastr.error('Error', 'You must choose cover letter');
       return;
     }
@@ -117,6 +132,12 @@ export class AddPaperFormComponent implements OnInit {
     reader.onerror = () => {
       this.toastr.error('Error', 'Failed to read file');
     };
+  }
+
+  openEditor() {
+    localStorage.setItem('revisionData', JSON.stringify({paperTitle: this.revisionPaperTitle,
+                                                         processId: this.revisionProcessId}));
+    this.router.navigate(['/add-paper-editor']);
   }
 
 }

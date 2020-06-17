@@ -1,6 +1,7 @@
 package com.ftn.scientific_papers.controller;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -47,20 +48,24 @@ public class ScientificPaperController {
 			@RequestParam(defaultValue = "") String title, @RequestParam(defaultValue = "") String author,
 			@RequestParam(defaultValue = "") String affiliation, @RequestParam(defaultValue = "") String keyword,
 			@RequestParam(defaultValue = "") String loggedAuthor,
-			@RequestParam(required = false) Long fromDate, // timestamp
-			@RequestParam(required = false) Long toDate // timestamp
+			@RequestParam(required = false) Long acceptedFromDate, // timestamp
+			@RequestParam(required = false) Long acceptedToDate, // timestamp
+			@RequestParam(required = false) Long recievedFromDate, // timestamp
+			@RequestParam(required = false) Long recievedToDate // timestamp
 	) throws IOException {
 		if(!loggedAuthor.equals(""))
 			loggedAuthor = tokenUtils.getUsernameFromRequest(request);
 		
 		System.out.println("Title: " + title + " Author: " + author + " Affiliation: " + affiliation + " Keyword: "
-				+ keyword + " From Date: " + fromDate + " To Date: " + toDate + " Logged author: " + loggedAuthor );
+				+ keyword + "Accepted From Date: " + acceptedFromDate + "Accepted To Date: " + acceptedToDate + 
+				"Recieved from: " + recievedFromDate + "Recieved to: " + recievedToDate +
+				" Logged author: " + loggedAuthor );
 		String resource = "";
-		if (title.equals("") && author.equals("") && affiliation.equals("") && keyword.equals("") && fromDate == null
-				&& toDate == null) {
+		if (title.equals("") && author.equals("") && affiliation.equals("") && keyword.equals("") && acceptedFromDate == null
+				&& acceptedToDate == null && recievedFromDate == null && recievedToDate == null) {
 			resource = spService.getAll(searchText, loggedAuthor);
 		} else {
-			SearchData searchData = new SearchData(title, author, affiliation, keyword, fromDate, toDate);
+			SearchData searchData = new SearchData(title, author, affiliation, keyword, acceptedFromDate, acceptedToDate, recievedFromDate, recievedToDate);
 			resource = spService.metadataSearch(searchData, loggedAuthor);
 		}
 
@@ -72,6 +77,12 @@ public class ScientificPaperController {
 		XMLResource resource = spService.findOne(id);
 
 		return new ResponseEntity<>(resource.getContent().toString(), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/template", produces = MediaType.APPLICATION_XML_VALUE)
+	public ResponseEntity<String> getScientificPaperTemplate() throws Exception {
+
+		return new ResponseEntity<>( spService.getTemplate(), HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasRole('ROLE_AUTHOR')")
@@ -86,7 +97,7 @@ public class ScientificPaperController {
 	}
 	
 	@PreAuthorize("hasRole('ROLE_AUTHOR')")
-	@PostMapping(value="/revision", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
+	@PostMapping(value="/revision", consumes = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> addPaperRevision(@RequestParam(("processId")) String processId,
 			@RequestBody String scientificPaperXml) throws Exception {
 		
@@ -97,12 +108,12 @@ public class ScientificPaperController {
 	}
 	
 	@PreAuthorize("hasRole('ROLE_AUTHOR')")
-	@DeleteMapping(value="/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+	@DeleteMapping(value="/{id}")
 	public ResponseEntity<String> withdrawScientificPaper(@PathVariable("id")String paperId) throws Exception{
 		
 		// Get author username from token
 	    String username = tokenUtils.getUsernameFromRequest(request);
 		spService.withdrawScientificPaper(paperId, username);
-		return new ResponseEntity<>("Deleted", HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
