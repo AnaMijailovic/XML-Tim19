@@ -10,8 +10,8 @@ import { AllowedRoutes } from '../_service/allowed-routes.service';
 })
 export class LogoutComponent implements OnInit {
 
-  constructor(private authService: AuthenticationService, 
-              private router: Router, 
+  constructor(private authService: AuthenticationService,
+              private router: Router,
               private allowedRoutes: AllowedRoutes) {}
 
   ngOnInit() {

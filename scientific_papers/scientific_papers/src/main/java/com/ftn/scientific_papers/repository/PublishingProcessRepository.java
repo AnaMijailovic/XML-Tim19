@@ -1,17 +1,33 @@
 package com.ftn.scientific_papers.repository;
 
+import java.io.StringReader;
+import java.rmi.UnexpectedException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import com.ftn.scientific_papers.exceptions.CustomUnexpectedException;
+import com.ftn.scientific_papers.exceptions.DatabaseException;
+import com.ftn.scientific_papers.model.publishing_process.PublishingProcess;
+import com.ftn.scientific_papers.model.user.TUser;
+import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+import org.xmldb.api.base.Resource;
+import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
+import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
 import com.ftn.scientific_papers.exceptions.ResourceNotFoundException;
 import com.ftn.scientific_papers.util.DBManager;
 import com.ftn.scientific_papers.util.FileUtil;
 import com.ftn.scientific_papers.util.XUpdateTemplate;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 @Repository
 public class PublishingProcessRepository {
@@ -30,7 +46,76 @@ public class PublishingProcessRepository {
 		}
 		return result;
 	}
-	
+
+	public PublishingProcess findOneUnmarshalled(String id) {
+		try {
+			String xPath = String.format("/publishing-process[@id='%s']", id);
+			ResourceSet result = dbManager.executeXPath(publishingProcessCollectionId, xPath);
+
+			if (result == null) {
+				return null;
+			}
+
+			ResourceIterator i = result.getIterator();
+			Resource res = null;
+
+			while (i.hasMoreResources()) {
+				try {
+					res = i.nextResource();
+					PublishingProcess publishingProcess = unmarshallPublishingProcess(res.getContent().toString());
+					return  publishingProcess;
+				} finally {
+					// don't forget to cleanup resources
+					try {
+						((EXistResource)res).freeResources();
+					} catch (XMLDBException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+			return  null;
+
+		} catch(Exception e) {
+			throw new DatabaseException("Exception while getting publishing processes." + id);
+		}
+	}
+
+	public List<PublishingProcess> getAll() {
+		try {
+			String xPath = "/publishing-process";
+			ResourceSet result = dbManager.executeXPath(publishingProcessCollectionId, xPath);
+
+			if (result == null) {
+				return new ArrayList<PublishingProcess>();
+			}
+
+			ResourceIterator i = result.getIterator();
+			Resource res = null;
+			List<PublishingProcess> publishingProcesses = new ArrayList<>();
+
+			while (i.hasMoreResources()) {
+				try {
+					res = i.nextResource();
+					PublishingProcess publishingProcess = unmarshallPublishingProcess(res.getContent().toString());
+					publishingProcesses.add(publishingProcess);
+				} finally {
+					// don't forget to cleanup resources
+					try {
+						((EXistResource)res).freeResources();
+					} catch (XMLDBException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+			return  publishingProcesses;
+
+		} catch(Exception e) {
+			throw new DatabaseException("Exception while getting all publishing processes.");
+		}
+	}
+
 	public String findOneByPaperId(String paperId) throws Exception {
 
 		String xQueryPath = "./src/main/resources/xQuery/getProcessByPaperId.txt";
@@ -40,7 +125,7 @@ public class PublishingProcessRepository {
 		ResourceSet result = dbManager.executeXQuery(publishingProcessCollectionId, "", params, xQueryPath);
 		
 		if(result.getSize() == 0)
-			throw new ResourceNotFoundException("Proces for paper with id: " + paperId +  " was not found.");
+			throw new ResourceNotFoundException("Process for paper with id: " + paperId +  " was not found.");
 		
 		String processId = result.getIterator().nextResource().getContent().toString();
 		System.out.println("ProcessId from xQuery: " + processId);
@@ -94,7 +179,7 @@ public class PublishingProcessRepository {
 		String xUpdateExpression = String.format(XUpdateTemplate.UPDATE, updatePath, newVersion);
 
 		dbManager.executeXUpdate(publishingProcessCollectionId, xUpdateExpression, processId);
-		System.out.println("Proces after updating latestVersion: \n" + findOne(processId).getContent().toString());
+		System.out.println("Process after updating latestVersion: \n" + findOne(processId).getContent().toString());
 	}
 
 	public void updateStatus(String processId, String newStatus) throws Exception {
@@ -103,7 +188,7 @@ public class PublishingProcessRepository {
 		String xUpdateExpression = String.format(XUpdateTemplate.UPDATE, updatePath, newStatus);
 
 		dbManager.executeXUpdate(publishingProcessCollectionId, xUpdateExpression, processId);
-		System.out.println("Proces after updating status: \n" + findOne(processId).getContent().toString());
+		System.out.println("Process after updating status: \n" + findOne(processId).getContent().toString());
 	}
 
 	public String getNextId() {
@@ -129,6 +214,29 @@ public class PublishingProcessRepository {
 	public void update(String publishingProcessXml, String id) throws Exception {
 
 		dbManager.save(publishingProcessCollectionId, id, publishingProcessXml);
+	}
 
+	private PublishingProcess unmarshallPublishingProcess(String publishingProcessXML) throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(PublishingProcess.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();
+
+		return (PublishingProcess) unmarshaller.unmarshal(new StringReader(publishingProcessXML));
+	}
+
+	public void assignEditor(String processId, String userId) {
+		try {
+			XMLResource result = dbManager.findOne(publishingProcessCollectionId, processId);
+			if (result == null) {
+				throw new ResourceNotFoundException("Publishing process with id " + processId + " was not found");
+			}
+
+			String updatePath = "/publishing-process/editor-id";
+			String xUpdateExpression = String.format(XUpdateTemplate.UPDATE, updatePath, userId);
+			dbManager.executeXUpdate(publishingProcessCollectionId, xUpdateExpression, processId);
+			System.out.println("Process after updating status: \n" + result.getContent().toString());
+
+		} catch (Exception e) {
+			throw new CustomUnexpectedException("Exception occurred while assigning editor " + userId + " to process " + processId);
+		}
 	}
 }

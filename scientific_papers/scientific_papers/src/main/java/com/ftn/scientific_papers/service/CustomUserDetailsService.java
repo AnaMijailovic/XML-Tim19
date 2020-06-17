@@ -52,6 +52,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 		}
 	}
 
+	public TUser findById(String userId) {
+		return userRepository.findById(userId);
+	}
+
+	public TUser findByUsername(String username) {
+		return userRepository.findByUsername(username);
+	}
+
 	public void registerUser(TUser user) {
 		if (userRepository.findByUsername(user.getUsername()) != null) {
 			throw new UsernameTakenException();
@@ -61,4 +69,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 		userRepository.save(user);
 	}
 
+
+    public List<TUser> findAll() {
+		return userRepository.findAll();
+    }
 }

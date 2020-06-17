@@ -1,16 +1,28 @@
 package com.ftn.scientific_papers.repository;
 
+import java.io.StringReader;
 import java.util.HashMap;
 
+import com.ftn.scientific_papers.exceptions.DatabaseException;
+import com.ftn.scientific_papers.model.scientific_paper.ScientificPaper;
+import com.ftn.scientific_papers.model.user.TUser;
+import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+import org.xmldb.api.base.Resource;
+import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
+import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
 import com.ftn.scientific_papers.exceptions.ResourceNotFoundException;
 import com.ftn.scientific_papers.util.DBManager;
 import com.ftn.scientific_papers.util.XUpdateTemplate;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 @Repository
 public class ScientificPaperRepository {
@@ -32,6 +44,41 @@ public class ScientificPaperRepository {
 			throw new ResourceNotFoundException("Scientific paper with id " + id + " was not found");
 		}
 		return result;
+	}
+
+	public ScientificPaper findOneUnmarshalled(String id) {
+		try {
+			String xPathExpression = String.format("/scientific_paper[@id='%s']", id);
+			ResourceSet result = dbManager.executeXPath(scientificPaperCollectionId, xPathExpression);
+
+			if (result == null) {
+				return null;
+			}
+
+			ResourceIterator i = result.getIterator();
+			Resource res = null;
+			ScientificPaper scientificPaper = null;
+
+			while(i.hasMoreResources()) {
+
+				try {
+					res = i.nextResource();
+					scientificPaper = unmarshallScientificPaper(res.getContent().toString());
+				} finally {
+					// don't forget to cleanup resources
+					try {
+						((EXistResource)res).freeResources();
+					} catch (XMLDBException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+			return scientificPaper;
+
+		} catch (Exception e) {
+			throw new DatabaseException("Exception while finding user by id.");
+		}
 	}
 
 	public String getAll(String searchText, String loggedAuthor) {
@@ -103,5 +150,12 @@ public class ScientificPaperRepository {
 
 		dbManager.save(scientificPaperCollectionId, id, scientificPaperXml);
 
+	}
+
+	private ScientificPaper unmarshallScientificPaper(String scientificPaperXML) throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(ScientificPaper.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();
+
+		return (ScientificPaper) unmarshaller.unmarshal(new StringReader(scientificPaperXML));
 	}
 }

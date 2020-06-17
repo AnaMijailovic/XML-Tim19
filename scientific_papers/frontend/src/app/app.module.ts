@@ -24,6 +24,9 @@ import { AuthorPapersComponent } from './author-papers/author-papers.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { ScientificPaperEditorComponent } from './scientific-paper-editor/scientific-paper-editor.component';
 import { CoverLetterEditorComponent } from './cover-letter-editor/cover-letter-editor.component';
+import { EditorPageComponent } from './editor-page/editor-page.component';
+import { PublishingProcessCardComponent } from './publishing-process-card/publishing-process-card.component';
+import { AssignReviewerDialogComponentComponent } from './assign-reviewer-dialog-component/assign-reviewer-dialog-component.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +44,9 @@ import { CoverLetterEditorComponent } from './cover-letter-editor/cover-letter-e
     ConfirmationDialogComponent,
     ScientificPaperEditorComponent,
     CoverLetterEditorComponent
+    EditorPageComponent,
+    PublishingProcessCardComponent,
+    AssignReviewerDialogComponentComponent
   ],
   imports: [
     BrowserModule,
@@ -68,8 +74,7 @@ import { CoverLetterEditorComponent } from './cover-letter-editor/cover-letter-e
                 useClass: TokenInterceptorService,
                 multi: true
               }],
-
-  entryComponents: [ConfirmationDialogComponent ],
+  entryComponents: [AssignReviewerDialogComponentComponent,ConfirmationDialogComponent ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

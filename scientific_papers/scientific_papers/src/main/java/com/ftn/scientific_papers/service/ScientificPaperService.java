@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.ftn.scientific_papers.model.scientific_paper.ScientificPaper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -60,6 +61,11 @@ public class ScientificPaperService {
 	public XMLResource findOne(String id) throws Exception {
 
 		return spRepository.findOne(id);
+	}
+
+	public ScientificPaper findOneUnmarshalled(String id) {
+
+		return spRepository.findOneUnmarshalled(id);
 	}
 
 	public String getAll(String searchText, String loggedAuthor) {

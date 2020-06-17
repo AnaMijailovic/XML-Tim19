@@ -30,8 +30,8 @@
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="NEW_SUBMISSION"/>
-                        <xs:enumeration value="WAITING_FOR_REVIEWERS_ ACCEPTANCE"/>
-                        <xs:enumeration value="NEW_REVIEVER_NEEDED"/>
+                        <xs:enumeration value="WAITING_FOR_REVIEWERS_ACCEPTANCE"/>
+                        <xs:enumeration value="NEW_REVIEwER_NEEDED"/>
                         <xs:enumeration value="REVIEWS_ACCEPTED"/>
                         <xs:enumeration value="REVIEWS_DONE"/>
                         <xs:enumeration value="ACCEPTED"/>
