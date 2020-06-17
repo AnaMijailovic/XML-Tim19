@@ -33,11 +33,11 @@
                 <tr>
                     <td>
                         <br>
-                        <button mat-raised-button color="primary">View papers</button>
+                        <button mat-raised-button color="primary" (click)="test()">View papers</button>
                         <button mat-button color="primary" *ngIf="showAssignSelf" (click)="assignSelfAsEditor()">Assign self as editor</button>
-                        <button mat-button color="primary"  *ngIf="showAssignReviewer">Assign reviewer</button>
-                        <button mat-stroked-button color="accent" *ngIf="showAcceptReject">Accept paper</button>
-                        <button mat-stroked-button color="warn" *ngIf="showAcceptReject">Reject paper</button>
+                        <button mat-button color="primary"  *ngIf="showAssignReviewer" (click)="openDialog()">Assign reviewer</button>
+                        <button mat-stroked-button color="accent" *ngIf="showAcceptReject" (click)="accept()">Accept</button>
+                        <button mat-stroked-button color="warn" *ngIf="showAcceptReject"(click)="reject()">Reject</button>
                     </td>
                 </tr>
             </table>

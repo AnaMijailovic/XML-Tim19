@@ -2,7 +2,9 @@ package com.ftn.scientific_papers.repository;
 
 import java.io.ByteArrayOutputStream;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -101,6 +103,41 @@ public class UserRepository {
 		}
 	}
 
+	public List<TUser> findAll() {
+		try {
+			String xPathExpression = "/user";
+			ResourceSet result = dbManager.executeXPath(userCollectionId, xPathExpression);
+
+			if (result == null) {
+				return null;
+			}
+
+			ResourceIterator i = result.getIterator();
+			Resource res = null;
+			List<TUser> users = new ArrayList<>();
+
+			while(i.hasMoreResources()) {
+
+				try {
+					res = i.nextResource();
+					TUser user = unmarshallUser(res.getContent().toString());
+					users.add(user);
+				} finally {
+					try {
+						((EXistResource)res).freeResources();
+					} catch (XMLDBException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+			return users;
+
+		} catch (Exception e) {
+			throw new DatabaseException("Exception while finding user by id.");
+		}
+	}
+
 	public void save(TUser user) {
 		try {
 			ResourceSet rs = dbManager.executeXQuery(userCollectionId, "count(/.)", new HashMap<>(), "");
@@ -136,6 +173,7 @@ public class UserRepository {
 		
 		return (TUser) unmarshaller.unmarshal(new StringReader(userXML));
 	}
+
 
 
 }

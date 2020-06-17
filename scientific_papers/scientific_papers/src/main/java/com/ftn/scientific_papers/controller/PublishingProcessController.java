@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import com.ftn.scientific_papers.service.PublishingProcessService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.PathParam;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,6 +82,25 @@ public class PublishingProcessController {
 			TUser user = userService.findByUsername(username);
 
 			publishingProcessService.assignEditor(processId, user.getUserId());
+			PublishingProcess process = publishingProcessService.findOneUnmarshalled(processId);
+
+			ScientificPaper scientificPaper = scientificPaperService.findOneUnmarshalled(process.getPaperVersion().get(process.getLatestVersion().intValue()-1).getScientificPaperId());
+			PublishingProcessDTO publishingProcessDTO = mapper.toDTO(scientificPaper, process);
+
+			return new ResponseEntity(publishingProcessDTO, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@PutMapping(value="/status/{processId},{status}")
+	@PreAuthorize("hasRole('ROLE_EDITOR')")
+	public ResponseEntity<PublishingProcessDTO> updatePaperStatus(@PathVariable("processId") String processId, @PathVariable("status") String status) {
+		try {
+			if (!status.equalsIgnoreCase("ACCEPTED") && !status.equalsIgnoreCase("REJECTED")) {
+				return new ResponseEntity("Invalid paper status", HttpStatus.BAD_REQUEST);
+			}
+			publishingProcessService.updateStatus(processId, status);
 			PublishingProcess process = publishingProcessService.findOneUnmarshalled(processId);
 
 			ScientificPaper scientificPaper = scientificPaperService.findOneUnmarshalled(process.getPaperVersion().get(process.getLatestVersion().intValue()-1).getScientificPaperId());

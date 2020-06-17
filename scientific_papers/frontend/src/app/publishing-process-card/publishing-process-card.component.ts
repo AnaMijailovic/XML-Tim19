@@ -3,6 +3,8 @@ import { PublishingProcess } from '../_model/publishingProcess.model';
 import { UtilService } from '../_service/util.service';
 import { ToastrService } from 'ngx-toastr';
 import { PublishingProcessService } from '../_service/publishing-process.service';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { AssignReviewerDialogComponentComponent } from '../assign-reviewer-dialog-component/assign-reviewer-dialog-component.component';
 
 @Component({
   selector: 'app-publishing-process-card',
@@ -19,6 +21,7 @@ export class PublishingProcessCardComponent implements OnInit {
 
   constructor(private publishingProcessService: PublishingProcessService,
               private utilService: UtilService,
+              private dialog: MatDialog,
               private toastr: ToastrService) { }
 
   ngOnInit() {
@@ -36,21 +39,78 @@ export class PublishingProcessCardComponent implements OnInit {
         this.showAssignReviewer = true;
       } else if (this.publishingProcess.status === 'REVIEWS_DONE') {
         this.showAcceptReject = true;
+      } else {
+        this.showAcceptReject = false;
+        this.showAssignReviewer = false;
+        this.showAssignSelf = false;
       }
     }
   }
 
   assignSelfAsEditor() {
     this.publishingProcessService.assignEditor(this.publishingProcess.processId).subscribe(
-      (resoonse => {
+      ((response: PublishingProcess) => {
         this.toastr.success('Success', 'Successfully assigned self as editor');
-        console.log(resoonse);
-        this.publishingProcess = resoonse;
+        this.publishingProcess = response;
         this.updateButtonFlags();
-      }), (error => {
+      }), (error: any) => {
         this.toastr.error('Error', 'Some error happend');
         console.log(JSON.stringify(error));
-      })
+      }
+    );
+  }
+
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    const dialogRef = this.dialog.open(AssignReviewerDialogComponentComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      reviewerId => {
+        if (reviewerId !== undefined) {
+          this.publishingProcessService.assignReviewer(this.publishingProcess.processId, reviewerId).subscribe(
+            ((response: PublishingProcess) => {
+              this.toastr.success('Success', 'Successfully assigned reviewer');
+              console.log(response);
+              this.publishingProcess = response;
+              this.updateButtonFlags();
+            }), ((error: any) => {
+              // this.toastr.error('Error', 'Some error happend');
+              this.toastr.error('Error', 'Not implemented yet');
+              console.log(JSON.stringify(error));
+            })
+          );
+        }
+      }
+    );
+  }
+
+  accept() {
+    this.publishingProcessService.updatePaperStatus(this.publishingProcess.processId, 'ACCEPTED').subscribe(
+      ((response: PublishingProcess) => {
+        this.toastr.success('Success', 'Paper successfully accepted');
+        this.publishingProcess = response;
+        this.updateButtonFlags();
+      }), (error: any) => {
+        this.toastr.error('Error', 'Some error happend');
+        console.log(JSON.stringify(error));
+      }
+    );
+  }
+
+  reject() {
+    this.publishingProcessService.updatePaperStatus(this.publishingProcess.processId, 'REJECTED').subscribe(
+      ((response: PublishingProcess) => {
+        this.toastr.success('Success', 'Paper rejected');
+        this.publishingProcess = response;
+        this.updateButtonFlags();
+      }), (error: any) => {
+        this.toastr.error('Error', 'Some error happend');
+        console.log(JSON.stringify(error));
+      }
     );
   }
 }

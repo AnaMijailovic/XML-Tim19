@@ -70,4 +70,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	}
 
 
+    public List<TUser> findAll() {
+		return userRepository.findAll();
+    }
 }

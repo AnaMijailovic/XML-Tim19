@@ -23,6 +23,7 @@ import { TokenInterceptorService } from './_service/token-interceptor.service';
 import { AuthorPapersComponent } from './author-papers/author-papers.component';
 import { EditorPageComponent } from './editor-page/editor-page.component';
 import { PublishingProcessCardComponent } from './publishing-process-card/publishing-process-card.component';
+import { AssignReviewerDialogComponentComponent } from './assign-reviewer-dialog-component/assign-reviewer-dialog-component.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { PublishingProcessCardComponent } from './publishing-process-card/publis
     AuthorPapersComponent,
     AuthorPapersComponent,
     EditorPageComponent,
-    PublishingProcessCardComponent
+    PublishingProcessCardComponent,
+    AssignReviewerDialogComponentComponent
   ],
   imports: [
     BrowserModule,
@@ -66,6 +68,7 @@ import { PublishingProcessCardComponent } from './publishing-process-card/publis
                 useClass: TokenInterceptorService,
                 multi: true
               }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AssignReviewerDialogComponentComponent]
 })
 export class AppModule { }

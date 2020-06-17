@@ -1,5 +1,4 @@
 export interface PublishingProcess {
-
     processId: string;
     titles: string[];
     authors: string[];
