@@ -1,0 +1,10 @@
+<app-header (sendSearchData)="sendSearchData($event)"></app-header>
+<img src="../../assets/images/header.jpg" width="100%" height="22%">
+
+<mat-card id='cl-editor'>
+        <h2>Cover letter editor</h2>
+        <div id="xonomy-letter-editor"></div>
+        <br/>
+        <button mat-raised-button color="primary" (click)="loadClTemplate()">Load template</button>
+        <button mat-raised-button color="primary" (click)="addLetterXonomy()">Submit letter</button>
+</mat-card>

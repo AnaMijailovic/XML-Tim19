@@ -22,6 +22,8 @@ import { CoverLetterService } from './_service/cover-letter.service';
 import { TokenInterceptorService } from './_service/token-interceptor.service';
 import { AuthorPapersComponent } from './author-papers/author-papers.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { ScientificPaperEditorComponent } from './scientific-paper-editor/scientific-paper-editor.component';
+import { CoverLetterEditorComponent } from './cover-letter-editor/cover-letter-editor.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     AddPaperFormComponent,
     AuthorPapersComponent,
     AuthorPapersComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    ScientificPaperEditorComponent,
+    CoverLetterEditorComponent
   ],
   imports: [
     BrowserModule,

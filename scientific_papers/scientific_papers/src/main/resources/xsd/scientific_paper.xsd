@@ -66,7 +66,7 @@
                 <xs:group ref="simple_paragraph_elements"/>
             </xs:choice>
         </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="required"/>
+        <xs:attribute name="id" type="xs:ID" use="optional"/>
     </xs:complexType>
     <xs:complexType name="TComplexParagraph" mixed="true">
         <xs:sequence>
@@ -76,7 +76,7 @@
                 <xs:group ref="simple_paragraph_elements"/>
             </xs:choice>
         </xs:sequence>
-        <xs:attribute name="id" type="xs:ID" use="required"/>
+        <xs:attribute name="id" type="xs:ID" use="optional"/>
     </xs:complexType>
     <xs:complexType mixed="true" name="TEmphasis">
         <xs:choice maxOccurs="unbounded" minOccurs="1">
@@ -129,7 +129,7 @@
                                     <xs:simpleContent>
                                         <xs:extension base="xs:string">
                                             <xs:attribute name="lang" type="xs:string"
-                                                use="required"/>
+                                                use="optional"/>
                                             <xs:anyAttribute namespace="http://www.w3.org/ns/rdfa#"
                                                 processContents="lax"/>
                                         </xs:extension>
@@ -161,7 +161,7 @@
                                         <xs:element maxOccurs="unbounded" name="paragraph"
                                             type="TSimpleParagraph"/>
                                     </xs:sequence>
-                                    <xs:attribute name="id" type="xs:ID" use="required"/>
+                                    <xs:attribute name="id" type="xs:ID" use="optional"/>
                                 </xs:complexType>
                             </xs:element>
                             <xs:element maxOccurs="unbounded" ref="chapter"/>
@@ -170,7 +170,6 @@
                                     <xs:sequence>
                                         <xs:element maxOccurs="unbounded" ref="reference"/>
                                     </xs:sequence>
-                                    <xs:attribute name="id" type="xs:ID" use="required"/>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
@@ -255,7 +254,7 @@
                 <xs:element name="name" type="xs:string"/>
                 <xs:element name="description" type="xs:string"/>
             </xs:sequence>
-            <xs:attribute name="id" type="xs:ID" use="required"/>
+            <xs:attribute name="id" type="xs:ID" use="optional"/>
             <xs:attribute name="src" type="xs:string" use="required"/>
             <xs:attribute name="width" type="xs:positiveInteger"/>
             <xs:attribute name="height" type="xs:positiveInteger"/>
@@ -266,7 +265,7 @@
             <xs:sequence maxOccurs="unbounded" minOccurs="1">
                 <xs:element name="item" type="TItem"/>
             </xs:sequence>
-            <xs:attribute name="id" type="xs:ID" use="required"/>
+            <xs:attribute name="id" type="xs:ID" use="optional"/>
             <xs:attribute name="style" default="circle">
                 <xs:simpleType>
                     <xs:restriction base="xs:token">
@@ -284,7 +283,7 @@
             <xs:sequence maxOccurs="unbounded">
                 <xs:element name="item" type="TItem"/>
             </xs:sequence>
-            <xs:attribute name="id" type="xs:ID" use="required"/>
+            <xs:attribute name="id" type="xs:ID" use="optional"/>
             <xs:attribute name="type" default="1">
                 <xs:simpleType>
                     <xs:restriction base="xs:token">
@@ -312,7 +311,7 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="id" type="xs:ID" use="required"/>
+            <xs:attribute name="id" type="xs:ID" use="optional"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="quote">
@@ -321,7 +320,7 @@
                 <xs:element name="source" type="xs:string"/>
                 <xs:element name="text" type="xs:string"/>
             </xs:sequence>
-            <xs:attribute name="id" type="xs:ID" use="required"/>
+            <xs:attribute name="id" type="xs:ID" use="optional"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="heading" type="xs:string"/>
@@ -334,7 +333,6 @@
                 <xs:element name="year_of_publication" type="xs:gYear"> </xs:element>
                 <xs:element name="pages" type="xs:string"/>
             </xs:sequence>
-            <xs:attribute name="id" type="xs:ID" use="required"/>
         </xs:complexType>
     </xs:element>
 </xs:schema>

@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from '../_service/authentication.service';
 import { Router } from '@angular/router';
 import { ScientificPaperService } from '../_service/scientific-paper.service';
 import { CoverLetterService } from '../_service/cover-letter.service';
@@ -133,6 +132,10 @@ export class AddPaperFormComponent implements OnInit {
     reader.onerror = () => {
       this.toastr.error('Error', 'Failed to read file');
     };
+  }
+
+  openEditor() {
+    this.router.navigate(['/add-paper-editor']);
   }
 
 }
