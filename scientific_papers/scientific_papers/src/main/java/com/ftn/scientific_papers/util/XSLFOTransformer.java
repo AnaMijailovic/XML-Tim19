@@ -5,10 +5,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.sax.SAXResult;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.apache.fop.apps.FOUserAgent;
@@ -75,5 +77,38 @@ public class XSLFOTransformer {
 
 		return outStream;
 	}
+	
+
+	public ByteArrayOutputStream generateHTML( String xmlString,String xslString)throws Exception {
+		
+		// Point to the XSL-FO file
+		File xslFile = new File(xslString);
+
+		// Create transformation source
+		StreamSource transformSource = new StreamSource(xslFile);
+
+		// Initialize the transformation subject
+		StreamSource source = new StreamSource(new StringReader(xmlString));
+		
+		// Create the output stream to store the results
+		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+			
+		// Initialize the transformer object
+		Transformer transformer = transformerFactory.newTransformer(transformSource);
+		transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
+		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+		
+		// Generate XHTML
+		transformer.setOutputProperty(OutputKeys.METHOD, "xhtml");
+		StreamResult result = new StreamResult(outStream);
+		// Start transformation 
+		transformer.transform(source, result);
+		return outStream;
+			
+		
+	}
+	
+
+	
 
 }

@@ -41,6 +41,16 @@ public class CoverLetterController {
 		XMLResource resource = coverLetterService.findOneXml(id);
 		return new ResponseEntity<>(resource.getContent().toString(), HttpStatus.OK);
 	}
+    
+	
+	@GetMapping(value = "/html/{id}", produces = MediaType.TEXT_HTML_VALUE)
+	public ResponseEntity<String> findOneHtml(@PathVariable("id") String id)throws Exception { 
+		byte[] resource = coverLetterService.findOneHtml(id);
+		return new ResponseEntity<>(new String(resource), HttpStatus.OK); 
+	}
+	 
+    
+
   
     @GetMapping(value = "/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<byte[]> findOnePdf(@PathVariable("id") String id) throws Exception {
