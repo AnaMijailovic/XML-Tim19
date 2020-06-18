@@ -1,5 +1,6 @@
 package com.ftn.scientific_papers.service;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,7 +8,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.ftn.scientific_papers.model.scientific_paper.ScientificPaper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -24,9 +24,11 @@ import com.ftn.scientific_papers.exceptions.RevisionForbiddenException;
 import com.ftn.scientific_papers.fuseki.FusekiManager;
 import com.ftn.scientific_papers.fuseki.FusekiReader;
 import com.ftn.scientific_papers.fuseki.MetadataExtractor;
+import com.ftn.scientific_papers.model.scientific_paper.ScientificPaper;
 import com.ftn.scientific_papers.repository.PublishingProcessRepository;
 import com.ftn.scientific_papers.repository.ScientificPaperRepository;
 import com.ftn.scientific_papers.util.FileUtil;
+import com.ftn.scientific_papers.util.XSLFOTransformer;
 
 @Service
 public class ScientificPaperService {
@@ -57,6 +59,9 @@ public class ScientificPaperService {
 
 	@Autowired
 	private FusekiManager fusekiManager;
+	
+	@Autowired
+	private XSLFOTransformer xslfoTransformer;
 
 	public XMLResource findOne(String id) throws Exception {
 
@@ -395,6 +400,25 @@ public class ScientificPaperService {
 		acceptedDateElement.setAttribute("rdfa:property", "pred:accepted");
 		acceptedDateElement.setAttribute("rdfa:datatype", "xs:date");
 
+	}
+	
+	public XMLResource findOneXml(String id) throws Exception {
+		XMLResource scientificPaperXml = spRepository.findOne(id);
+		return scientificPaperXml;
+	}
+  
+    public byte[] findOnePdf(String id) throws Exception {
+		String xmlString = spRepository.findOne(id).getContent().toString();
+		String xslString = ScientificPaperRepository.SCIENTIFIC_PAPER_XSL_FO_PATH;
+		ByteArrayOutputStream scientificPaperPdf = xslfoTransformer.generatePDF(xmlString, xslString); 
+		return scientificPaperPdf.toByteArray();
+    }
+    
+    public byte[] findOneHtml(String id) throws Exception {
+    	String xmlString = spRepository.findOne(id).getContent().toString();
+    	String xslString = ScientificPaperRepository.SCIENTIFIC_PAPER_XSL_PATH;
+    	ByteArrayOutputStream scientificPaperHtml = xslfoTransformer.generateHTML(xmlString, xslString); 
+		return scientificPaperHtml.toByteArray();
 	}
 
 }
