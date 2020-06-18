@@ -69,6 +69,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 		userRepository.save(user);
 	}
 
+	public void update(TUser user) {
+		userRepository.update(user);
+	}
 
     public List<TUser> findAll() {
 		return userRepository.findAll();

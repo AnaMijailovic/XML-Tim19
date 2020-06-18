@@ -154,6 +154,19 @@ public class UserRepository {
 			throw new DatabaseException("An error occured while user registration.");
 		}
 	}
+
+	public void update(TUser user) {
+		try {
+			String userXML = marshallUser(user);
+
+			dbManager.save(userCollectionId, user.getUserId(),  userXML);
+
+		} catch (JAXBException e) {
+			throw new DatabaseException("An error occured while marshalling user.");
+		} catch (Exception e) {
+			throw new DatabaseException("An error occured while updating user.");
+		}
+	}
 	
 	private String marshallUser(TUser user) throws JAXBException {
 		JAXBContext context = JAXBContext.newInstance(TUser.class);

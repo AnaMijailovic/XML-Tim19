@@ -1,6 +1,9 @@
 package com.ftn.scientific_papers.repository;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.rmi.UnexpectedException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +30,7 @@ import com.ftn.scientific_papers.util.XUpdateTemplate;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 @Repository
@@ -211,16 +215,17 @@ public class PublishingProcessRepository {
 
 	}
 
-	public void update(String publishingProcessXml, String id) throws Exception {
+	public void update(PublishingProcess publishingProcess) {
+		try {
+			String userXML = marshallPublishingProcess(publishingProcess);
 
-		dbManager.save(publishingProcessCollectionId, id, publishingProcessXml);
-	}
+			dbManager.save(publishingProcessCollectionId, publishingProcess.getId(),  userXML);
 
-	private PublishingProcess unmarshallPublishingProcess(String publishingProcessXML) throws JAXBException {
-		JAXBContext context = JAXBContext.newInstance(PublishingProcess.class);
-		Unmarshaller unmarshaller = context.createUnmarshaller();
-
-		return (PublishingProcess) unmarshaller.unmarshal(new StringReader(publishingProcessXML));
+		} catch (JAXBException e) {
+			throw new DatabaseException("An error occured while marshalling publishing process.");
+		} catch (Exception e) {
+			throw new DatabaseException("An error occured while updating publishing process.");
+		}
 	}
 
 	public void assignEditor(String processId, String userId) {
@@ -238,5 +243,24 @@ public class PublishingProcessRepository {
 		} catch (Exception e) {
 			throw new CustomUnexpectedException("Exception occurred while assigning editor " + userId + " to process " + processId);
 		}
+	}
+
+	private PublishingProcess unmarshallPublishingProcess(String publishingProcessXML) throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(PublishingProcess.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();
+
+		return (PublishingProcess) unmarshaller.unmarshal(new StringReader(publishingProcessXML));
+	}
+
+	private String marshallPublishingProcess(PublishingProcess publishingProcess) throws Exception {
+		JAXBContext context = JAXBContext.newInstance(PublishingProcess.class);
+		Marshaller marshaller = context.createMarshaller();
+
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		marshaller.marshal(publishingProcess, stream);
+
+		return new String(stream.toByteArray());
 	}
 }
