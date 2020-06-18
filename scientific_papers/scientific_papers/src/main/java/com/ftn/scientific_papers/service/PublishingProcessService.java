@@ -3,7 +3,9 @@ package com.ftn.scientific_papers.service;
 import com.ftn.scientific_papers.exceptions.CustomUnexpectedException;
 import com.ftn.scientific_papers.exceptions.ResourceNotFoundException;
 import com.ftn.scientific_papers.model.publishing_process.PublishingProcess;
+import com.ftn.scientific_papers.model.publishing_process.VersionReview;
 import com.ftn.scientific_papers.model.scientific_paper.ScientificPaper;
+import com.ftn.scientific_papers.model.user.TUser;
 import com.ftn.scientific_papers.repository.ScientificPaperRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -134,4 +136,49 @@ public class PublishingProcessService {
 			throw new CustomUnexpectedException("Unexpected exception while updating paper status");
 		}
     }
+
+    public void assignReviewer(PublishingProcess process, TUser user) {
+		try {
+			PublishingProcess.PaperVersion latestVersion = process.getPaperVersion().get(process.getLatestVersion().intValue()-1);
+			VersionReview versionReview = new VersionReview();
+			versionReview.setReviewerId(user.getUserId());
+			versionReview.setReviewId(null);
+			versionReview.setStatus("PENDING");
+
+			if (latestVersion.getVersionReviews() == null) {
+				PublishingProcess.PaperVersion.VersionReviews reviews = new PublishingProcess.PaperVersion.VersionReviews();
+				reviews.getVersionReview().add(versionReview);
+				latestVersion.setVersionReviews(reviews);
+			} else {
+				latestVersion.getVersionReviews().getVersionReview().add(versionReview);
+			}
+
+			if (checkIfEnoughReviewers(latestVersion.getVersionReviews())) {
+				process.setStatus("WAITING_FOR_REVIEWERS_ACCEPTANCE");
+			}
+
+			publishingProcessRepository.update(process);
+
+			// TODO: notify reviewer
+
+		} catch (Exception e) {
+			throw new CustomUnexpectedException("Unexpected exception while assigning reviewer");
+		}
+
+    }
+
+	private boolean checkIfEnoughReviewers(PublishingProcess.PaperVersion.VersionReviews versionReviews) {
+		int cnt = 0;
+
+		for (VersionReview review: versionReviews.getVersionReview()) {
+			if (review.getStatus().equals("PENDING") ||
+				review.getStatus().equals("ACCEPTED") ||
+				review.getStatus().equals("FINISHED")) {
+				cnt++;
+			}
+		}
+
+		return cnt == 2;
+	}
+
 }
