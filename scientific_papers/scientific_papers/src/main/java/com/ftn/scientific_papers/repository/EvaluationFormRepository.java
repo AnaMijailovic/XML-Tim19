@@ -13,6 +13,8 @@ import com.ftn.scientific_papers.util.DBManager;
 
 @Repository
 public class EvaluationFormRepository {
+	public static final String EVALUATION_FORM_XSL_FO_PATH = "src/main/resources/xsl-fo/evaluation_form_fo.xsl";
+	public static final String EVALUATION_FORM_XSL_PATH = "src/main/resources/xslt/evaluation_form.xsl";
 	
 	@Autowired
 	private DBManager dbManager;

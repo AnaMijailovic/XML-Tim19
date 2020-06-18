@@ -1,0 +1,46 @@
+<div class="main-div" >
+    <mat-card class="publishing-process-card">
+        <mat-card-header>
+            <mat-card-title> {{ publishingProcess.paperTitles[0] }} </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <table>
+                <tr>
+                    <td>
+                        <b>Editor:</b> {{publishingProcess.editorName}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Authors:</b> <span *ngFor="let author of publishingProcess.authors"> {{ author }} </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Reviewers:</b> <span *ngFor="let reviewer of publishingProcess.reviewers"> {{ reviewer }} </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Status:</b> {{ publishingProcess.status }}
+                    </td>
+                </tr>
+                <tr>
+                     <td>
+                        <b>Version:</b> {{ publishingProcess.version }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br>
+                        <button mat-raised-button color="primary" (click)="test()">View papers</button>
+                        <button mat-button color="primary" *ngIf="showAssignSelf" (click)="assignSelfAsEditor()">Assign self as editor</button>
+                        <button mat-button color="primary"  *ngIf="showAssignReviewer" (click)="openDialog()">Assign reviewer</button>
+                        <button mat-stroked-button color="accent" *ngIf="showAcceptReject" (click)="accept()">Accept</button>
+                        <button mat-stroked-button color="warn" *ngIf="showAcceptReject"(click)="reject()">Reject</button>
+                    </td>
+                </tr>
+            </table>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -128,4 +129,31 @@ public class ScientificPaperController {
 		spService.withdrawScientificPaper(paperId, username);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/xml/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+	public ResponseEntity<String> findOneXml(@PathVariable("id") String id) throws Exception {
+		XMLResource resource = spService.findOneXml(id);
+		return new ResponseEntity<>(resource.getContent().toString(), HttpStatus.OK);
+	}
+	    
+		
+	@GetMapping(value = "/html/{id}", produces = MediaType.TEXT_HTML_VALUE)
+	public ResponseEntity<String> findOneHtml(@PathVariable("id") String id)throws Exception { 
+		byte[] resource = spService.findOneHtml(id);
+		return new ResponseEntity<>(new String(resource), HttpStatus.OK); 
+	}
+		 
+	    
+
+	  
+    @GetMapping(value = "/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<byte[]> findOnePdf(@PathVariable("id") String id) throws Exception {
+
+		byte[] contents = spService.findOnePdf(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.add("Content-Disposition", "inline; filename=" + id + ".pdf");
+        ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
+        return response;
+    }
 }
