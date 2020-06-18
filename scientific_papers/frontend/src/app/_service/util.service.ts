@@ -9,6 +9,18 @@ export class UtilService {
 
   constructor() { }
 
+  openAsXml(data: any) {
+    const blob = new Blob([data], { type: 'text/xml' });
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+  }
+
+  openAsJson(data: any) {
+    const blob = new Blob([data], { type: 'text/json' });
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+  }
+
   generateParams(data: any): string {
 
     return Object.keys(data).map(k => {

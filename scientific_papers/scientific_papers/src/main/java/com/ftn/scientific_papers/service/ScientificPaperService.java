@@ -34,6 +34,7 @@ import com.ftn.scientific_papers.util.XSLFOTransformer;
 public class ScientificPaperService {
 
 	private static final String QUERY_FILE_PATH = "src/main/resources/sparql/metadataSearch.rq";
+	private static final String QUOTES_FILE_PATH = "src/main/resources/sparql/findQuotes.rq";
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 	@Value("${max-chapter-levels}")
@@ -94,7 +95,20 @@ public class ScientificPaperService {
 		System.out.println("Full result:  \n" + sb.toString());
 		return sb.toString();
 	}
+	
+	public String getQuotedBy(String paperId) throws IOException {
+		HashMap<String, String> values = new HashMap<>();
 
+		values.put("quotedPaper", "https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/" + paperId);
+		
+		// execute sparql query
+		Set<String> paperURLs = FusekiReader.executeQuery(QUOTES_FILE_PATH, values);
+		Set<String> paperIds = getIdsFromUrls(paperURLs);
+
+		return getByIds(paperIds, "");
+	}
+	
+	
 	// sparql query returns a set of urls of matching papers
 	// xQuerys are then executed to find papers with that ids
 	public String metadataSearch(SearchData searchData, String loggedAuthor) throws IOException {
@@ -151,7 +165,9 @@ public class ScientificPaperService {
 	public String getMetadataJson(String id) throws Exception {
 		return spRepository.getMetadataJson(id);
 	}
-
+	
+	
+	
 	public String save(String scientificPaperXml, String paperVersion) throws Exception {
 
 		// SAXParseExcetion is thrown when xml is not valid
@@ -324,14 +340,11 @@ public class ScientificPaperService {
 
 	}
 
-	public void generateMetadataAttributes(Element paperElement, String id) {
-		// get head element from dom and set rdfa:about attribute value
-		NodeList headNodeList = paperElement.getElementsByTagName("head");
-		Element headElement = (Element) headNodeList.item(0);
+	public void generateMetadataAttributes(Element paperElement, String id) throws Exception {
 
 		String aboutAttributeValue = "https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/" + id;
-		headElement.setAttribute("rdfa:about", aboutAttributeValue);
-		headElement.setAttribute("rdfa:vocab", "https://github.com/AnaMijailovic/XML-Tim19/predicate/");
+	    paperElement.setAttribute("rdfa:about", aboutAttributeValue);
+		paperElement.setAttribute("rdfa:vocab", "https://github.com/AnaMijailovic/XML-Tim19/predicate/");
 
 		// titles
 		NodeList titlesNodeList = paperElement.getElementsByTagName("title");
@@ -358,7 +371,6 @@ public class ScientificPaperService {
 		// get author elements and change rdfa:href attribute value
 		NodeList authorsNodeList = paperElement.getElementsByTagName("author");
 
-		// Moraju prvo id-jevi da se izgenerisu !!!
 		for (int i = 0; i < authorsNodeList.getLength(); i++) {
 			Element authorElement = (Element) authorsNodeList.item(i);
 
@@ -407,7 +419,24 @@ public class ScientificPaperService {
 		acceptedDateElement.setTextContent("");
 		acceptedDateElement.setAttribute("rdfa:property", "pred:accepted");
 		acceptedDateElement.setAttribute("rdfa:datatype", "xs:date");
+		
+		
+		// quotes
+		NodeList quoteList = paperElement.getElementsByTagName("quote");
 
+		for (int i = 0; i < quoteList.getLength(); i++) {
+			Element quoteElement = (Element) quoteList.item(i);
+			String quoteSourcePaperId = quoteElement.getElementsByTagName("source").item(0).getTextContent();
+			findOne(quoteSourcePaperId); // check if id is valid
+			quoteElement.setAttribute("rdfa:href", aboutAttributeValue);
+			quoteElement.setAttribute("rdfa:rel", "pred:isQuotedBy");
+			quoteElement.setAttribute("rdfa:rev", "pred:quotes");
+			quoteElement.setAttribute("rdfa:about", "https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/"
+			                         + quoteSourcePaperId);
+
+		}
+		
+    // https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper3
 	}
 	
 	public XMLResource findOneXml(String id) throws Exception {

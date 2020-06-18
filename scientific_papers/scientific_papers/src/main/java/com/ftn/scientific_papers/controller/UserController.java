@@ -6,6 +6,7 @@ import com.ftn.scientific_papers.model.user.TRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +22,7 @@ import com.ftn.scientific_papers.model.user.TUser;
 import com.ftn.scientific_papers.model.user.TUser.Roles;
 import com.ftn.scientific_papers.security.TokenUtils;
 import com.ftn.scientific_papers.service.CustomUserDetailsService;
+import com.ftn.scientific_papers.service.EmailService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,8 @@ public class UserController {
 	
 	@Autowired
 	private TokenUtils tokenUtils;
+	@Autowired
+	private EmailService emailService;
 	
 	@PostMapping(value = "/register")
 	public ResponseEntity<String> register(@Valid @RequestBody RegisterUserDTO dto) {
@@ -62,6 +66,12 @@ public class UserController {
 		user.setRoles(roles);
 		
 		userDetailsService.registerUser(user);
+		try {
+			emailService.registrationEmail(user.getEmail());
+		} catch (MailException | InterruptedException e) {
+			System.out.println("There was an error while sending an e-mail");
+			e.printStackTrace();
+		}
 		
 		return new ResponseEntity<>("Successfully saved", HttpStatus.CREATED);
 	}
