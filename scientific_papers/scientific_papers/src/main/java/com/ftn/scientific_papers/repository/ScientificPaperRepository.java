@@ -28,6 +28,8 @@ import javax.xml.bind.Unmarshaller;
 public class ScientificPaperRepository {
 
 	private static final String XQUERY_PATH = ".\\src\\main\\resources\\xQuery";
+	public static final String SCIENTIFIC_PAPER_XSL_FO_PATH = "src/main/resources/xsl-fo/scientific_paper_fo.xsl";
+	public static final String SCIENTIFIC_PAPER_XSL_PATH = "src/main/resources/xslt/scientific_paper.xsl";
 	@Autowired
 	private DBManager dbManager;
 
