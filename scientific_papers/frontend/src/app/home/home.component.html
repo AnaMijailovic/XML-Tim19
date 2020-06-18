@@ -10,5 +10,5 @@
 
 <app-search-form (sendSearchParams)= "sendSearchParams($event)"></app-search-form>
 <div id="paper-cards">
-    <app-paper-card *ngFor="let paper of papers" [paper]="paper"></app-paper-card>
+    <app-paper-card *ngFor="let paper of papers" [paper]="paper" [authorView]="false"></app-paper-card>
 </div> 

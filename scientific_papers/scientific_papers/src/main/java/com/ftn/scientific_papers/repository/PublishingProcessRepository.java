@@ -172,6 +172,17 @@ public class PublishingProcessRepository {
 		System.out.println("Author: " + author);
 		return author;
 	}
+	
+	public String getLetterByPaperId(String paperId) throws Exception{
+		String xQueryPath = "./src/main/resources/xQuery/getLetterByPaperId.txt";
+
+		HashMap<String, String> params = new HashMap<>();
+		params.put("id", paperId);
+		ResourceSet rs = dbManager.executeXQuery(publishingProcessCollectionId, "", params, xQueryPath);
+		String letterId = rs.getIterator().nextResource().getContent().toString();
+		System.out.println("Letter id: " + letterId);
+		return letterId;
+	}
 
 	public void updateLatestVersion(String processId, String newVersion) throws Exception {
 

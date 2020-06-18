@@ -12,5 +12,5 @@
 <button mat-raised-button color="primary" (click)="filterByStatus('WITHDRAWN')">WITHDRAWN</button>
 </div>
 <div id="paper-cards">
-    <app-paper-card *ngFor="let paper of papers" [paper]="paper"></app-paper-card>
+    <app-paper-card *ngFor="let paper of papers" [paper]="paper" [authorView]="true"></app-paper-card>
 </div>

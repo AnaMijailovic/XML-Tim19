@@ -31,11 +31,34 @@
                 </tr>
         </table>
         <div id="btns-div" align="right">
+                <button mat-raised-button color="primary" [matMenuTriggerFor]="viewMenu">View</button>
+                <mat-menu #viewMenu="matMenu" yPosition="below">
+                    <button mat-menu-item (click)="viewHtml()"><b>Html</b></button>
+                    <button mat-menu-item (click)="viewPdf()"><b>Pdf</b></button>
+                    <button mat-menu-item (click)="viewXml()"><b>Xml</b></button>
+                </mat-menu>
+                
+                <button mat-raised-button color="primary" [matMenuTriggerFor]="metadataMenu">Metadata</button>
+                <mat-menu #metadataMenu="matMenu" yPosition="below">
+                        <button mat-menu-item (click)="metadataRdf()"><b>Rdf</b></button>
+                        <button mat-menu-item (click)="metadataJson()"><b>Json</b></button>
+                </mat-menu>
+                
+                <span *ngIf="authorView">
+                <button  mat-raised-button color="primary" [matMenuTriggerFor]="letterMenu">Cover letter</button>
+                <mat-menu #letterMenu="matMenu" yPosition="below">
+                        <button mat-menu-item (click)="viewLetterHtml()"><b>Html</b></button>
+                        <button mat-menu-item (click)="viewLetterPdf()"><b>Pdf</b></button>
+                        <button mat-menu-item (click)="viewLetterXml()"><b>Xml</b></button>
+                </mat-menu>
+
+                </span>
+                
                 <button *ngIf="paper.paperStatus === 'REVISION'" mat-raised-button color="primary" class="view-paper-btn"
                 (click)="addRevision(paper.title, paper.processId )" >Add revision</button>
-            <button *ngIf="paper.paperStatus === 'PENDING' || paper.paperStatus === 'REVISION' || paper.paperStatus === 'REVIEWING'" mat-raised-button color="primary" class="view-paper-btn"
-            (click)="confirmWithdraw(paper.title, paper.id )" > Withdraw </button>
-            <button mat-raised-button color="primary" class="view-paper-btn"> View </button>
+                <button *ngIf="paper.paperStatus === 'PENDING' || paper.paperStatus === 'REVISION' || paper.paperStatus === 'REVIEWING'" mat-raised-button color="primary" class="view-paper-btn"
+                (click)="confirmWithdraw(paper.title, paper.id )" > Withdraw </button>
+           <!-- <button mat-raised-button color="primary" class="view-paper-btn"> View </button> -->
         </div>
     </mat-card-content>
-</mat-card>
+</mat-card> 

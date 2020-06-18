@@ -15,6 +15,18 @@ export class CoverLetterService {
     return this.http.get(URL + '/template', { responseType: 'text' });
   }
 
+  getPdf(paperId: string) {
+    window.open(URL + '/pdf/' + paperId, '_blank');
+  }
+
+  getXml(paperId: string) {
+    window.open(URL + '/xml/' + paperId, '_blank');
+  }
+
+  getHtml(paperId: string) {
+    window.open(URL + '/html/' + paperId, '_blank');
+  }
+
   addCoverLetter(letterXml: string, processId: string) {
     const httpOptions = {
       headers: new HttpHeaders({
