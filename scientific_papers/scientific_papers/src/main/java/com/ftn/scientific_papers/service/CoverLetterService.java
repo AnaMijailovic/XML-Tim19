@@ -45,6 +45,13 @@ public class CoverLetterService {
 		ByteArrayOutputStream coverLetterPdf = xslfoTransformer.generatePDF(xmlString, xslString); 
 		return coverLetterPdf.toByteArray();
     }
+    
+    public byte[] findOneHtml(String id) throws Exception {
+    	String xmlString = coverLetterRepository.findOne(id).getContent().toString();
+    	String xslString = CoverLetterRepository.COVER_LETTER_XSL_PATH;
+    	ByteArrayOutputStream coverLetterHtml = xslfoTransformer.generateHTML(xmlString, xslString); 
+		return coverLetterHtml.toByteArray();
+	}
   
     public String getTemplate() throws IOException {
 		
