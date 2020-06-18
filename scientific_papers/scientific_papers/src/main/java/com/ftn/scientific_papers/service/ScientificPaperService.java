@@ -143,6 +143,14 @@ public class ScientificPaperService {
 
 		return paperIds;
 	}
+	
+	public String getMetadataXml(String id) throws Exception {
+		return spRepository.getMetadataXml(id);
+	}
+
+	public String getMetadataJson(String id) throws Exception {
+		return spRepository.getMetadataJson(id);
+	}
 
 	public String save(String scientificPaperXml, String paperVersion) throws Exception {
 
