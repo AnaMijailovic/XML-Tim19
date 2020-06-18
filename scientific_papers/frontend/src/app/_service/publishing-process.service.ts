@@ -9,9 +9,6 @@ const convert = require('xml-js');
   providedIn: 'root'
 })
 export class PublishingProcessService {
-  updatePaperStatus(processId: string, status: string) {
-    return this.http.put(`http://localhost:8088/api/publishingProcess/status/${processId},${status}`, null);
-  }
   constructor(private http: HttpClient) { }
 
   getOngoingPublishingProcesses(): Observable<any> {
@@ -28,5 +25,9 @@ export class PublishingProcessService {
 
   assignReviewer(processId: string, reviewerId: string): Observable<any>{
     return this.http.put(`http://localhost:8088/api/reviewers/assign/${processId},${reviewerId}`, null);
+  }
+
+  updatePaperStatus(processId: string, status: string) {
+    return this.http.put(`http://localhost:8088/api/publishingProcess/status/${processId},${status}`, null);
   }
 }

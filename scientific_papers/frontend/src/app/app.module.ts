@@ -28,6 +28,8 @@ import { EditorPageComponent } from './editor-page/editor-page.component';
 import { PublishingProcessCardComponent } from './publishing-process-card/publishing-process-card.component';
 import { AssignReviewerDialogComponentComponent } from './assign-reviewer-dialog-component/assign-reviewer-dialog-component.component';
 import { ReviewRequestsComponent } from './review-requests/review-requests.component';
+import { ReviewRequestCardComponent } from './review-request-card/review-request-card.component';
+import { ReviewsComponent } from './reviews/reviews.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { ReviewRequestsComponent } from './review-requests/review-requests.compo
     EditorPageComponent,
     PublishingProcessCardComponent,
     AssignReviewerDialogComponentComponent,
-    ReviewRequestsComponent
+    ReviewRequestsComponent,
+    ReviewRequestCardComponent,
+    ReviewsComponent
   ],
   imports: [
     BrowserModule,
