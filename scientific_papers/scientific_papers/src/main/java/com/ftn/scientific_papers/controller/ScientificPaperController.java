@@ -85,6 +85,18 @@ public class ScientificPaperController {
 		return new ResponseEntity<>( spService.getTemplate(), HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/metadata/xml/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+	public ResponseEntity<String> getMetadataSP(@PathVariable("id") String id) throws Exception {
+		String metadata = spService.getMetadataXml(id);
+		return new ResponseEntity<>(metadata, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/metadata/json/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+	public ResponseEntity<String> getMetadataJson(@PathVariable("id") String id) throws Exception {
+		String metadata = spService.getMetadataJson(id);
+		return new ResponseEntity<>(metadata, HttpStatus.OK);
+	}
+	
 	@PreAuthorize("hasRole('ROLE_AUTHOR')")
 	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> addPaper(@RequestBody String scientificPaperXml) throws Exception {

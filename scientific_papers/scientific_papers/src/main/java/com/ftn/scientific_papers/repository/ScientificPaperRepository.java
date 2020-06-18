@@ -9,8 +9,14 @@ import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
 
 import com.ftn.scientific_papers.exceptions.ResourceNotFoundException;
+import com.ftn.scientific_papers.fuseki.FusekiManager;
+import com.ftn.scientific_papers.fuseki.MetadataExtractor;
 import com.ftn.scientific_papers.util.DBManager;
+import com.ftn.scientific_papers.util.FileUtil;
 import com.ftn.scientific_papers.util.XUpdateTemplate;
+
+import org.json.JSONObject;
+import org.json.XML;
 
 @Repository
 public class ScientificPaperRepository {
@@ -18,6 +24,12 @@ public class ScientificPaperRepository {
 	private static final String XQUERY_PATH = ".\\src\\main\\resources\\xQuery";
 	@Autowired
 	private DBManager dbManager;
+	
+	@Autowired
+	private MetadataExtractor metadataExtractor;
+
+	@Autowired
+	private FusekiManager fusekiManager;
 
 	@Value("${scientific-paper-collection-id}")
 	private String scientificPaperCollectionId;
@@ -69,6 +81,27 @@ public class ScientificPaperRepository {
 		}
 
 		return result;
+	}
+
+	public String getMetadataXml(String id) throws Exception {
+		XMLResource paper = findOne(id);
+		if (paper == null) {
+			throw new ResourceNotFoundException("Scientific paper with id: " + id + " was not found.");
+		}
+		
+		// Get metadata
+		String rdfFilePath = "src/main/resources/rdf/metadata.rdf";
+		metadataExtractor.extractMetadata(paper.getContent().toString(), rdfFilePath);
+
+		return FileUtil.readFile(rdfFilePath);
+	}
+
+	public String getMetadataJson(String id) throws Exception {
+	
+		String metadataXml = getMetadataXml(id);
+		JSONObject xmlJSONObj = XML.toJSONObject(metadataXml);
+
+		return xmlJSONObj.toString(4);
 	}
 
 	public void updateStatus(String paperId, String newStatus) throws Exception {

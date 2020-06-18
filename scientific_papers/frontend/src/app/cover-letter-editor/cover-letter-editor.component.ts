@@ -61,7 +61,7 @@ export class CoverLetterEditorComponent implements OnInit {
     this.clService.getTemplate().subscribe(
       (response => {
         const xonomy = document.getElementById('xonomy-letter-editor');
-        Xonomy.render(response, xonomy, this.xonomyService.scientificPaperElement);
+        Xonomy.render(response, xonomy, this.xonomyService.coverLetterElement);
       }), (error => {
         if (error.error.exception) {
           this.toastr.error('Error', error.error.exception);
