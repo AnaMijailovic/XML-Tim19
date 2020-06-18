@@ -89,6 +89,11 @@ public class ScientificPaperController {
 
 		return new ResponseEntity<>(spService.getTemplate(), HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/{id}/quotes", produces = MediaType.APPLICATION_XML_VALUE)
+	public ResponseEntity<String> getQuotedBy(@PathVariable("id") String paperId) throws Exception {
+		return new ResponseEntity<>(spService.getQuotedBy(paperId), HttpStatus.OK);
+	}
 
 	@GetMapping(value = "/{id}/coverLetter/xml", produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> getCoverLetterXml(@PathVariable("id") String paperId) throws Exception {

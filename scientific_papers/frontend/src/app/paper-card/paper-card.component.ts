@@ -118,4 +118,8 @@ export class PaperCardComponent implements OnInit {
       })
     );
   }
+
+  quotedBy() {
+    this.router.navigate(['/paper-quoted-by/' + this.paper.id]);
+  }
 }
