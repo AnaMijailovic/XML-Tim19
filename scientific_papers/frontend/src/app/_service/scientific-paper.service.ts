@@ -59,9 +59,11 @@ export class ScientificPaperService {
   }
 
   getScientificPapers(params: string): Observable<string> {
-
     return this.http.get(URL + params, { responseType: 'text' });
+  }
 
+  getQuotedBy(paperId: string): Observable<string> {
+    return this.http.get(URL + '/' + paperId + '/quotes', { responseType: 'text' });
   }
 
   addScientificPaper(paperXml: string) {

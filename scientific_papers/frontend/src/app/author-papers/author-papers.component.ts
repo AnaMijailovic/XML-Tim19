@@ -61,7 +61,6 @@ export class AuthorPapersComponent implements OnInit {
       params = params + '&loggedAuthor=' + this.utilService.getLoggedUser();
     }
 
-    alert('papehf: ' + params);
     this.getScientificPapers('?' + params);
 
   }
