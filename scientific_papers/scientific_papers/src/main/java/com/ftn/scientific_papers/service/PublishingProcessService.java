@@ -21,6 +21,7 @@ import com.ftn.scientific_papers.util.DBManager;
 import com.ftn.scientific_papers.util.FileUtil;
 import com.ftn.scientific_papers.util.XUpdateTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -181,4 +182,24 @@ public class PublishingProcessService {
 		return cnt == 2;
 	}
 
+	public List<PublishingProcess> getReviewRequestForUser(String userId) {
+		List<PublishingProcess> allProcess = publishingProcessRepository.getAll();
+		List<PublishingProcess> result = new ArrayList<>();
+
+		for (PublishingProcess process: allProcess) {
+			PublishingProcess.PaperVersion latestVersion = process.getPaperVersion().get(process.getLatestVersion().intValue()-1);
+			PublishingProcess.PaperVersion.VersionReviews reviews = latestVersion.getVersionReviews();
+
+			if (reviews == null)
+				continue;
+
+			for (VersionReview review: reviews.getVersionReview()) {
+				if (review.getReviewerId().equals(userId) && review.getStatus().equals("PENDING")) {
+					result.add(process);
+				}
+			}
+		}
+
+		return result;
+	}
 }

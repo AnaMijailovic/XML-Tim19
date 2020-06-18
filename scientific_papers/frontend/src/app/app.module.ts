@@ -27,6 +27,7 @@ import { CoverLetterEditorComponent } from './cover-letter-editor/cover-letter-e
 import { EditorPageComponent } from './editor-page/editor-page.component';
 import { PublishingProcessCardComponent } from './publishing-process-card/publishing-process-card.component';
 import { AssignReviewerDialogComponentComponent } from './assign-reviewer-dialog-component/assign-reviewer-dialog-component.component';
+import { ReviewRequestsComponent } from './review-requests/review-requests.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { AssignReviewerDialogComponentComponent } from './assign-reviewer-dialog
     CoverLetterEditorComponent,
     EditorPageComponent,
     PublishingProcessCardComponent,
-    AssignReviewerDialogComponentComponent
+    AssignReviewerDialogComponentComponent,
+    ReviewRequestsComponent
   ],
   imports: [
     BrowserModule,
