@@ -38,7 +38,7 @@ export class AllowedRoutes {
 
         if (role.authority === 'ROLE_REVIEWER') {
           components.push({path: '/review-requests', label: 'Review requests'});
-          components.push({path: '/reviews', label: 'Reviews'});
+          components.push({path: '/pending-reviews', label: 'Pending reviews'});
         }
       });
 
