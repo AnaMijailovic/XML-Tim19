@@ -85,11 +85,13 @@ export class ScientificPaperEditorComponent implements OnInit {
         this.toastr.success('Success', 'Scientific paper submitted');
         this.processId = response.toString();
         localStorage.setItem('processId', this.processId);
+        console.log(response.toString());
       }), (error => {
         if (error.error.text !== undefined && error.error.text.startsWith('process')) {
           this.toastr.success('Success', 'Scientific paper submitted');
           this.processId = error.error.text;
           localStorage.setItem('processId', this.processId);
+          console.log(error.error.text);
         } else {
           if (error.error.exception) {
             this.toastr.error('Error', error.error.exception);

@@ -151,7 +151,9 @@ public class ScientificPaperService {
 	public String getMetadataJson(String id) throws Exception {
 		return spRepository.getMetadataJson(id);
 	}
-
+	
+	
+	
 	public String save(String scientificPaperXml, String paperVersion) throws Exception {
 
 		// SAXParseExcetion is thrown when xml is not valid

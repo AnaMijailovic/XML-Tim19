@@ -64,6 +64,10 @@ public class PublishingProcessService {
 		return publishingProcessRepository.getAuthorFromProcess(processId);
 	}
 	
+	public String getLetterByPaperId(String paperId) throws Exception {
+		return publishingProcessRepository.getLetterByPaperId(paperId);
+	}
+	
 	public String createProcess(String paperId, String authorId) throws Exception {
 
 		// Read xml template

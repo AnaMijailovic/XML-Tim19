@@ -1,0 +1,7 @@
+declare namespace sp="https://github.com/AnaMijailovic/XML-Tim19";
+let $collection := collection("/db/sample/publishing_process")
+
+for $pp in $collection
+	for $paper in $pp/sp:publishing-process/sp:paper-version
+		where $paper/sp:scientific-paper-id/text() = $id
+			return data($paper/sp:cover-letter-id/text())

@@ -5,6 +5,8 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 import { ScientificPaperService } from '../_service/scientific-paper.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { UtilService } from '../_service/util.service';
+import { CoverLetterService } from '../_service/cover-letter.service';
 
 @Component({
   selector: 'app-paper-card',
@@ -16,8 +18,13 @@ export class PaperCardComponent implements OnInit {
   @Input()
   paper: ScientificPaper;
 
+  @Input()
+  authorView: boolean;
+
   constructor( public dialog: MatDialog,
                private spService: ScientificPaperService,
+               private clService: CoverLetterService,
+               private utilService: UtilService,
                private toastr: ToastrService,
                private router: Router) { }
 
@@ -58,4 +65,57 @@ export class PaperCardComponent implements OnInit {
       this.router.navigate(['/add-paper']);
   }
 
+  viewHtml() {
+    this.spService.getHtml(this.paper.id);
+  }
+
+  viewPdf() {
+    this.spService.getPdf(this.paper.id);
+  }
+
+  viewXml() {
+    this.spService.getXml(this.paper.id);
+  }
+
+  viewLetterHtml() {
+    this.spService.getLetterHtml(this.paper.id);
+  }
+
+  viewLetterPdf() {
+    this.spService.getLetterPdf(this.paper.id);
+  }
+
+  viewLetterXml() {
+    this.spService.getLetterXml(this.paper.id);
+  }
+
+  metadataRdf() {
+    this.spService.getMetadataRdf(this.paper.id).subscribe(
+      (response => {
+            this.utilService.openAsXml(response);
+      }), (error => {
+          if (error.error.exception) {
+            this.toastr.error('Error', error.error.exception);
+          } else {
+            this.toastr.error('Error', 'Some error happend');
+            console.log(JSON.stringify(error));
+          }
+      })
+    );
+  }
+
+  metadataJson() {
+    this.spService.getMetadataJson(this.paper.id).subscribe(
+      (response => {
+        this.utilService.openAsJson(response);
+      }), (error => {
+          if (error.error.exception) {
+            this.toastr.error('Error', error.error.exception);
+          } else {
+            this.toastr.error('Error', 'Some error happend');
+            console.log(JSON.stringify(error));
+          }
+      })
+    );
+  }
 }
