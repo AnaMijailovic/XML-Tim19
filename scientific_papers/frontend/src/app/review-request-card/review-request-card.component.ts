@@ -22,7 +22,7 @@ export class ReviewRequestCardComponent implements OnInit {
   }
 
   accept() {
-    this.reviewService.aceptReview(this.reviewRequest.processId).subscribe(
+    this.reviewService.acceptReview(this.reviewRequest.processId).subscribe(
       ((response: any) => {
         this.toastr.success('Success', 'Successfully accepted review');
         this.router.navigate(['/pending-reviews']);
@@ -37,7 +37,7 @@ export class ReviewRequestCardComponent implements OnInit {
     this.reviewService.rejectReview(this.reviewRequest.processId).subscribe(
       ((response: any) => {
         this.toastr.success('Success', 'Successfully rejected review');
-        this.router.navigate(['/review-requests']);
+        location.reload()
       }), (error: any) => {
         this.toastr.error('Error', 'Some error happend');
         console.log(JSON.stringify(error));

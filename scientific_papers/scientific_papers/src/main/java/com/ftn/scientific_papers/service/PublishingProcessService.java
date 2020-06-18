@@ -104,7 +104,7 @@ public class PublishingProcessService {
 		String xUpdateExpression =  String.format(XUpdateTemplate.UPDATE, updatePath, coverLetterId);
 		
 		dbManager.executeXUpdate(collectionId, xUpdateExpression, processId);
-		System.out.println("Proces after adding cover letter id: \n" + findOne(processId).getContent().toString());
+		System.out.println("Process after adding cover letter id: \n" + findOne(processId).getContent().toString());
 		
 	}
 	
@@ -168,20 +168,6 @@ public class PublishingProcessService {
 
     }
 
-	private boolean checkIfEnoughReviewers(PublishingProcess.PaperVersion.VersionReviews versionReviews) {
-		int cnt = 0;
-
-		for (VersionReview review: versionReviews.getVersionReview()) {
-			if (review.getStatus().equals("PENDING") ||
-				review.getStatus().equals("ACCEPTED") ||
-				review.getStatus().equals("FINISHED")) {
-				cnt++;
-			}
-		}
-
-		return cnt == 2;
-	}
-
 	public List<PublishingProcess> getReviewRequestForUser(String userId) {
 		List<PublishingProcess> allProcess = publishingProcessRepository.getAll();
 		List<PublishingProcess> result = new ArrayList<>();
@@ -201,5 +187,71 @@ public class PublishingProcessService {
 		}
 
 		return result;
+	}
+
+	public void acceptReview(PublishingProcess process, String userId) {
+		try {
+			PublishingProcess.PaperVersion latestVersion = process.getPaperVersion().get(process.getLatestVersion().intValue()-1);
+			List<VersionReview> versionReviews = latestVersion.getVersionReviews().getVersionReview();
+
+			for (VersionReview review : versionReviews) {
+				if (review.getReviewerId().equals(userId) && review.getStatus().equals("PENDING")) {
+					review.setStatus("ACCEPTED");
+				}
+			}
+
+			if (checkIfAllAccepted(latestVersion.getVersionReviews())) {
+				process.setStatus("REVIEWS_ACCEPTED");
+				String paperId = process.getPaperVersion().get(process.getLatestVersion().intValue()-1).getScientificPaperId();
+				scientificPaperRepository.getById(paperId, "REVIEWING");
+			}
+
+			publishingProcessRepository.update(process);
+		} catch (Exception e) {
+			throw new CustomUnexpectedException("Unexpected exception while accepting review");
+		}
+	}
+
+	public void rejectReview(PublishingProcess process, String userId) {
+		try {
+			PublishingProcess.PaperVersion latestVersion = process.getPaperVersion().get(process.getLatestVersion().intValue()-1);
+			List<VersionReview> versionReviews = latestVersion.getVersionReviews().getVersionReview();
+
+			for (VersionReview review : versionReviews) {
+				if (review.getReviewerId().equals(userId) && review.getStatus().equals("PENDING")) {
+					review.setStatus("REJECTED");
+				}
+			}
+			process.setStatus("NEW_REVIEWER_NEEDED");
+			publishingProcessRepository.update(process);
+
+		} catch (Exception e) {
+			throw new CustomUnexpectedException("Unexpected exception while rejecting review");
+		}
+	}
+
+	private boolean checkIfEnoughReviewers(PublishingProcess.PaperVersion.VersionReviews versionReviews) {
+		int cnt = 0;
+
+		for (VersionReview review: versionReviews.getVersionReview()) {
+			if (review.getStatus().equals("PENDING") ||
+					review.getStatus().equals("ACCEPTED") ||
+					review.getStatus().equals("FINISHED")) {
+				cnt++;
+			}
+		}
+
+		return cnt == 2;
+	}
+
+	private boolean checkIfAllAccepted(PublishingProcess.PaperVersion.VersionReviews versionReviews) {
+		int cnt = 0;
+
+		for (VersionReview review: versionReviews.getVersionReview()) {
+			if (review.getStatus().equals("ACCEPTED")) {
+				cnt++;
+			}
+		}
+		return cnt == 2;
 	}
 }

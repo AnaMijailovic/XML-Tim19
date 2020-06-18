@@ -5,6 +5,7 @@ export interface PublishingProcess {
     editorUsername: string;
     editorName: string;
     reviewers: string[];
+    reviewersIds: string[];
     status: string;
     version: string;
 }

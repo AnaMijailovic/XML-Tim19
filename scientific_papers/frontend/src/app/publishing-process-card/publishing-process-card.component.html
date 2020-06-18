@@ -36,6 +36,7 @@
                         <button mat-raised-button color="primary" (click)="test()">View papers</button>
                         <button mat-button color="primary" *ngIf="showAssignSelf" (click)="assignSelfAsEditor()">Assign self as editor</button>
                         <button mat-button color="primary"  *ngIf="showAssignReviewer" (click)="openDialog()">Assign reviewer</button>
+                        <button mat-stroked-button color="primary" *ngIf="showAcceptReject" (click)="revision()">Revision</button>
                         <button mat-stroked-button color="accent" *ngIf="showAcceptReject" (click)="accept()">Accept</button>
                         <button mat-stroked-button color="warn" *ngIf="showAcceptReject"(click)="reject()">Reject</button>
                     </td>

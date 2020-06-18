@@ -16,10 +16,10 @@ export class ReviewService {
     return this.http.get('http://localhost:8088/api/reviewers/reviewRequests');
   }
 
-  rejectReview(processId: string): Observable<any>  {
-    return this.http.get(`http://localhost:8088/api/reviewers/accept/${processId}`);
+  acceptReview(processId: string): Observable<any>  {
+    return this.http.post(`http://localhost:8088/api/reviewers/accept/${processId}`, null);
   }
-  aceptReview(processId: string): Observable<any>  {
-    return this.http.get(`http://localhost:8088/api/reviewers/reject/${processId}`);
+  rejectReview(processId: string): Observable<any>  {
+    return this.http.post(`http://localhost:8088/api/reviewers/reject/${processId}`, null);
   }
 }

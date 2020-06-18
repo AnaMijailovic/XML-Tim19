@@ -9,18 +9,20 @@ public class PublishingProcessDTO {
     String editorUsername;
     String editorName;
     List<String> reviewers;
+    List<String> reviewersIds;
     String status;
     String version;
 
     public PublishingProcessDTO() {}
 
-    public PublishingProcessDTO(String processId, List<String> paperTitles, List<String> authors, String editorId, String editorName, List<String> reviewers, String status, String version) {
+    public PublishingProcessDTO(String processId, List<String> paperTitles, List<String> authors, String editorId, String editorName, List<String> reviewers, List<String> reviewersIds, String status, String version) {
         this.processId = processId;
         this.paperTitles = paperTitles;
         this.authors = authors;
         this.editorUsername = editorId;
         this.editorName = editorName;
         this.reviewers = reviewers;
+        this.reviewersIds = reviewersIds;
         this.status = status;
         this.version = version;
     }
@@ -87,5 +89,13 @@ public class PublishingProcessDTO {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public List<String> getReviewersIds() {
+        return reviewersIds;
+    }
+
+    public void setReviewersIds(List<String> reviewersIds) {
+        this.reviewersIds = reviewersIds;
     }
 }

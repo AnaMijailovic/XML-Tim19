@@ -52,14 +52,14 @@ public class ReviewerController {
 
     @GetMapping()
     @PreAuthorize("hasRole('ROLE_EDITOR')")
-    public ResponseEntity<List<BasicUserInfoDTO>> GetAllReviewers() {
+    public ResponseEntity<List<BasicUserInfoDTO>> getAllReviewers() {
         String username = tokenUtils.getUsernameFromRequest(request);
         TUser user = userService.findByUsername(username);
 
         List<TUser> users = userService.findAll();
         List<BasicUserInfoDTO> response = new ArrayList<>();
         for (TUser u: users) {
-            if (u.getUserId() != user.getUserId()) {
+            if (!u.getUserId().equals(user.getUserId())) {
                 BasicUserInfoDTO dto = new BasicUserInfoDTO();
                 dto.setUserId(u.getUserId());
                 dto.setFullName(u.getName() + " " + u.getSurname());
@@ -72,7 +72,7 @@ public class ReviewerController {
 
     @PutMapping(value = "/assign/{processId},{reviewerId}")
     @PreAuthorize("hasRole('ROLE_EDITOR')")
-    public ResponseEntity<PublishingProcessDTO> AssignReviewer(@PathVariable("processId") String processId, @PathVariable("reviewerId") String reviewerId) {
+    public ResponseEntity<PublishingProcessDTO> assignReviewer(@PathVariable("processId") String processId, @PathVariable("reviewerId") String reviewerId) {
         PublishingProcess process = publishingProcessService.findOneUnmarshalled(processId);
 
         if (process == null) {
@@ -87,7 +87,7 @@ public class ReviewerController {
 
         TUser user = userService.findById(reviewerId);
 
-        if (!user.getRoles().getRole().contains("ROLE_REVIEWER")) {
+        if (!checkIfReviewer(user.getRoles().getRole())) {
             user.getRoles().getRole().add(new TRole("ROLE_REVIEWER"));
             userService.update(user);
         }
@@ -99,9 +99,10 @@ public class ReviewerController {
         return new ResponseEntity(publishingProcessDTO, HttpStatus.OK);
     }
 
+
     @GetMapping(value ="/reviewRequests")
     @PreAuthorize("hasRole('ROLE_REVIEWER')")
-    public ResponseEntity<ReviewRequestDTO> GetPendingReviewRequests() {
+    public ResponseEntity<ReviewRequestDTO> getPendingReviewRequests() {
         String username = tokenUtils.getUsernameFromRequest(request);
         TUser user = userService.findByUsername(username);
 
@@ -120,11 +121,53 @@ public class ReviewerController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
+    @PostMapping(value="/accept/{processId}")
+    @PreAuthorize("hasRole('ROLE_REVIEWER')")
+    public ResponseEntity acceptReview(@PathVariable("processId") String processId) {
+        String username = tokenUtils.getUsernameFromRequest(request);
+        TUser user = userService.findByUsername(username);
+
+        PublishingProcess process = publishingProcessService.findOneUnmarshalled(processId);
+
+        if (process == null) {
+            return new ResponseEntity("Invalid process id", HttpStatus.NOT_FOUND);
+        }
+
+        publishingProcessService.acceptReview(process, user.getUserId());
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PostMapping(value="/reject/{processId}")
+    @PreAuthorize("hasRole('ROLE_REVIEWER')")
+    public ResponseEntity rejectReview(@PathVariable("processId") String processId) {
+        String username = tokenUtils.getUsernameFromRequest(request);
+        TUser user = userService.findByUsername(username);
+
+        PublishingProcess process = publishingProcessService.findOneUnmarshalled(processId);
+
+        if (process == null) {
+            return new ResponseEntity("Invalid process id", HttpStatus.NOT_FOUND);
+        }
+
+        publishingProcessService.rejectReview(process, user.getUserId());
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     private boolean isInOngoingProcess(PublishingProcess process) {
         String status = process.getStatus();
 
         if (status.equals("ACCEPTED") || status.equals("REJECTED") || status.equals("WITHDRAWN"))
             return false;
         return true;
+    }
+
+
+    private boolean checkIfReviewer(List<TRole> roles) {
+        for (TRole role: roles) {
+            if (role.getRole().equals("ROLE_REVIEWER")) {
+                return true;
+            }
+        }
+        return false;
     }
 }
