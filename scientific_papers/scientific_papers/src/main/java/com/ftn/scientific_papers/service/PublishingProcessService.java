@@ -9,6 +9,7 @@ import com.ftn.scientific_papers.model.user.TUser;
 import com.ftn.scientific_papers.repository.ScientificPaperRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -43,6 +44,9 @@ public class PublishingProcessService {
 	
 	@Autowired
 	private DBManager dbManager;
+	
+	@Autowired
+	private EmailService emailService;
 
 	public List<PublishingProcess> getAll() {
 		return  publishingProcessRepository.getAll();
@@ -164,6 +168,18 @@ public class PublishingProcessService {
 			publishingProcessRepository.update(process);
 
 			// TODO: notify reviewer
+			try {
+				String reviewerEmail = user.getEmail();
+				String scientificPaperId = latestVersion.getScientificPaperId();
+				String coverLetterId = latestVersion.getCoverLetterId();
+				ScientificPaper scientificPaper = scientificPaperRepository.findOneUnmarshalled(scientificPaperId);
+				String scientificPaperName = scientificPaper.getHead().getTitle().get(0).getValue();
+				emailService.assignReviewerEmail(reviewerEmail, scientificPaperName, scientificPaperId, coverLetterId);
+			} catch (MailException | InterruptedException e) {
+				System.out.println("There was an error while sending an e-mail");
+				e.printStackTrace();
+			}
+			
 
 		} catch (Exception e) {
 			throw new CustomUnexpectedException("Unexpected exception while assigning reviewer");
