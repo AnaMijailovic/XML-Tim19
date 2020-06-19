@@ -1,0 +1,33 @@
+<form class="main-div" id="add-review" [formGroup]="form">
+    <mat-card class="review-card">
+        <mat-card-header>
+            <mat-card-title> {{ reviewInfo.paperTitles[0] }} </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <table>
+                <tr>
+                    <td>
+                        <b>Version:</b> {{ reviewInfo.version }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br>
+                        <button mat-button color="primary">View paper</button>
+                        <button mat-button color="primary" (click)="openEditor()">Use xml editor</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br>
+                        <input hidden formControlName="review" id="review" type="file" name="file"
+                            (change)="reviewFileChange($event.target.files)" accept=".xml">
+
+                        <button mat-button color="primary" (click)="openReviewInput()">Upload review</button>
+                        <button mat-raised-button color="primary" (click)="submitReview()">Submit</button>
+                    </td>
+                </tr>
+            </table>
+        </mat-card-content>
+    </mat-card>
+</form>

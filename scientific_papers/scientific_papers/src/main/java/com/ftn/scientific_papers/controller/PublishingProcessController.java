@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.*;
 import com.ftn.scientific_papers.service.PublishingProcessService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -63,8 +65,13 @@ public class PublishingProcessController {
 				continue;
 
 			try {
-				ScientificPaper scientificPaper = scientificPaperService.findOneUnmarshalled(process.getPaperVersion().get(process.getLatestVersion().intValue()-1).getScientificPaperId());
-				PublishingProcessDTO publishingProcessDTO = mapper.toDTO(scientificPaper, process);
+                PublishingProcess.PaperVersion paperVersion = process.getPaperVersion().get(process.getLatestVersion().intValue()-1);
+
+                if (paperVersion == null)
+                    continue;
+
+				ScientificPaper scientificPaper = scientificPaperService.findOneUnmarshalled(paperVersion.getScientificPaperId());
+				PublishingProcessDTO publishingProcessDTO = mapper.toDTO(scientificPaper, process, process.getLatestVersion().intValue()-1);
 				result.add(publishingProcessDTO);
 			} catch (Exception e) {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -85,7 +92,7 @@ public class PublishingProcessController {
 			PublishingProcess process = publishingProcessService.findOneUnmarshalled(processId);
 
 			ScientificPaper scientificPaper = scientificPaperService.findOneUnmarshalled(process.getPaperVersion().get(process.getLatestVersion().intValue()-1).getScientificPaperId());
-			PublishingProcessDTO publishingProcessDTO = mapper.toDTO(scientificPaper, process);
+			PublishingProcessDTO publishingProcessDTO = mapper.toDTO(scientificPaper, process,process.getLatestVersion().intValue()-1);
 
 			return new ResponseEntity(publishingProcessDTO, HttpStatus.OK);
 		} catch (Exception e) {
@@ -97,14 +104,35 @@ public class PublishingProcessController {
 	@PreAuthorize("hasRole('ROLE_EDITOR')")
 	public ResponseEntity<PublishingProcessDTO> updatePaperStatus(@PathVariable("processId") String processId, @PathVariable("status") String status) {
 		try {
-			if (!status.equalsIgnoreCase("ACCEPTED") && !status.equalsIgnoreCase("REJECTED")) {
+			if (!status.equalsIgnoreCase("ACCEPTED") && !status.equalsIgnoreCase("REJECTED") && !status.equalsIgnoreCase("NEW_REVISION")) {
 				return new ResponseEntity("Invalid paper status", HttpStatus.BAD_REQUEST);
 			}
-			publishingProcessService.updateStatus(processId, status);
-			PublishingProcess process = publishingProcessService.findOneUnmarshalled(processId);
+            PublishingProcess process = publishingProcessService.findOneUnmarshalled(processId);
 
-			ScientificPaper scientificPaper = scientificPaperService.findOneUnmarshalled(process.getPaperVersion().get(process.getLatestVersion().intValue()-1).getScientificPaperId());
-			PublishingProcessDTO publishingProcessDTO = mapper.toDTO(scientificPaper, process);
+			int paperVersion = process.getLatestVersion().intValue()-1;
+			ScientificPaper scientificPaper = scientificPaperService.findOneUnmarshalled(process.getPaperVersion().get(paperVersion).getScientificPaperId());
+
+			if (!process.getStatus().equals("REVIEWS_DONE")) {
+				return new ResponseEntity("Paper reviews not done", HttpStatus.BAD_REQUEST);
+			}
+
+        	process.setStatus(status);
+
+        	if (status.equals("NEW_REVISION")) {
+        	    BigInteger version = BigInteger.valueOf(process.getLatestVersion().intValue() + 1);
+        	    process.setLatestVersion(version);
+            }
+
+        	if (status.equals("ACCEPTED")) {
+        		scientificPaper.setAcceptedDate(new Date());
+			}
+
+        	publishingProcessService.update(process);
+			scientificPaperService.update(scientificPaper);
+
+			PublishingProcessDTO publishingProcessDTO = mapper.toDTO(scientificPaper, process, paperVersion);
+
+			// TODO: notify author if accepted, rejected or needs revision
 
 			return new ResponseEntity(publishingProcessDTO, HttpStatus.OK);
 		} catch (Exception e) {

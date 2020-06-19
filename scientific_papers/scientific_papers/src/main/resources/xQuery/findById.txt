@@ -14,7 +14,6 @@ let $processes := collection("/db/sample/publishing_process")
 					<id>{ data($sp/sp:scientific_paper/@id) }</id>
 					<paper_status> { data($sp/sp:scientific_paper/@status) } </paper_status>
 					<process_id>{ data($pp/sp:publishing-process/@id) }</process_id>
-					(: TODO Ovde dodaj i drugi naslov i jezik? :)
 					<title>{ data($sp/sp:scientific_paper/sp:head/sp:title[1]) }</title>
 					{
 						for $author in $sp//sp:author

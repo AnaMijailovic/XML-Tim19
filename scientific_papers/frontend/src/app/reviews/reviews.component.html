@@ -1,0 +1,6 @@
+<app-header></app-header>
+<img src="../../assets/images/header.jpg" width="100%" height="22%">
+
+<div>
+    <app-assigned-review-card *ngFor="let reviewInfo of assignedReviews" [reviewInfo]="reviewInfo"></app-assigned-review-card>
+</div>

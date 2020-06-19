@@ -66,7 +66,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
  *             &lt;enumeration value="NEW_SUBMISSION"/&gt;
  *             &lt;enumeration value="WAITING_FOR_REVIEWERS_ACCEPTANCE"/&gt;
- *             &lt;enumeration value="NEW_REVIEVER_NEEDED"/&gt;
+ *             &lt;enumeration value="NEW_REVIEwER_NEEDED"/&gt;
  *             &lt;enumeration value="REVIEWS_ACCEPTED"/&gt;
  *             &lt;enumeration value="REVIEWS_DONE"/&gt;
  *             &lt;enumeration value="ACCEPTED"/&gt;

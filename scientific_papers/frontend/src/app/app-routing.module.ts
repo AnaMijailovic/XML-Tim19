@@ -9,6 +9,9 @@ import { AuthorPapersComponent } from './author-papers/author-papers.component';
 import { ScientificPaperEditorComponent } from './scientific-paper-editor/scientific-paper-editor.component';
 import { CoverLetterEditorComponent } from './cover-letter-editor/cover-letter-editor.component';
 import { EditorPageComponent } from './editor-page/editor-page.component';
+import { QuotedPapersComponent } from './quoted-papers/quoted-papers.component';
+import { ReviewRequestsComponent } from './review-requests/review-requests.component';
+import { ReviewsComponent } from './reviews/reviews.component';
 
 
 
@@ -21,8 +24,11 @@ const routes: Routes = [
   { path: 'add-paper-editor', component:  ScientificPaperEditorComponent},
   { path: 'add-cover-letter-editor', component: CoverLetterEditorComponent},
   { path: 'my-papers', component: AuthorPapersComponent},
-  { path: 'submissions-in-process', component: EditorPageComponent}
-]
+  { path: 'submissions-in-process', component: EditorPageComponent},
+  { path: 'paper-quoted-by/:id', component: QuotedPapersComponent},
+  { path: 'review-requests', component: ReviewRequestsComponent},
+  { path: 'assigned-reviews', component: ReviewsComponent }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
