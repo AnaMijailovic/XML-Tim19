@@ -177,7 +177,7 @@ public class ReviewerController {
 
     @GetMapping(value="/paper/{processId}")
     @PreAuthorize("hasRole('ROLE_REVIEWER')")
-    public ResponseEntity<String> paperForReviewer(@PathVariable("processId") String processId) {
+    public ResponseEntity<String> paperForReviewer(@PathVariable("processId") String processId) throws Exception{
         String username = tokenUtils.getUsernameFromRequest(request);
         TUser user = userService.findByUsername(username);
 
@@ -201,8 +201,10 @@ public class ReviewerController {
 
         String paperId = latestVersion.getScientificPaperId();
 
-        // TODO: return paper without author
-        return new ResponseEntity<>(HttpStatus.OK);
+        
+		byte[] resource = scientificPaperService.anonymousFindOneHtml(paperId);
+		return new ResponseEntity<>(new String(resource), HttpStatus.OK);
+        
     }
 
     private boolean isInOngoingProcess(PublishingProcess process) {
