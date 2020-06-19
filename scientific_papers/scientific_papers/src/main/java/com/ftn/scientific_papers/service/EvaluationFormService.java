@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.ftn.scientific_papers.dom.DOMParser;
 import com.ftn.scientific_papers.exceptions.CustomExceptionResponse;
 import com.ftn.scientific_papers.exceptions.CustomUnexpectedException;
+import com.ftn.scientific_papers.model.evaluation_form.EvaluationForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,11 @@ public class EvaluationFormService {
 	public XMLResource findOne(String id) throws Exception {
 		
 		return evaluationFormRepository.findOne(id);
+	}
+
+
+	public EvaluationForm findOneUnmarshalled(String reviewId) {
+		return evaluationFormRepository.findOneUnmarshalled(reviewId);
 	}
 
 	public String save(String evaluationFormXML, String paperId, String reviewerId) {
