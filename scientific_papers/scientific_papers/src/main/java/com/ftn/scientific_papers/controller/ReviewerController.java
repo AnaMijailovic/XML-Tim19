@@ -176,29 +176,13 @@ public class ReviewerController {
     }
 
     @GetMapping(value="/paper/{processId}")
-    @PreAuthorize("hasRole('ROLE_REVIEWER')")
     public ResponseEntity<String> paperForReviewer(@PathVariable("processId") String processId) throws Exception{
-        String username = tokenUtils.getUsernameFromRequest(request);
-        TUser user = userService.findByUsername(username);
-
         PublishingProcess process = publishingProcessService.findOneUnmarshalled(processId);
         if (process == null) {
             return new ResponseEntity("Invalid process id", HttpStatus.NOT_FOUND);
         }
 
         PublishingProcess.PaperVersion latestVersion = process.getPaperVersion().get(process.getLatestVersion().intValue()-1);
-
-        boolean isReviewerOnPaper = false;
-        for (VersionReview review : latestVersion.getVersionReviews().getVersionReview()) {
-            if (review.getReviewerId().equals(user.getUserId())) {
-                isReviewerOnPaper = true;
-            }
-        }
-
-        if (!isReviewerOnPaper) {
-            return new ResponseEntity<>("No rights to see paper.", HttpStatus.BAD_REQUEST);
-        }
-
         String paperId = latestVersion.getScientificPaperId();
 
         
