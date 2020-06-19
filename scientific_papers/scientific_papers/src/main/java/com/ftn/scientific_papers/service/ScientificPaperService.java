@@ -457,6 +457,22 @@ public class ScientificPaperService {
     	ByteArrayOutputStream scientificPaperHtml = xslfoTransformer.generateHTML(xmlString, xslString); 
 		return scientificPaperHtml.toByteArray();
 	}
+    
+
+  
+    public byte[] anonymousFindOnePdf(String id) throws Exception {
+		String xmlString = spRepository.findOne(id).getContent().toString();
+		String xslString = ScientificPaperRepository.ANONYMOUS_SCIENTIFIC_PAPER_XSL_FO_PATH;
+		ByteArrayOutputStream scientificPaperPdf = xslfoTransformer.generatePDF(xmlString, xslString); 
+		return scientificPaperPdf.toByteArray();
+    }
+    
+    public byte[] anonymousFindOneHtml(String id) throws Exception {
+    	String xmlString = spRepository.findOne(id).getContent().toString();
+    	String xslString = ScientificPaperRepository.ANONYMOUS_SCIENTIFIC_PAPER_XSL_PATH;
+    	ByteArrayOutputStream scientificPaperHtml = xslfoTransformer.generateHTML(xmlString, xslString); 
+		return scientificPaperHtml.toByteArray();
+	}
 
 	public void update(ScientificPaper scientificPaper) {
 		spRepository.update(scientificPaper);

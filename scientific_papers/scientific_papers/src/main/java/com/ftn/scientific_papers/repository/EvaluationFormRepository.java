@@ -1,20 +1,32 @@
 package com.ftn.scientific_papers.repository;
 
+import java.io.StringReader;
 import java.util.HashMap;
 
 import com.ftn.scientific_papers.dom.DOMParser;
 import com.ftn.scientific_papers.exceptions.CustomExceptionResponse;
 import com.ftn.scientific_papers.exceptions.CustomUnexpectedException;
+import com.ftn.scientific_papers.exceptions.DatabaseException;
+import com.ftn.scientific_papers.model.evaluation_form.EvaluationForm;
+import com.ftn.scientific_papers.model.publishing_process.PublishingProcess;
+import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
+import org.xmldb.api.base.Resource;
+import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
+import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
 import com.ftn.scientific_papers.exceptions.ResourceNotFoundException;
 import com.ftn.scientific_papers.util.DBManager;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 @Repository
 public class EvaluationFormRepository {
@@ -35,7 +47,49 @@ public class EvaluationFormRepository {
 		 }
 		 return result;
 	}
-	
+
+
+	public EvaluationForm findOneUnmarshalled(String reviewId) {
+		try {
+			String xPath = String.format("/evaluation_form[@id='%s']", reviewId);
+			ResourceSet result = dbManager.executeXPath(evaluationFormCollectionId, xPath);
+
+			if (result == null) {
+				return null;
+			}
+
+			ResourceIterator i = result.getIterator();
+			Resource res = null;
+
+			while (i.hasMoreResources()) {
+				try {
+					res = i.nextResource();
+					EvaluationForm ef = unmarshallEvaluationForm(res.getContent().toString());
+					return  ef;
+				} finally {
+					// don't forget to cleanup resources
+					try {
+						((EXistResource)res).freeResources();
+					} catch (XMLDBException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+
+			return  null;
+
+		} catch(Exception e) {
+			throw new DatabaseException("Exception while getting publishing processes." + reviewId);
+		}
+	}
+
+	private EvaluationForm unmarshallEvaluationForm(String efXML) throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(EvaluationForm.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();
+
+		return (EvaluationForm) unmarshaller.unmarshal(new StringReader(efXML));
+	}
+
 	public void save(String evaluationFormXML, String evaluationFormId) {
 		try {
 			dbManager.save(evaluationFormCollectionId, evaluationFormId, evaluationFormXML);
