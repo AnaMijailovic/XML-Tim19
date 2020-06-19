@@ -30,6 +30,6 @@ Tim 19:
         - Pokrenuti `.\bin\startup.bat` fajl
         - Proveriti da li je aplikacija pokrenuta odlaskom na [Exist](http://localhost:8080/exist/apps/eXide/)
 
-    
+- Video: 
         
 
