@@ -27,7 +27,7 @@ const routes: Routes = [
   { path: 'submissions-in-process', component: EditorPageComponent},
   { path: 'paper-quoted-by/:id', component: QuotedPapersComponent},
   { path: 'review-requests', component: ReviewRequestsComponent},
-  { path: 'pending-reviews', component: ReviewsComponent }
+  { path: 'assigned-reviews', component: ReviewsComponent }
 ];
 
 @NgModule({

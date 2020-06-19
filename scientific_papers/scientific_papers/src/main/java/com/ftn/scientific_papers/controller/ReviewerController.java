@@ -95,7 +95,7 @@ public class ReviewerController {
         publishingProcessService.assignReviewer(process, user);
 
         ScientificPaper scientificPaper = scientificPaperService.findOneUnmarshalled(process.getPaperVersion().get(process.getLatestVersion().intValue()-1).getScientificPaperId());
-        PublishingProcessDTO publishingProcessDTO = publishingProcessMapper.toDTO(scientificPaper, process);
+        PublishingProcessDTO publishingProcessDTO = publishingProcessMapper.toDTO(scientificPaper, process, process.getLatestVersion().intValue()-1);
         return new ResponseEntity(publishingProcessDTO, HttpStatus.OK);
     }
 
@@ -108,6 +108,27 @@ public class ReviewerController {
 
         List<ReviewRequestDTO> result = new ArrayList<>();
         List<PublishingProcess> processes = publishingProcessService.getReviewRequestForUser(user.getUserId());
+
+        for (PublishingProcess process: processes) {
+            if (!isInOngoingProcess(process))
+                continue;
+
+            ScientificPaper scientificPaper = scientificPaperService.findOneUnmarshalled(process.getPaperVersion().get(process.getLatestVersion().intValue()-1).getScientificPaperId());
+            ReviewRequestDTO dto = reviewRequestMapper.toDTO(scientificPaper, process);
+            result.add(dto);
+        }
+
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
+
+    @GetMapping(value ="/assignedReviews")
+    @PreAuthorize("hasRole('ROLE_REVIEWER')")
+    public ResponseEntity<ReviewRequestDTO> getAssignedReviews() {
+        String username = tokenUtils.getUsernameFromRequest(request);
+        TUser user = userService.findByUsername(username);
+
+        List<ReviewRequestDTO> result = new ArrayList<>();
+        List<PublishingProcess> processes = publishingProcessService.getAssignedReviewsForUser(user.getUserId());
 
         for (PublishingProcess process: processes) {
             if (!isInOngoingProcess(process))

@@ -37,7 +37,7 @@ export class ReviewRequestCardComponent implements OnInit {
     this.reviewService.rejectReview(this.reviewRequest.processId).subscribe(
       ((response: any) => {
         this.toastr.success('Success', 'Successfully rejected review');
-        location.reload()
+        location.reload();
       }), (error: any) => {
         this.toastr.error('Error', 'Some error happend');
         console.log(JSON.stringify(error));

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<evaluation_form xmlns="https://github.com/AnaMijailovic/XML-Tim19"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    id = "rev1"
+    xsi:schemaLocation="https://github.com/AnaMijailovic/XML-Tim19 file:/D:/FaksProjekti/XML/XML-Tim19/scientific_papers/scientific_papers/src/main/resources/xsd/evaluation_form.xsd">
+    <reviewer>
+        <first_name>Mary</first_name>
+        <last_name>Stewert</last_name>
+        <email>test@gmail.com</email>
+    </reviewer>
+    <scientific_paper_title>Bla bla title revisiion</scientific_paper_title>
+    <scientific_paper_summary>Bla bla bla</scientific_paper_summary>
+    <suggestions>
+        <suggestion>
+            <ref>ref1</ref>
+            <comment>Blab</comment>
+        </suggestion>
+    </suggestions>
+    <overall_recommendation>
+        <recommendation>Minor Revision</recommendation>
+        <comment>Revise some thigns</comment>
+    </overall_recommendation>
+</evaluation_form>

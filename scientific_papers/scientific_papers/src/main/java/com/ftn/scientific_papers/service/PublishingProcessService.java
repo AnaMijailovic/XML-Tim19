@@ -234,6 +234,63 @@ public class PublishingProcessService {
 		}
 	}
 
+
+	public List<PublishingProcess> getAssignedReviewsForUser(String userId) {
+		List<PublishingProcess> allProcess = publishingProcessRepository.getAll();
+		List<PublishingProcess> result = new ArrayList<>();
+
+		for (PublishingProcess process: allProcess) {
+			PublishingProcess.PaperVersion latestVersion = process.getPaperVersion().get(process.getLatestVersion().intValue()-1);
+			PublishingProcess.PaperVersion.VersionReviews reviews = latestVersion.getVersionReviews();
+
+			if (reviews == null)
+				continue;
+
+			for (VersionReview review: reviews.getVersionReview()) {
+				if (review.getReviewerId().equals(userId) && review.getStatus().equals("ACCEPTED")) {
+					result.add(process);
+				}
+			}
+		}
+
+		return result;
+	}
+
+
+	public void submitReview(PublishingProcess process, String userId, String reviewId) {
+		try {
+			PublishingProcess.PaperVersion latestVersion = process.getPaperVersion().get(process.getLatestVersion().intValue()-1);
+			List<VersionReview> versionReviews = latestVersion.getVersionReviews().getVersionReview();
+
+			for (VersionReview review : versionReviews) {
+				if (review.getReviewerId().equals(userId) && review.getStatus().equals("ACCEPTED")) {
+					review.setStatus("FINISHED");
+					review.setReviewId(reviewId);
+				}
+			}
+
+			if (checkIfAllReviewsFinished(latestVersion.getVersionReviews())) {
+				process.setStatus("REVIEWS_DONE");
+			}
+
+			publishingProcessRepository.update(process);
+		} catch (Exception e) {
+			throw new CustomUnexpectedException("Unexpected exception while updating review in process");
+		}
+	}
+
+	private boolean checkIfAllReviewsFinished(PublishingProcess.PaperVersion.VersionReviews versionReviews) {
+		int cnt = 0;
+
+		for (VersionReview review: versionReviews.getVersionReview()) {
+			if (review.getStatus().equals("FINISHED")) {
+				cnt++;
+			}
+		}
+
+		return cnt == 2;
+	}
+
 	private boolean checkIfEnoughReviewers(PublishingProcess.PaperVersion.VersionReviews versionReviews) {
 		int cnt = 0;
 
@@ -257,5 +314,9 @@ public class PublishingProcessService {
 			}
 		}
 		return cnt == 2;
+	}
+
+	public void update(PublishingProcess process) {
+		publishingProcessRepository.save(process);
 	}
 }
