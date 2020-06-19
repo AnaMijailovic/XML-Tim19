@@ -32,6 +32,7 @@ import javax.xml.bind.Unmarshaller;
 public class EvaluationFormRepository {
 	public static final String EVALUATION_FORM_XSL_FO_PATH = "src/main/resources/xsl-fo/evaluation_form_fo.xsl";
 	public static final String EVALUATION_FORM_XSL_PATH = "src/main/resources/xslt/evaluation_form.xsl";
+	public static final String MERGE_XSL_PATH = "src/main/resources/xslt/mergeReviews.xsl";
 	
 	@Autowired
 	private DBManager dbManager;
@@ -47,7 +48,37 @@ public class EvaluationFormRepository {
 		 }
 		 return result;
 	}
+	
+	public String getReviewsForMerge(String processId, String paperId) throws Exception {
+		String xQueryPath = "./src/main/resources/xQuery/getReviewsForMerge.txt";
+		
+		HashMap<String, String> params = new HashMap<>();
+		params.put("id", processId);
+		ResourceSet result = dbManager.executeXQuery(evaluationFormCollectionId, "", params, xQueryPath);
+		
+		if(result.getSize() == 0)
+			throw new ResourceNotFoundException("Reviews not found");
+		
+		String resStr = "";
+		
+		ResourceIterator i = result.getIterator();
+		Resource res = null;
 
+		while (i.hasMoreResources()) {
+			try {
+				res = i.nextResource();
+				resStr += res.getContent().toString();
+			} finally {
+				// don't forget to cleanup resources
+				try {
+					((EXistResource)res).freeResources();
+				} catch (XMLDBException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return resStr;
+	}
 
 	public EvaluationForm findOneUnmarshalled(String reviewId) {
 		try {

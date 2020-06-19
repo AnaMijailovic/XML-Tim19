@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 
 import com.ftn.scientific_papers.dom.DOMParser;
+import com.ftn.scientific_papers.dom.DomErrorHandler;
 import com.ftn.scientific_papers.exceptions.CustomExceptionResponse;
 import com.ftn.scientific_papers.exceptions.CustomUnexpectedException;
 import com.ftn.scientific_papers.model.evaluation_form.EvaluationForm;
@@ -85,6 +86,30 @@ public class EvaluationFormService {
     	ByteArrayOutputStream evaluationFormHtml = xslfoTransformer.generateHTML(xmlString, xslString); 
 		return evaluationFormHtml.toByteArray();
 	}
+    
+    public byte[] getMergedHtml(String processId, String paperId) throws Exception {
+    	String merged =  getReviewsForMerge(processId, paperId);
+    	String xslPath = EvaluationFormRepository.MERGE_XSL_PATH;
+    	ByteArrayOutputStream evaluationFormHtml = xslfoTransformer.generateHTML(merged, xslPath); 
+		return evaluationFormHtml.toByteArray();
+    }
+    
+    public String getReviewsForMerge(String processId, String paperId) throws Exception {
+    	String reviewsForMergeString = evaluationFormRepository.getReviewsForMerge(processId, paperId);
+    	Document document = DOMParser.buildDocumentWithoutSchema(reviewsForMergeString);
+    	
+    	NodeList reviews = document.getDocumentElement().getElementsByTagName("evaluation_form");
+		for (int i = 0; i < reviews.getLength(); i++) {
+			Element review = (Element) reviews.item(i);
+			NodeList reviewers = review.getElementsByTagName("reviewer");
+			for (int j = 0; j < reviewers.getLength(); j++) {
+				review.removeChild(reviewers.item(j));
+			}
+		}
+    	
+	    reviewsForMergeString = DOMParser.getStringFromDocument(document);
+    	return reviewsForMergeString;
+    }
 
 
 }

@@ -1,0 +1,13 @@
+declare namespace ns="https://github.com/AnaMijailovic/XML-Tim19";
+let $processes := collection("/db/sample/publishing_process")
+let $reviews := collection("/db/sample/evaluation_forms")
+
+
+return <ns:evaluation-forms xmlns:sp="https://github.com/AnaMijailovic/XML-Tim19">
+{for $review in $reviews
+ for $process in $processes
+		where $process/sp:publishing-process/@id = $id
+		     (: for $versionReview in $process/sp:publishing-process/sp:paper-version[last()]/sp:version-reviews/sp:version-review
+					where $review/sp:evaluation_form/@id = $versionReview/sp:review_id/text() :)
+							return $review }
+</ns:evaluation-forms>
