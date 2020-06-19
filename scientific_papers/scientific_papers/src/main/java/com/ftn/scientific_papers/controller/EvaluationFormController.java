@@ -74,9 +74,9 @@ public class EvaluationFormController {
 		return new ResponseEntity(HttpStatus.CREATED);
 	}
 
-	@GetMapping(value="/finished/{processId},{paperId}")
+	@GetMapping(value="/finished/{processId}/{paperId}")
 	@PreAuthorize("hasRole('ROLE_AUTHOR')")
-	public ResponseEntity<String> getFinishedEvaluationForms(@PathVariable("processId") String processId, @PathVariable("paperId") String paperId) {
+	public ResponseEntity<String> getFinishedEvaluationForms(@PathVariable("processId") String processId, @PathVariable("paperId") String paperId) throws Exception {
 		PublishingProcess process = publishingProcessService.findOneUnmarshalled(processId);
 		if (process == null) {
 			return new ResponseEntity("Invalid process id", HttpStatus.NOT_FOUND);
@@ -95,11 +95,16 @@ public class EvaluationFormController {
 			return new ResponseEntity("Reviews not finished", HttpStatus.BAD_REQUEST);
 		}
 
-		// TODO: return merged evaluation forms without reviewer info
-
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(evaluationFormService.getReviewsForMerge(processId, paperId), HttpStatus.OK);
 	}
+	
+	@GetMapping(value="/finished/html/{processId}/{paperId}")
+	public ResponseEntity<String> demo(@PathVariable("processId") String processId, @PathVariable("paperId") String paperId) throws Exception {
 
+		return new ResponseEntity<>(new String(evaluationFormService.getMergedHtml(processId, paperId)),HttpStatus.OK);
+	}
+	
+	
 	@GetMapping(value = "/xml/{id}", produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> findOneXml(@PathVariable("id") String id) throws Exception {
 		XMLResource resource = evaluationFormService.findOneXml(id);
