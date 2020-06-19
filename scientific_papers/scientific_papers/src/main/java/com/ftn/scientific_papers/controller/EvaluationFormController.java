@@ -124,6 +124,12 @@ public class EvaluationFormController {
         return response;
     }
 
+    @GetMapping(value="/template", produces = MediaType.APPLICATION_XML_VALUE)
+	@PreAuthorize("hasRole('ROLE_REVIEWER')")
+	public ResponseEntity<String> getEvaluationFormTemplate() {
+		return new ResponseEntity<>(evaluationFormService.getTemplate(), HttpStatus.OK);
+	}
+
 
 	private List<EvaluationForm> getFinishedEvaluationFormsFromPaperVersion(PublishingProcess.PaperVersion paperVersion) {
 		List<EvaluationForm> evaluationForms = new ArrayList<>();

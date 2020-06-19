@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<evaluation_form xmlns="https://github.com/AnaMijailovic/XML-Tim19"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <reviewer>
+        <first_name>reviewer_name</first_name>
+        <last_name>reviewer_last_name</last_name>
+        <email>testmail@gmail.com</email>
+    </reviewer>
+    <scientific_paper_title>title</scientific_paper_title>
+    <scientific_paper_summary>paper_summary</scientific_paper_summary>
+    <suggestions>
+        <suggestion>
+            <ref>ref1</ref>
+            <comment>comment_on_ref</comment>
+        </suggestion>
+    </suggestions>
+    <overall_recommendation>
+        <recommendation>Minor Revision</recommendation>
+        <recommendation_comment>fix_some_things</recommendation_comment>
+    </overall_recommendation>
+</evaluation_form>

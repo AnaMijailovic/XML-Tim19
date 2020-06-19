@@ -36,4 +36,7 @@ export class ReviewService {
     return this.http.post(`http://localhost:8088/api/evaluationForms/${processId}`, reviewXml, this.httpOptions);
   }
 
+  getTemplate(): Observable<string> {
+    return this.http.get('http://localhost:8088/api/evaluationForms/template', { responseType: 'text' });
+  }
 }
