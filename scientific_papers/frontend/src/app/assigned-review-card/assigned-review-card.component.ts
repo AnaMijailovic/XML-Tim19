@@ -54,6 +54,11 @@ export class AssignedReviewCardComponent implements OnInit {
     };
   }
 
+  view() {
+    console.log(this.reviewInfo.processId);
+    this.reviewService.getPaperForReviewer(this.reviewInfo.processId);
+  }
+
   submitReview() {
     if (this.reviewXml === '' || this.reviewXml === undefined || this.reviewXml === null ) {
       this.toastr.error('Error', 'You must choose review paper');

@@ -33,6 +33,11 @@ export class ReviewRequestCardComponent implements OnInit {
     );
   }
 
+  view() {
+    console.log(this.reviewRequest.processId);
+    this.reviewService.getPaperForReviewer(this.reviewRequest.processId);
+  }
+
   reject() {
     this.reviewService.rejectReview(this.reviewRequest.processId).subscribe(
       ((response: any) => {
