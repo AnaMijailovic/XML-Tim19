@@ -118,14 +118,12 @@ export class PublishingProcessCardComponent implements OnInit {
   }
 
   revision() {
-    this.publishingProcessService.sendOnRevision(this.publishingProcess.processId).subscribe(
+    this.publishingProcessService.updatePaperStatus(this.publishingProcess.processId, 'NEW_REVISION').subscribe(
       ((response: PublishingProcess) => {
         this.toastr.success('Success', 'Paper sent on revision');
-        this.publishingProcess = response;
-        this.updateButtonFlags();
+        location.reload();
       }), (error: any) => {
-        //this.toastr.error('Error', 'Some error happend');
-        this.toastr.error('Error', 'Not implemented yet');
+        this.toastr.error('Error', 'Some error happend');
         console.log(JSON.stringify(error));
       }
     );

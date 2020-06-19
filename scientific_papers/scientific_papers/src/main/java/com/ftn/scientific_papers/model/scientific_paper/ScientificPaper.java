@@ -148,7 +148,7 @@ public class ScientificPaper {
     @XmlSchemaType(name = "date")
     protected Date revisedDate;
     @XmlAttribute(name = "accepted_date")
-    @XmlJavaTypeAdapter(Adapter2 .class)
+    @XmlJavaTypeAdapter(Adapter1 .class)
     @XmlSchemaType(name = "date")
     protected Date acceptedDate;
     @XmlAttribute(name = "status")

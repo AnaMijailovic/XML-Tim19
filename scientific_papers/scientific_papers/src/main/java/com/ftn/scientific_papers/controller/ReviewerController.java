@@ -95,7 +95,7 @@ public class ReviewerController {
         publishingProcessService.assignReviewer(process, user);
 
         ScientificPaper scientificPaper = scientificPaperService.findOneUnmarshalled(process.getPaperVersion().get(process.getLatestVersion().intValue()-1).getScientificPaperId());
-        PublishingProcessDTO publishingProcessDTO = publishingProcessMapper.toDTO(scientificPaper, process);
+        PublishingProcessDTO publishingProcessDTO = publishingProcessMapper.toDTO(scientificPaper, process, process.getLatestVersion().intValue()-1);
         return new ResponseEntity(publishingProcessDTO, HttpStatus.OK);
     }
 

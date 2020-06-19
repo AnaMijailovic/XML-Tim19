@@ -226,6 +226,19 @@ public class PublishingProcessRepository {
 
 	}
 
+	public void save(PublishingProcess process) {
+		try {
+			String processXML = marshallPublishingProcess(process);
+
+			dbManager.save(publishingProcessCollectionId, process.getId(),  processXML);
+
+		} catch (JAXBException e) {
+			throw new DatabaseException("An error occured while marshalling user.");
+		} catch (Exception e) {
+			throw new DatabaseException("An error occured while updating user.");
+		}
+	}
+
 	public void update(PublishingProcess publishingProcess) {
 		try {
 			String userXML = marshallPublishingProcess(publishingProcess);

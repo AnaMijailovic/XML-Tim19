@@ -315,4 +315,8 @@ public class PublishingProcessService {
 		}
 		return cnt == 2;
 	}
+
+	public void update(PublishingProcess process) {
+		publishingProcessRepository.save(process);
+	}
 }

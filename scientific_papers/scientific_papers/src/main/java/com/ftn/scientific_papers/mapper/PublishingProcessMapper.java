@@ -18,7 +18,7 @@ public class PublishingProcessMapper {
     @Autowired
     private CustomUserDetailsService userService;
 
-    public PublishingProcessDTO toDTO(ScientificPaper scientificPaper, PublishingProcess process) {
+    public PublishingProcessDTO toDTO(ScientificPaper scientificPaper, PublishingProcess process, int version) {
         PublishingProcessDTO publishingProcessDTO = new PublishingProcessDTO();
         publishingProcessDTO.setProcessId(process.getId());
 
@@ -28,7 +28,7 @@ public class PublishingProcessMapper {
 
         publishingProcessDTO.setVersion(process.getLatestVersion().toString());
 
-        PublishingProcess.PaperVersion.VersionReviews reviews = process.getPaperVersion().get(process.getLatestVersion().intValue()-1).getVersionReviews();
+        PublishingProcess.PaperVersion.VersionReviews reviews = process.getPaperVersion().get(version).getVersionReviews();
         if (reviews == null) {
             publishingProcessDTO.setReviewers(new ArrayList<>());
             publishingProcessDTO.setReviewersIds(new ArrayList<>());
@@ -54,7 +54,8 @@ public class PublishingProcessMapper {
 
         for (int i = 0; i < versionReviews.getVersionReview().size(); i++) {
             if (versionReviews.getVersionReview().get(i).getStatus().equals("ACCEPTED") ||
-                versionReviews.getVersionReview().get(i).getStatus().equals("PENDING")) {
+                versionReviews.getVersionReview().get(i).getStatus().equals("PENDING") ||
+                versionReviews.getVersionReview().get(i).getStatus().equals("FINISHED")) {
                 TUser author = userService.findById(versionReviews.getVersionReview().get(i).getReviewerId());
                 reviewers.add(author.getName() + " " + author.getSurname());
             }
