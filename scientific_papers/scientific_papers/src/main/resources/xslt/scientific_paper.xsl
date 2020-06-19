@@ -120,17 +120,17 @@
                     		
                     		<xsl:for-each select="ns:scientific_paper/ns:body/ns:references/ns:reference">
                     		<div></div>
-            				<xsl:value-of select="."/>;
+                    		<xsl:variable name="refPaperId" select="ns:paper_id"/>
+            				<a>
+            				 	<xsl:attribute name="href">
+       								<xsl:value-of select="concat('http://localhost:8088/api/scientificPapers/html/' , $refPaperId)" />
+   								</xsl:attribute>
+            				<xsl:value-of select="."/>
+            				</a>
             				</xsl:for-each>
                         </p>
 					</xsl:if>
 				</div>
-				
-          
-				
-                  
-			
-            
                 
             </body>
         </html>

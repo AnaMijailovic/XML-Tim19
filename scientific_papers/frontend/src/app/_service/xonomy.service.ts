@@ -695,6 +695,14 @@ export class XonomyService {
             },
             reference: {
                 menu: [
+                     {
+                        caption: 'Add <paper_id>',
+                        action: Xonomy.newElementChild,
+                        actionParameter: '<paper_id></paper_id>',
+                        hideIf: (jsElement: any) => {
+                            return jsElement.hasChildElement('paper_id');
+                        }
+                    },
                     {
                         caption: 'Add <title>',
                         action: Xonomy.newElementChild,
@@ -738,8 +746,19 @@ export class XonomyService {
                     }],
 
             },
+            paper_id: {
+                oneliner: true,
+                mustBeBefore: ['title', 'reference_author', 'publisher', 'year_of_publication', 'pages'],
+                hasText: true,
+                asker: Xonomy.askString,
+                menu: [
+                    {
+                        caption: 'Delete element',
+                        action: Xonomy.deleteElement
+                    }],
+            },
             reference_author: {
-                mustBeAfter: ['title'],
+                mustBeAfter: ['title', 'paper_id'],
                 mustBeBefore: ['publisher', 'year_of_publication', 'pages'],
                 menu: [
                     {
@@ -774,7 +793,7 @@ export class XonomyService {
             },
             publisher: {
                 oneliner: true,
-                mustBeAfter: ['title', 'reference_author'],
+                mustBeAfter: ['paper_id', 'title', 'reference_author'],
                 mustBeBefore: ['year_of_publication', 'pages'],
                 hasText: true,
                 asker: Xonomy.askString,
@@ -786,7 +805,7 @@ export class XonomyService {
             },
             year_of_publication: {
                 oneliner: true,
-                mustBeAfter: ['title', 'reference_author', 'publisher'],
+                mustBeAfter: ['paper_id', 'title', 'reference_author', 'publisher'],
                 mustBeBefore: ['pages'],
                 hasText: true,
                 asker: Xonomy.askString,
@@ -798,7 +817,7 @@ export class XonomyService {
             },
             pages: {
                 oneliner: true,
-                mustBeAfter: ['title', 'reference_author', 'publisher', 'year_of_publication'],
+                mustBeAfter: ['paper_id', 'title', 'reference_author', 'publisher', 'year_of_publication'],
                 hasText: true,
                 asker: Xonomy.askString,
                 menu: [

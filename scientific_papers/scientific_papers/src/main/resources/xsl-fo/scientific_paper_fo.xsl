@@ -48,13 +48,13 @@
                         <fo:block text-align-last="center">
                  		 <fo:block font-family="sans-serif">
                  		 		<xsl:for-each select="ns:scientific_paper/ns:head/ns:author/ns:first_name">
-            					<xsl:value-of select="."/>;
+            					<xsl:value-of select="."/>
             				
             					</xsl:for-each>
                     	</fo:block>
                     	<fo:block>
 							<xsl:for-each select="ns:scientific_paper/ns:head/ns:author/ns:last_name">
-            				<xsl:value-of select="."/>;
+            				<xsl:value-of select="."/>
             				</xsl:for-each>            
             	            </fo:block>
                     </fo:block>
@@ -66,7 +66,7 @@
                         <fo:block text-align-last="center">
                  		 <fo:block font-family="sans-serif" position="absolute"  padding="10px">
 							<xsl:for-each select="ns:scientific_paper/ns:head/ns:author/ns:affiliation">
-            				<xsl:value-of select="."/>;
+            				<xsl:value-of select="."/>
             				
             				</xsl:for-each>                        
             				</fo:block>
@@ -79,7 +79,7 @@
                         <fo:block text-align-last="left">
                            <fo:block font-family="sans-serif" font-size="10px" font-weight="bold" position="absolute"  padding="10px">                   		
 							<xsl:for-each select="ns:scientific_paper/ns:head/ns:keyword">
-            				<xsl:value-of select="."/>;
+            				<xsl:value-of select="."/>
             				</xsl:for-each>
                      		</fo:block>
                         </fo:block>
@@ -107,7 +107,7 @@
                            <fo:block font-family="sans-serif" font-size="16px" font-weight="bold" position="absolute"  padding="10px">
                            	  	<xsl:for-each select="ns:scientific_paper/ns:body/ns:chapter/ns:heading">
                            	  	<fo:block></fo:block>
-            					<xsl:value-of select="."/>;
+            					<xsl:value-of select="."/>
             					</xsl:for-each>
   	                			<xsl:value-of select="ns:scientific_paper/ns:body/ns:chapter/ns:paragraph"/>	
      							<xsl:if test="ns:scientific_paper/ns:body/ns:chapter/ns:paragraph/ns:image">
@@ -134,7 +134,11 @@
                     		</fo:block>
                     		<fo:block></fo:block>
 							<xsl:for-each select="ns:scientific_paper/ns:body/ns:references/ns:reference">
-            				<xsl:value-of select="."/>;
+            				
+            				 <xsl:variable name="refPaperId" select="ns:paper_id"/>
+                			<fo:basic-link external-destination="http://localhost:8088/api/scientificPapers/pdf/{$refPaperId}" font-size="12px">
+                				<xsl:value-of select="."/>
+                			</fo:basic-link>
             				</xsl:for-each>                        
             				</fo:block>
 					</xsl:if>
