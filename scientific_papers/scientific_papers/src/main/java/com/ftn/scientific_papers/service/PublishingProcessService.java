@@ -48,6 +48,9 @@ public class PublishingProcessService {
 	
 	@Autowired
 	private EmailService emailService;
+	
+	@Autowired
+	private CustomUserDetailsService customUserDetailsService;
 
 	public List<PublishingProcess> getAll() {
 		return  publishingProcessRepository.getAll();
@@ -168,7 +171,7 @@ public class PublishingProcessService {
 
 			publishingProcessRepository.update(process);
 
-			// TODO: notify reviewer
+			
 			try {
 				String reviewerEmail = user.getEmail();
 				String scientificPaperId = latestVersion.getScientificPaperId();
@@ -227,6 +230,23 @@ public class PublishingProcessService {
 			}
 
 			publishingProcessRepository.update(process);
+			try {
+				TUser reviewer = customUserDetailsService.findById(userId);
+				String reviewerName = reviewer.getName();
+				String reviewerSurname = reviewer.getSurname();
+				String scientificPaperId = latestVersion.getScientificPaperId();
+				
+				ScientificPaper scientificPaper = scientificPaperRepository.findOneUnmarshalled(scientificPaperId);
+				String scientificPaperName = scientificPaper.getHead().getTitle().get(0).getValue();
+				String editorId = process.getEditorId();
+				TUser editor = customUserDetailsService.findById(editorId);
+				String editorEmail = editor.getEmail();
+				emailService.acceptReviewEmail(editorEmail, reviewerName, reviewerSurname, scientificPaperName);
+
+			} catch (MailException | InterruptedException e) {
+				System.out.println("There was an error while sending an e-mail");
+				e.printStackTrace();
+			}
 		} catch (Exception e) {
 			throw new CustomUnexpectedException("Unexpected exception while accepting review");
 		}
@@ -244,6 +264,23 @@ public class PublishingProcessService {
 			}
 			process.setStatus("NEW_REVIEWER_NEEDED");
 			publishingProcessRepository.update(process);
+			try {
+				TUser reviewer = customUserDetailsService.findById(userId);
+				String reviewerName = reviewer.getName();
+				String reviewerSurname = reviewer.getSurname();
+				String scientificPaperId = latestVersion.getScientificPaperId();
+				
+				ScientificPaper scientificPaper = scientificPaperRepository.findOneUnmarshalled(scientificPaperId);
+				String scientificPaperName = scientificPaper.getHead().getTitle().get(0).getValue();
+				String editorId = process.getEditorId();
+				TUser editor = customUserDetailsService.findById(editorId);
+				String editorEmail = editor.getEmail();
+				emailService.rejectReviewEmail(editorEmail, reviewerName, reviewerSurname, scientificPaperName);
+
+			} catch (MailException | InterruptedException e) {
+				System.out.println("There was an error while sending an e-mail");
+				e.printStackTrace();
+			}
 
 		} catch (Exception e) {
 			throw new CustomUnexpectedException("Unexpected exception while rejecting review");

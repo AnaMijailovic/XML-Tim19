@@ -8,11 +8,13 @@ import com.ftn.scientific_papers.model.scientific_paper.ScientificPaper;
 import com.ftn.scientific_papers.model.user.TUser;
 import com.ftn.scientific_papers.security.TokenUtils;
 import com.ftn.scientific_papers.service.CustomUserDetailsService;
+import com.ftn.scientific_papers.service.EmailService;
 import com.ftn.scientific_papers.service.ScientificPaperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,6 +48,9 @@ public class PublishingProcessController {
 
 	@Autowired
 	private TokenUtils tokenUtils;
+	
+	@Autowired
+	private EmailService emailService;
 
 	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> findOne(@RequestParam(("paperId")) String paperId) throws Exception {
@@ -133,6 +138,46 @@ public class PublishingProcessController {
 			PublishingProcessDTO publishingProcessDTO = mapper.toDTO(scientificPaper, process, paperVersion);
 
 			// TODO: notify author if accepted, rejected or needs revision
+			switch (status) {
+			  case "ACCEPTED":
+				try {
+					String authorId = process.getAuthorId();
+					TUser author = userService.findById(authorId);
+					String authorEmail = author.getEmail();
+					String scientificPaperName = scientificPaper.getHead().getTitle().get(0).getValue();
+					emailService.acceptPaperEmail(authorEmail, scientificPaperName);
+				} catch (MailException | InterruptedException e) {
+					System.out.println("There was an error while sending an e-mail");
+					e.printStackTrace();
+				}
+			    break;
+			  case "REJECTED":
+				try {
+					String authorId = process.getAuthorId();
+					TUser author = userService.findById(authorId);
+					String authorEmail = author.getEmail();
+					String scientificPaperName = scientificPaper.getHead().getTitle().get(0).getValue();
+					emailService.rejectPaperEmail(authorEmail, scientificPaperName);
+				} catch (MailException | InterruptedException e) {
+					System.out.println("There was an error while sending an e-mail");
+					e.printStackTrace();
+				}
+			    break;
+			  case "NEW_REVISION":
+				try {
+					String authorId = process.getAuthorId();
+					TUser author = userService.findById(authorId);
+					String authorEmail = author.getEmail();
+					String scientificPaperName = scientificPaper.getHead().getTitle().get(0).getValue();
+					emailService.newRevisionPaperEmail(authorEmail, scientificPaperName);
+				} catch (MailException | InterruptedException e) {
+					System.out.println("There was an error while sending an e-mail");
+					e.printStackTrace();
+				}
+			    break;
+			  default:
+			    System.out.println("Invalid paper status");
+			}
 
 			return new ResponseEntity(publishingProcessDTO, HttpStatus.OK);
 		} catch (Exception e) {
