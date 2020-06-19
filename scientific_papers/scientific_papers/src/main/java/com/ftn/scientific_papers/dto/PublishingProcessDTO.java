@@ -6,25 +6,55 @@ public class PublishingProcessDTO {
     String processId;
     List<String> paperTitles;
     List<String> authors;
+    String latestPaperId;
+    String latestCoverId;
     String editorUsername;
     String editorName;
     List<String> reviewers;
     List<String> reviewersIds;
+    List<String> finishedReviewsIds;
     String status;
     String version;
 
     public PublishingProcessDTO() {}
 
-    public PublishingProcessDTO(String processId, List<String> paperTitles, List<String> authors, String editorId, String editorName, List<String> reviewers, List<String> reviewersIds, String status, String version) {
+    public PublishingProcessDTO(String processId, List<String> paperTitles, List<String> authors, List<String> finishedReviewsIds, String latestPaperId, String latestCoverId, String editorUsername, String editorName, List<String> reviewers, List<String> reviewersIds, String status, String version) {
         this.processId = processId;
         this.paperTitles = paperTitles;
         this.authors = authors;
-        this.editorUsername = editorId;
+        this.latestPaperId = latestPaperId;
+        this.finishedReviewsIds = finishedReviewsIds;
+        this.latestCoverId = latestCoverId;
+        this.editorUsername = editorUsername;
         this.editorName = editorName;
         this.reviewers = reviewers;
         this.reviewersIds = reviewersIds;
         this.status = status;
         this.version = version;
+    }
+
+    public List<String> getFinishedReviewsIds() {
+        return finishedReviewsIds;
+    }
+
+    public void setFinishedReviewsIds(List<String> finishedReviewsIds) {
+        this.finishedReviewsIds = finishedReviewsIds;
+    }
+
+    public String getLatestPaperId() {
+        return latestPaperId;
+    }
+
+    public void setLatestPaperId(String latestPaperId) {
+        this.latestPaperId = latestPaperId;
+    }
+
+    public String getLatestCoverId() {
+        return latestCoverId;
+    }
+
+    public void setLatestCoverId(String latestCoverId) {
+        this.latestCoverId = latestCoverId;
     }
 
     public String getProcessId() {
