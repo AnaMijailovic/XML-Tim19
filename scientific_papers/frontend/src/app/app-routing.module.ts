@@ -12,6 +12,7 @@ import { EditorPageComponent } from './editor-page/editor-page.component';
 import { QuotedPapersComponent } from './quoted-papers/quoted-papers.component';
 import { ReviewRequestsComponent } from './review-requests/review-requests.component';
 import { ReviewsComponent } from './reviews/reviews.component';
+import { ReviewEditorComponent } from './review-editor/review-editor.component';
 
 
 
@@ -27,7 +28,8 @@ const routes: Routes = [
   { path: 'submissions-in-process', component: EditorPageComponent},
   { path: 'paper-quoted-by/:id', component: QuotedPapersComponent},
   { path: 'review-requests', component: ReviewRequestsComponent},
-  { path: 'assigned-reviews', component: ReviewsComponent }
+  { path: 'assigned-reviews', component: ReviewsComponent },
+  { path: 'review-editor', component: ReviewEditorComponent }
 ];
 
 @NgModule({

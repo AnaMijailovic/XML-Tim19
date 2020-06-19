@@ -14,7 +14,11 @@
                  <div style="width:800px; margin:0 auto;">
                    <xsl:if test="ns:scientific_paper/ns:head/ns:title">
                    				<h1>
-                   				<xsl:value-of select="ns:scientific_paper/ns:head/ns:title"/>	
+                   				<xsl:for-each select="ns:scientific_paper/ns:head/ns:title">       			
+               						<xsl:value-of select="."/>
+               						
+             						<div></div>	
+             						</xsl:for-each>
                    				</h1>
 					</xsl:if>
 				</div>
@@ -37,33 +41,25 @@
 				</div>
 				
 				<div style="width:800px; margin:0 auto;">
-                   <xsl:if test="ns:scientific_paper/ns:head/ns:author">   		
-                   			<xsl:for-each select="ns:scientific_paper/ns:head/ns:author/ns:first_name">
-            				<xsl:value-of select="."/>;
-            				
-            				</xsl:for-each>
-            				<p></p>
-            				<xsl:for-each select="ns:scientific_paper/ns:head/ns:author/ns:last_name">
-            				<xsl:value-of select="."/>;
-            				
-            				</xsl:for-each>
-            				
-            				<p></p>
-            				<xsl:for-each select="ns:scientific_paper/ns:head/ns:author/ns:affiliation">
-            				<xsl:value-of select="."/>;
-            				
-            				</xsl:for-each>
-            		
-                   
-					</xsl:if>
+                
+				<xsl:if test="ns:scientific_paper/ns:head/ns:author">
+	
+		<div>Authors:</div>
+       <xsl:for-each select="ns:scientific_paper/ns:head/ns:author">       			
+               <xsl:value-of select="concat(ns:first_name, ' ', ns:last_name)"/>
+               <div></div>
+             	<xsl:value-of select="concat(ns:affiliation/ns:name, ', ', ns:affiliation/ns:city, ', ' , ns:affiliation/ns:country)"/>
+             	<div></div>
+             	<div></div>
+               
+       </xsl:for-each>
+	</xsl:if>
 				</div>
 				
 				<div>
                    <xsl:if test="ns:scientific_paper/ns:head/ns:keyword">
                         	<h4>                 		
-                    		<xsl:for-each select="ns:scientific_paper/ns:head/ns:keyword">
-            				<xsl:value-of select="."/>;
-            				</xsl:for-each>
+								<xsl:value-of select="ns:scientific_paper/ns:head/ns:keyword"/>;
                     		</h4>
 					</xsl:if>
 				</div>
@@ -75,51 +71,57 @@
                            		                        Abstract     				
                     		</h3>
                     		<p>
-                    		<xsl:for-each select="ns:scientific_paper/ns:body/ns:abstract">
-            				<xsl:value-of select="."/>;
-            				</xsl:for-each>
+                    		<xsl:for-each select="ns:scientific_paper/ns:body/ns:abstract/ns:paragraph">       			
+               						<xsl:value-of select="."/>
+               						<div></div>
+               
+       						</xsl:for-each>                    		
                         </p>
 					</xsl:if>
 				</div>
-              
-              <div>
-                   <xsl:if test="ns:scientific_paper/ns:body/ns:chapter">
-                        <h3>
-                           	<xsl:for-each select="ns:scientific_paper/ns:body/ns:chapter/ns:heading">
-                           	<div></div>
-            				<xsl:value-of select="."/>;
-            				</xsl:for-each>
-                        </h3>
-                        <p>
-  	                			<xsl:value-of select="ns:scientific_paper/ns:body/ns:chapter/ns:paragraph"/>	
-  	                	</p>
-  	                	<p>
-     							<xsl:if test="ns:scientific_paper/ns:body/ns:chapter/ns:paragraph/ns:image">
-	     							<xsl:value-of select="ns:scientific_paper/ns:body/ns:chapter/ns:paragraph/ns:image"/>
-	     							<xsl:value-of select="ns:scientific_paper/ns:body/ns:chapter/ns:paragraph/ns:image/ns:name"/>	
-	     							<xsl:value-of select="ns:scientific_paper/ns:body/ns:chapter/ns:paragraph/ns:image/ns:description"/>	
-	     						</xsl:if>
-	     				</p>
-	     				<p>
-	     						<xsl:if test="ns:scientific_paper/ns:body/ns:chapter/ns:paragraph/ns:table">
-	     							<xsl:value-of select="ns:scientific_paper/ns:body/ns:chapter/ns:paragraph/ns:table"/>
-	     							<xsl:value-of select="ns:scientific_paper/ns:body/ns:chapter/ns:paragraph/ns:table/ns:name"/>	
-	     							<xsl:value-of select="ns:scientific_paper/ns:body/ns:chapter/ns:paragraph/ns:table/ns:description"/>	
-	     						</xsl:if>
-	     				</p>			
-                   
-					</xsl:if>
-				</div>
-              
-               <div>
-                   <xsl:if test="ns:scientific_paper/ns:body/ns:references">
-                       <h3>
+	<div>
+	<xsl:if test="ns:scientific_paper/ns:body/ns:chapter">
+		<div  font-family="sans-serif">
+		
+       <xsl:for-each select="ns:scientific_paper/ns:body/ns:chapter"> 
+       <h3> 			
+               <xsl:value-of select="ns:heading"/>
+       </h3>     
+               <div></div>
+             	<xsl:value-of select="ns:paragraph"/>
+             	
+             	
+             	<div></div>
+             	<div></div>
+             	<xsl:if test="ns:scientific_paper/ns:body/ns:chapter/ns:paragraph/ns:image">
+	    			<xsl:value-of select="ns:scientific_paper/ns:body/ns:chapter/ns:paragraph/ns:image"/>	
+	   			</xsl:if>
+	   			<xsl:if test="ns:scientific_paper/ns:body/ns:chapter/ns:paragraph/ns:table">						
+	   				<xsl:value-of select="ns:scientific_paper/ns:body/ns:chapter/ns:paragraph/ns:table"/>	
+	     		</xsl:if>
+	     		<xsl:if test="ns:scientific_paper/ns:body/ns:chapter/ns:paragraph/ns:quote">						
+	   				<xsl:value-of select="ns:scientific_paper/ns:body/ns:chapter/ns:paragraph/ns:quote"/>	
+	     		</xsl:if>
+	     		<xsl:if test="ns:scientific_paper/ns:body/ns:chapter/ns:paragraph/ns:unordered_list">						
+	   				<xsl:value-of select="ns:scientific_paper/ns:body/ns:chapter/ns:paragraph/ns:unordered_list"/>	
+	     		</xsl:if>
+	     		<xsl:if test="ns:scientific_paper/ns:body/ns:chapter/ns:paragraph/ns:ordered_list">						
+	   				<xsl:value-of select="ns:scientific_paper/ns:body/ns:chapter/ns:paragraph/ns:ordered_list"/>	
+	     		</xsl:if>
+	     		
+               
+       </xsl:for-each>
+       </div>
+	</xsl:if>
+	</div>
+	<div>
+              <xsl:if test="ns:scientific_paper/ns:body/ns:references">
+                        <div text-align-last="justify">
+                           <h3>
                            		                        References     				
                     		</h3>
-                    		<p>
-                    		
-                    		<xsl:for-each select="ns:scientific_paper/ns:body/ns:references/ns:reference">
                     		<div></div>
+
                     		<xsl:variable name="refPaperId" select="ns:paper_id"/>
             				<a>
             				 	<xsl:attribute name="href">

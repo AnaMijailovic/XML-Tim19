@@ -186,4 +186,21 @@ public class ScientificPaperController {
 		ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
 		return response;
 	}
+	
+	@GetMapping(value = "/anonymous/html/{id}", produces = MediaType.TEXT_HTML_VALUE)
+	public ResponseEntity<String> anonymousFindOneHtml(@PathVariable("id") String id) throws Exception {
+		byte[] resource = spService.anonymousFindOneHtml(id);
+		return new ResponseEntity<>(new String(resource), HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/anonymous/pdf/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<byte[]> anonymousFindOnePdf(@PathVariable("id") String id) throws Exception {
+
+		byte[] contents = spService.anonymousFindOnePdf(id);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_PDF);
+		headers.add("Content-Disposition", "inline; filename=" + id + ".pdf");
+		ResponseEntity<byte[]> response = new ResponseEntity<>(contents, headers, HttpStatus.OK);
+		return response;
+	}
 }

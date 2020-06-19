@@ -56,6 +56,26 @@ public class DOMParser {
 		return document;
 	}
 	
+	public static Document buildDocumentWithoutSchema(String xmlString) throws Exception
+	{
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		Document document;
+		factory.setValidating(false);
+		
+		factory.setNamespaceAware(true);
+		factory.setIgnoringComments(true);
+		factory.setIgnoringElementContentWhitespace(true);
+			
+		DocumentBuilder builder = factory.newDocumentBuilder();
+		
+		builder.setErrorHandler(new DomErrorHandler());
+		
+		document = builder.parse(new InputSource(new StringReader(xmlString)));
+			
+		return document;
+	}
+	
+	
 	//method to convert Document to String
 	public static String getStringFromDocument(Document doc)
 	{

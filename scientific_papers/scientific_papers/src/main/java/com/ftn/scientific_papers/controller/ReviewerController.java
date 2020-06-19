@@ -6,6 +6,7 @@ import com.ftn.scientific_papers.dto.ReviewRequestDTO;
 import com.ftn.scientific_papers.mapper.PublishingProcessMapper;
 import com.ftn.scientific_papers.mapper.ReviewRequestMapper;
 import com.ftn.scientific_papers.model.publishing_process.PublishingProcess;
+import com.ftn.scientific_papers.model.publishing_process.VersionReview;
 import com.ftn.scientific_papers.model.scientific_paper.ScientificPaper;
 import com.ftn.scientific_papers.model.user.TRole;
 import com.ftn.scientific_papers.model.user.TUser;
@@ -174,6 +175,38 @@ public class ReviewerController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @GetMapping(value="/paper/{processId}")
+    @PreAuthorize("hasRole('ROLE_REVIEWER')")
+    public ResponseEntity<String> paperForReviewer(@PathVariable("processId") String processId) throws Exception{
+        String username = tokenUtils.getUsernameFromRequest(request);
+        TUser user = userService.findByUsername(username);
+
+        PublishingProcess process = publishingProcessService.findOneUnmarshalled(processId);
+        if (process == null) {
+            return new ResponseEntity("Invalid process id", HttpStatus.NOT_FOUND);
+        }
+
+        PublishingProcess.PaperVersion latestVersion = process.getPaperVersion().get(process.getLatestVersion().intValue()-1);
+
+        boolean isReviewerOnPaper = false;
+        for (VersionReview review : latestVersion.getVersionReviews().getVersionReview()) {
+            if (review.getReviewerId().equals(user.getUserId())) {
+                isReviewerOnPaper = true;
+            }
+        }
+
+        if (!isReviewerOnPaper) {
+            return new ResponseEntity<>("No rights to see paper.", HttpStatus.BAD_REQUEST);
+        }
+
+        String paperId = latestVersion.getScientificPaperId();
+
+        
+		byte[] resource = scientificPaperService.anonymousFindOneHtml(paperId);
+		return new ResponseEntity<>(new String(resource), HttpStatus.OK);
+        
+    }
+
     private boolean isInOngoingProcess(PublishingProcess process) {
         String status = process.getStatus();
 
@@ -181,7 +214,6 @@ public class ReviewerController {
             return false;
         return true;
     }
-
 
     private boolean checkIfReviewer(List<TRole> roles) {
         for (TRole role: roles) {

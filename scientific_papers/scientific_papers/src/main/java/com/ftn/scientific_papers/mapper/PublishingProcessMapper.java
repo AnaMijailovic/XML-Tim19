@@ -25,16 +25,19 @@ public class PublishingProcessMapper {
         publishingProcessDTO.setPaperTitles(formatTitle(scientificPaper.getHead().getTitle()));
         publishingProcessDTO.setAuthors(formatAuthors(scientificPaper.getHead().getAuthor()));
         publishingProcessDTO.setStatus(process.getStatus());
-
+        publishingProcessDTO.setLatestPaperId(process.getPaperVersion().get(version).getScientificPaperId());
+        publishingProcessDTO.setLatestCoverId(process.getPaperVersion().get(version).getCoverLetterId());
         publishingProcessDTO.setVersion(process.getLatestVersion().toString());
 
         PublishingProcess.PaperVersion.VersionReviews reviews = process.getPaperVersion().get(version).getVersionReviews();
         if (reviews == null) {
             publishingProcessDTO.setReviewers(new ArrayList<>());
             publishingProcessDTO.setReviewersIds(new ArrayList<>());
+            publishingProcessDTO.setFinishedReviewsIds(new ArrayList<>());
         } else {
             publishingProcessDTO.setReviewers(formatReviewers(reviews));
             publishingProcessDTO.setReviewersIds(formatReviewersIds(reviews));
+            publishingProcessDTO.setFinishedReviewsIds(formatFinishedReviewersIds(reviews));
         }
 
         if (process.getEditorId().equals("")) {
@@ -75,6 +78,18 @@ public class PublishingProcessMapper {
         }
 
         return reviewers;
+    }
+
+    private List<String> formatFinishedReviewersIds(PublishingProcess.PaperVersion.VersionReviews versionReviews) {
+        List<String> reviewsIds = new ArrayList<>();
+
+        for (int i = 0; i < versionReviews.getVersionReview().size(); i++) {
+            if (versionReviews.getVersionReview().get(i).getStatus().equals("FINISHED")) {
+                reviewsIds.add(versionReviews.getVersionReview().get(i).getReviewId());
+            }
+        }
+
+        return reviewsIds;
     }
 
 
