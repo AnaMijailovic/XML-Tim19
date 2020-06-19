@@ -48,8 +48,6 @@
 					</xsl:if>
 				</fo:block>
 				
-				
-				
 	<fo:block>
 	<xsl:if test="ns:scientific_paper/ns:head/ns:author">
 		<fo:block text-align-last="center" font-family="sans-serif">
@@ -71,7 +69,9 @@
                    <xsl:if test="ns:scientific_paper/ns:head/ns:keyword">
                         <fo:block text-align-last="left">
                            <fo:block font-family="sans-serif" font-size="10px" font-weight="bold" position="absolute"  padding="10px">                   		
+
             				<xsl:value-of select="ns:scientific_paper/ns:head/ns:keyword"/>;
+
                      		</fo:block>
                         </fo:block>
 					</xsl:if>
@@ -91,6 +91,7 @@
                         </fo:block>
 					</xsl:if>
 				</fo:block>
+
 		<fo:block>
 	<xsl:if test="ns:scientific_paper/ns:body/ns:chapter">
 		<fo:block  font-family="sans-serif">
@@ -119,6 +120,7 @@
 	</xsl:if>
 	</fo:block>
 	 <fo:block>
+
                    <xsl:if test="ns:scientific_paper/ns:body/ns:references">
                         <fo:block text-align-last="justify">
                            <fo:block font-family="sans-serif" font-size="14px" font-weight="bold" position="absolute"  padding="10px">
@@ -126,10 +128,13 @@
                     		</fo:block>
                     		<fo:block></fo:block>
 							<xsl:for-each select="ns:scientific_paper/ns:body/ns:references/ns:reference">
-               				<xsl:value-of select="."/>
-            				<fo:block></fo:block>
-             						
-             							<fo:block></fo:block>
+
+            				
+            				 <xsl:variable name="refPaperId" select="ns:paper_id"/>
+                			<fo:basic-link external-destination="http://localhost:8088/api/scientificPapers/pdf/{$refPaperId}" font-size="12px">
+                				<xsl:value-of select="."/>
+                			</fo:basic-link>
+
             				</xsl:for-each>                        
             				</fo:block>
 					</xsl:if>

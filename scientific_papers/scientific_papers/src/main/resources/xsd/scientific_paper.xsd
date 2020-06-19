@@ -327,6 +327,7 @@
     <xs:element name="reference">
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="paper_id" type="xs:string"/>
                 <xs:element name="title" type="xs:string"/>
                 <xs:element maxOccurs="unbounded" name="reference_author" type="TPerson"> </xs:element>
                 <xs:element name="publisher" type="xs:string"/>

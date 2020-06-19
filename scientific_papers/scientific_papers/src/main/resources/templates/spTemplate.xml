@@ -52,7 +52,7 @@
         </chapter>
         <references>
             <reference>
-                <title>title2</title>
+                <paper_id>paper22</paper_id><title>title2</title>
                 <reference_author>
                     <first_name>first_name2</first_name>
                     <last_name>last_name2</last_name>
@@ -64,9 +64,9 @@
                 <publisher>publisher0</publisher>
                 <year_of_publication>2006</year_of_publication>
                 <pages>pages0</pages>
-            </reference>
+                </reference>
             <reference>
-                <title>title3</title>
+                <paper_id>paper33</paper_id><title>title3</title>
                 <reference_author>
                     <first_name>first_name4</first_name>
                     <last_name>last_name4</last_name>
@@ -78,6 +78,7 @@
                 <publisher>publisher1</publisher>
                 <year_of_publication>2006</year_of_publication>
                 <pages>pages1</pages>
+                
             </reference>
         </references>
     </body>
