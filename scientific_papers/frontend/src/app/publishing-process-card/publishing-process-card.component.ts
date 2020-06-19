@@ -5,6 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { PublishingProcessService } from '../_service/publishing-process.service';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AssignReviewerDialogComponentComponent } from '../assign-reviewer-dialog-component/assign-reviewer-dialog-component.component';
+import { ScientificPaperService } from '../_service/scientific-paper.service';
+import { ReviewService } from '../_service/review.service';
 
 @Component({
   selector: 'app-publishing-process-card',
@@ -18,9 +20,12 @@ export class PublishingProcessCardComponent implements OnInit {
   showAssignSelf = false;
   showAssignReviewer = false;
   showAcceptReject = false;
+  showReviews = false;
 
   constructor(private publishingProcessService: PublishingProcessService,
               private utilService: UtilService,
+              private scientificPaperService: ScientificPaperService,
+              private reviewService: ReviewService,
               private dialog: MatDialog,
               private toastr: ToastrService) { }
 
@@ -44,6 +49,10 @@ export class PublishingProcessCardComponent implements OnInit {
         this.showAssignReviewer = false;
         this.showAssignSelf = false;
       }
+    }
+
+    if (this.publishingProcess.finishedReviewsIds.length !== 0) {
+      this.showReviews = true;
     }
   }
 
@@ -127,5 +136,41 @@ export class PublishingProcessCardComponent implements OnInit {
         console.log(JSON.stringify(error));
       }
     );
+  }
+
+  viewHtmlPaper() {
+    this.scientificPaperService.getHtml(this.publishingProcess.latestPaperId);
+  }
+
+  viewPdfPaper() {
+    this.scientificPaperService.getPdf(this.publishingProcess.latestPaperId);
+  }
+
+  viewXmlPaper() {
+    this.scientificPaperService.getXml(this.publishingProcess.latestPaperId);
+  }
+
+  viewHtmlLetter() {
+    this.scientificPaperService.getLetterHtml(this.publishingProcess.latestCoverId);
+  }
+
+  viewPdfLetter() {
+    this.scientificPaperService.getLetterPdf(this.publishingProcess.latestCoverId);
+  }
+
+  viewXmlLetter() {
+    this.scientificPaperService.getLetterXml(this.publishingProcess.latestCoverId);
+  }
+
+  viewHtmlReviews() {
+    this.reviewService.getHtml(this.publishingProcess.finishedReviewsIds);
+  }
+
+  viewPdfReviews() {
+    this.reviewService.getPdf(this.publishingProcess.finishedReviewsIds);
+  }
+
+  viewXmlReviews() {
+    this.reviewService.getXml(this.publishingProcess.finishedReviewsIds);
   }
 }

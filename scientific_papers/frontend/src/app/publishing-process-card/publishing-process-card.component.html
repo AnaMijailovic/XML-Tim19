@@ -33,7 +33,29 @@
                 <tr>
                     <td>
                         <br>
-                        <button mat-raised-button color="primary" (click)="test()">View papers</button>
+                        <button mat-raised-button color="primary" [matMenuTriggerFor]="viewMenu1">View papers</button>
+                        <mat-menu #viewMenu1="matMenu" yPosition="below">
+                            <button mat-menu-item (click)="viewHtmlPaper()"><b>Html</b></button>
+                            <button mat-menu-item (click)="viewPdfPaper()"><b>Pdf</b></button>
+                            <button mat-menu-item (click)="viewXmlPaper()"><b>Xml</b></button>
+                        </mat-menu>
+                        <button mat-raised-button color="primary" [matMenuTriggerFor]="viewMenu2">View cover letter</button>
+                        <mat-menu #viewMenu2="matMenu" yPosition="below">
+                            <button mat-menu-item (click)="viewHtmlLetter()"><b>Html</b></button>
+                            <button mat-menu-item (click)="viewPdfLetter()"><b>Pdf</b></button>
+                            <button mat-menu-item (click)="viewXmlLetter()"><b>Xml</b></button>
+                        </mat-menu>
+                        <button mat-raised-button color="primary" *ngIf="showReviews" [matMenuTriggerFor]="viewMenu3">View reviews</button>
+                        <mat-menu #viewMenu3="matMenu" yPosition="below">
+                            <button mat-menu-item (click)="viewHtmlReviews()"><b>Html</b></button>
+                            <button mat-menu-item (click)="viewPdfReviews()"><b>Pdf</b></button>
+                            <button mat-menu-item (click)="viewXmlReviews()"><b>Xml</b></button>
+                        </mat-menu>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br>
                         <button mat-button color="primary" *ngIf="showAssignSelf" (click)="assignSelfAsEditor()">Assign self as editor</button>
                         <button mat-button color="primary"  *ngIf="showAssignReviewer" (click)="openDialog()">Assign reviewer</button>
                         <button mat-stroked-button color="primary" *ngIf="showAcceptReject" (click)="revision()">Revision</button>
