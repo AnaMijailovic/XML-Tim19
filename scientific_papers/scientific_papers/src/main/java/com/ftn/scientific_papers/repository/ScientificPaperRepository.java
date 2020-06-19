@@ -1,9 +1,11 @@
 package com.ftn.scientific_papers.repository;
 
+import java.io.ByteArrayOutputStream;
 import java.io.StringReader;
 import java.util.HashMap;
 
 import com.ftn.scientific_papers.exceptions.DatabaseException;
+import com.ftn.scientific_papers.model.publishing_process.PublishingProcess;
 import com.ftn.scientific_papers.model.scientific_paper.ScientificPaper;
 import com.ftn.scientific_papers.model.user.TUser;
 import org.exist.xmldb.EXistResource;
@@ -29,6 +31,7 @@ import org.json.XML;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 
@@ -194,5 +197,29 @@ public class ScientificPaperRepository {
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 
 		return (ScientificPaper) unmarshaller.unmarshal(new StringReader(scientificPaperXML));
+	}
+
+	public void update(ScientificPaper scientificPaper) {
+		try {
+			String spXML = marshallScientificPaper(scientificPaper);
+			dbManager.save(scientificPaperCollectionId, scientificPaper.getId(),  spXML);
+
+		} catch (JAXBException e) {
+			throw new DatabaseException("An error occured while marshalling scientific paper.");
+		} catch (Exception e) {
+			throw new DatabaseException("An error occured while updating scientific paper.");
+		}
+	}
+
+	private String marshallScientificPaper(ScientificPaper scientificPaper) throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(ScientificPaper.class);
+		Marshaller marshaller = context.createMarshaller();
+
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		marshaller.marshal(scientificPaper, stream);
+
+		return new String(stream.toByteArray());
 	}
 }

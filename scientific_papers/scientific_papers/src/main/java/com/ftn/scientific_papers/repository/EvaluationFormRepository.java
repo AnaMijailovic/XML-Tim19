@@ -2,9 +2,14 @@ package com.ftn.scientific_papers.repository;
 
 import java.util.HashMap;
 
+import com.ftn.scientific_papers.dom.DOMParser;
+import com.ftn.scientific_papers.exceptions.CustomExceptionResponse;
+import com.ftn.scientific_papers.exceptions.CustomUnexpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
 
@@ -21,10 +26,7 @@ public class EvaluationFormRepository {
 	
 	@Value("${evaluation-form-collection-id}")
 	private String evaluationFormCollectionId;
-	
-	@Value("${evaluation-form-schema-path}")
-	private String evaluationFormSchemaPath;
-	
+
 	public XMLResource findOne(String id) throws Exception {
 		
 		 XMLResource result = dbManager.findOne(evaluationFormCollectionId, id);
@@ -34,19 +36,23 @@ public class EvaluationFormRepository {
 		 return result;
 	}
 	
-	public void save(String evaluationFormXML) throws Exception {
-		// generate id
-		String id = "paper0";				
+	public void save(String evaluationFormXML, String evaluationFormId) {
 		try {
-			ResourceSet rs = dbManager.executeXQuery(evaluationFormCollectionId, "count(/.)", new HashMap<>(), "");
-			id = "paper" + rs.getIterator().nextResource().getContent().toString();
-		}catch(Exception e) {
-			
+			dbManager.save(evaluationFormCollectionId, evaluationFormId, evaluationFormXML);
+		} catch (Exception e) {
+			throw new CustomUnexpectedException("Exception while saving evaluation form");
 		}
-		System.out.println("\nID: " + id);	
-		//save 
-		dbManager.save(evaluationFormCollectionId, id, evaluationFormXML);
-		
 	}
 
+	public String getNextId() {
+		// generate id
+		String id = "evaluationForm0";
+		try {
+			ResourceSet rs = dbManager.executeXQuery(evaluationFormCollectionId, "count(/.)", new HashMap<>(), "");
+			id = "evaluationForm" + rs.getIterator().nextResource().getContent().toString();
+		} catch (Exception e) {
+
+		}
+		return id;
+	}
 }

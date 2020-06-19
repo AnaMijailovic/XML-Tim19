@@ -66,6 +66,10 @@ export class PublishingProcessCardComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
 
+    dialogConfig.data = {
+      assignedReviwersIds: this.publishingProcess.reviewersIds
+    }
+
     const dialogRef = this.dialog.open(AssignReviewerDialogComponentComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(
@@ -78,8 +82,7 @@ export class PublishingProcessCardComponent implements OnInit {
               this.publishingProcess = response;
               this.updateButtonFlags();
             }), ((error: any) => {
-              // this.toastr.error('Error', 'Some error happend');
-              this.toastr.error('Error', 'Not implemented yet');
+              this.toastr.error('Error', 'Some error happend');
               console.log(JSON.stringify(error));
             })
           );
@@ -107,6 +110,18 @@ export class PublishingProcessCardComponent implements OnInit {
         this.toastr.success('Success', 'Paper rejected');
         this.publishingProcess = response;
         this.updateButtonFlags();
+      }), (error: any) => {
+        this.toastr.error('Error', 'Some error happend');
+        console.log(JSON.stringify(error));
+      }
+    );
+  }
+
+  revision() {
+    this.publishingProcessService.updatePaperStatus(this.publishingProcess.processId, 'NEW_REVISION').subscribe(
+      ((response: PublishingProcess) => {
+        this.toastr.success('Success', 'Paper sent on revision');
+        location.reload();
       }), (error: any) => {
         this.toastr.error('Error', 'Some error happend');
         console.log(JSON.stringify(error));

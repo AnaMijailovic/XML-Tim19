@@ -458,4 +458,7 @@ public class ScientificPaperService {
 		return scientificPaperHtml.toByteArray();
 	}
 
+	public void update(ScientificPaper scientificPaper) {
+		spRepository.update(scientificPaper);
+	}
 }

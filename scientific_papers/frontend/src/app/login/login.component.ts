@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AllowedRoutes } from '../_service/allowed-routes.service';
 import { AuthenticationService } from '../_service/authentication.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthenticationService,
     private router: Router,
-    private allowedRoutes: AllowedRoutes
+    private allowedRoutes: AllowedRoutes,
+    private toastr: ToastrService
   ) {
     this.form = this.formBuilder.group({
       username: ['', Validators.required],
@@ -42,9 +44,9 @@ export class LoginComponent implements OnInit {
           errorResponse.errors.array.forEach(e => {
             errorAlert += `${e.defaultMessage}\n`;
           });
-          alert(errorAlert);
+          this.toastr.error('Error', errorAlert);
         } catch (e) {
-          alert(response.error);
+          this.toastr.error('Error', response.error);
         }
       });
     }

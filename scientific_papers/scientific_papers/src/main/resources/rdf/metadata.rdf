@@ -1,4 +1,5 @@
 <rdf:RDF xmlns:rdfa="http://www.w3.org/ns/rdfa#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
+
   <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper45">
     <pred:recieved xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="date">2020-06-18</pred:recieved>
   </rdf:Description>
@@ -19,6 +20,7 @@
   </rdf:Description>
   <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper45">
     <pred:isWrittenBy xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="author0"/>
+
   </rdf:Description>
   <rdf:Description rdf:about="author0">
     <pred:firstName xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="string">first_name0</pred:firstName>
@@ -35,11 +37,13 @@
   <rdf:Description rdf:about="affiliation">
     <pred:affiliationNamed xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="string">name0</pred:affiliationNamed>
   </rdf:Description>
+
   <rdf:Description rdf:about="author1">
     <pred:isTheAuthorOf xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper45"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper45">
     <pred:isWrittenBy xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:resource="author1"/>
+
   </rdf:Description>
   <rdf:Description rdf:about="author1">
     <pred:firstName xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="string">first_name1</pred:firstName>
@@ -56,6 +60,7 @@
   <rdf:Description rdf:about="affiliation">
     <pred:affiliationNamed xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="string">name1</pred:affiliationNamed>
   </rdf:Description>
+
   <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper45">
     <pred:keyword xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="string">keyword0</pred:keyword>
   </rdf:Description>
@@ -73,5 +78,6 @@
   </rdf:Description>
   <rdf:Description rdf:about="https://github.com/AnaMijailovic/XML-Tim19/scientific_papers/paper45">
     <pred:titled xmlns:pred="https://github.com/AnaMijailovic/XML-Tim19/predicate/" rdf:datatype="string">title3</pred:titled>
+
   </rdf:Description>
 </rdf:RDF>
