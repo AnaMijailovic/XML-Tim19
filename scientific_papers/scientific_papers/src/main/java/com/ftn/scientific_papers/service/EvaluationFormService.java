@@ -7,6 +7,7 @@ import com.ftn.scientific_papers.dom.DOMParser;
 import com.ftn.scientific_papers.exceptions.CustomExceptionResponse;
 import com.ftn.scientific_papers.exceptions.CustomUnexpectedException;
 import com.ftn.scientific_papers.model.evaluation_form.EvaluationForm;
+import com.ftn.scientific_papers.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,9 @@ public class EvaluationFormService {
 
 	@Value("${evaluation-form-schema-path}")
 	private String evaluationFormSchemaPath;
+
+	@Value("${evaluation-form-template-path}")
+	private String evaluationFormTemplatePath;
 	
 	@Autowired
 	private XSLFOTransformer xslfoTransformer;
@@ -87,4 +91,12 @@ public class EvaluationFormService {
 	}
 
 
+	public String getTemplate() {
+		try {
+			return FileUtil.readFile(evaluationFormTemplatePath);
+		} catch (Exception e) {
+			throw new CustomUnexpectedException("Exception while gettin ef template");
+		}
+
+	}
 }

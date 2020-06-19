@@ -34,7 +34,7 @@ export class AssignedReviewCardComponent implements OnInit {
   }
 
   openEditor() {
-    localStorage.setItem('reviewInfo', JSON.stringify(this.reviewInfo));
+    localStorage.setItem('processId', this.reviewInfo.processId);
     this.router.navigate(['/review-editor']);
   }
 
