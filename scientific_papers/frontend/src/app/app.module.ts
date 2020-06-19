@@ -31,6 +31,7 @@ import { QuotedPapersComponent } from './quoted-papers/quoted-papers.component';
 import { ReviewRequestsComponent } from './review-requests/review-requests.component';
 import { ReviewRequestCardComponent } from './review-request-card/review-request-card.component';
 import { ReviewsComponent } from './reviews/reviews.component';
+import { AssignedReviewCardComponent } from './assigned-review-card/assigned-review-card.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { ReviewsComponent } from './reviews/reviews.component';
     QuotedPapersComponent,
     ReviewRequestsComponent,
     ReviewRequestCardComponent,
-    ReviewsComponent
+    ReviewsComponent,
+    AssignedReviewCardComponent
   ],
   imports: [
     BrowserModule,

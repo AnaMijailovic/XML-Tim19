@@ -121,6 +121,27 @@ public class ReviewerController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
+    @GetMapping(value ="/assignedReviews")
+    @PreAuthorize("hasRole('ROLE_REVIEWER')")
+    public ResponseEntity<ReviewRequestDTO> getAssignedReviews() {
+        String username = tokenUtils.getUsernameFromRequest(request);
+        TUser user = userService.findByUsername(username);
+
+        List<ReviewRequestDTO> result = new ArrayList<>();
+        List<PublishingProcess> processes = publishingProcessService.getAssignedReviewsForUser(user.getUserId());
+
+        for (PublishingProcess process: processes) {
+            if (!isInOngoingProcess(process))
+                continue;
+
+            ScientificPaper scientificPaper = scientificPaperService.findOneUnmarshalled(process.getPaperVersion().get(process.getLatestVersion().intValue()-1).getScientificPaperId());
+            ReviewRequestDTO dto = reviewRequestMapper.toDTO(scientificPaper, process);
+            result.add(dto);
+        }
+
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
+
     @PostMapping(value="/accept/{processId}")
     @PreAuthorize("hasRole('ROLE_REVIEWER')")
     public ResponseEntity acceptReview(@PathVariable("processId") String processId) {

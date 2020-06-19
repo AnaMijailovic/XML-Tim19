@@ -17,11 +17,11 @@ public class Adapter2
 
 
     public Date unmarshal(String value) {
-        return (com.ftn.scientific_papers.util.MyDatatypeConverter.parseDate(value));
+        return (com.ftn.scientific_papers.util.MyDatatypeConverter.parseYear(value));
     }
 
     public String marshal(Date value) {
-        return (com.ftn.scientific_papers.util.MyDatatypeConverter.printDate(value));
+        return (com.ftn.scientific_papers.util.MyDatatypeConverter.printYear(value));
     }
 
 }
