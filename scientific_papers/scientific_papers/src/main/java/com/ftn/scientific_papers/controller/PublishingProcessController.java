@@ -62,7 +62,7 @@ public class PublishingProcessController {
 	@PreAuthorize("hasRole('ROLE_EDITOR')")
 	public ResponseEntity<List<PublishingProcessDTO>> getPublicationsInOngoingProcess()
 	{	
-		System.out.println("scientificPaperrr: ");
+
 		List<PublishingProcessDTO> result = new ArrayList<>();
 		List<PublishingProcess> processes = publishingProcessService.getAll();
 
@@ -79,7 +79,7 @@ public class PublishingProcessController {
 				ScientificPaper scientificPaper = scientificPaperService.findOneUnmarshalled(paperVersion.getScientificPaperId());
 				PublishingProcessDTO publishingProcessDTO = mapper.toDTO(scientificPaper, process, process.getLatestVersion().intValue()-1);
 				result.add(publishingProcessDTO);
-				System.out.println("scientificPaperrr: " + scientificPaper.getId());
+
 			} catch (Exception e) {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
