@@ -69,6 +69,10 @@ public class EvaluationFormController {
 		publishingProcessService.submitReview(process, user.getUserId(), reviewId);
 		return new ResponseEntity(HttpStatus.CREATED);
 	}
+
+	//@GetMapping(value = "/{processId}")
+	//@PreAuthorize("hasRole('ROLE_AUTHOR')")
+	//public ResponseEntity<>
 	
 	@GetMapping(value = "/xml/{id}", produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<String> findOneXml(@PathVariable("id") String id) throws Exception {
