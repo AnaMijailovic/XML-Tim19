@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 declare var require: any;
 const convert = require('xml-js');
 
-const URL = 'http://localhost:8088/api/evaluationForms'
+const URL = 'http://localhost:8088/api/evaluationForms';
+const URL2 = 'http://localhost:8088/api/reviewers/paper/';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,10 @@ export class ReviewService {
       'Content-Type':  'application/xml'
     })
   };
+
+  getPaperForReviewer(processId: string) {
+    window.open(URL2 + processId, '_blank');
+  }
 
   getPdf(reviewIds: string[]) {
     reviewIds.forEach(id => {
