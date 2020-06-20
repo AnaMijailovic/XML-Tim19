@@ -31,5 +31,6 @@ Tim 19:
         - Proveriti da li je aplikacija pokrenuta odlaskom na [Exist](http://localhost:8080/exist/apps/eXide/)
 
 - Video: 
-        
+
+  https://drive.google.com/file/d/1dkC_oEGE5Fwcq0YY4TiR3M9Rq2iwQ1gS/view?usp=sharing      
 
